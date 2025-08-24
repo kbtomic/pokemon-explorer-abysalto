@@ -14,16 +14,7 @@ export interface PokemonFilters {
 }
 
 export interface SortOption {
-  field:
-    | 'name'
-    | 'id'
-    | 'total-stats'
-    | 'hp'
-    | 'attack'
-    | 'defense'
-    | 'speed'
-    | 'special-attack'
-    | 'special-defense';
+  field: 'name' | 'id' | 'total-stats' | 'hp' | 'attack' | 'defense' | 'speed' | 'special-attack' | 'special-defense';
   direction: 'asc' | 'desc';
 }
 

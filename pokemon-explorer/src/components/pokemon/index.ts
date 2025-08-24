@@ -2,4 +2,8 @@ export * from './pokemon-card';
 export * from './pokemon-grid';
 export * from './search-bar';
 export * from './type-filter';
+export * from './generation-filter';
+export * from './stats-filter';
+export * from './sort-selector';
+export * from './pokemon-modal';
 export * from './filters-bar';

@@ -1,9 +1,6 @@
 import { Pokemon, PokemonFilters, SortOption } from '@/types';
 
-export function getPokemonImageUrl(
-  pokemon: Pokemon,
-  variant: 'default' | 'shiny' = 'default'
-): string {
+export function getPokemonImageUrl(pokemon: Pokemon, variant: 'default' | 'shiny' = 'default'): string {
   const artwork = pokemon.sprites.other['official-artwork'];
   if (variant === 'shiny' && artwork.front_shiny) {
     return artwork.front_shiny;
@@ -20,16 +17,10 @@ export function getStatValue(pokemon: Pokemon, statName: string): number {
   return stat?.base_stat || 0;
 }
 
-export function filterPokemon(
-  pokemonList: Pokemon[],
-  filters: PokemonFilters
-): Pokemon[] {
+export function filterPokemon(pokemonList: Pokemon[], filters: PokemonFilters): Pokemon[] {
   return pokemonList.filter(pokemon => {
     // Search filter
-    if (
-      filters.search &&
-      !pokemon.name.toLowerCase().includes(filters.search.toLowerCase())
-    ) {
+    if (filters.search && !pokemon.name.toLowerCase().includes(filters.search.toLowerCase())) {
       return false;
     }
 
@@ -52,9 +43,7 @@ export function filterPokemon(
     // Abilities filter
     if (filters.abilities.length > 0) {
       const pokemonAbilities = pokemon.abilities.map(a => a.ability.name);
-      if (
-        !filters.abilities.some(ability => pokemonAbilities.includes(ability))
-      ) {
+      if (!filters.abilities.some(ability => pokemonAbilities.includes(ability))) {
         return false;
       }
     }
@@ -71,10 +60,7 @@ export function filterPokemon(
   });
 }
 
-export function sortPokemon(
-  pokemonList: Pokemon[],
-  sort: SortOption
-): Pokemon[] {
+export function sortPokemon(pokemonList: Pokemon[], sort: SortOption): Pokemon[] {
   return [...pokemonList].sort((a, b) => {
     let aValue: string | number;
     let bValue: string | number;

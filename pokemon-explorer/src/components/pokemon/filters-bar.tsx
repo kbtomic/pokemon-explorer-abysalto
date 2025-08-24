@@ -2,6 +2,9 @@
 
 import { SearchBar } from './search-bar';
 import { TypeFilter } from './type-filter';
+import { GenerationFilter } from './generation-filter';
+import { StatsFilter } from './stats-filter';
+import { SortSelector } from './sort-selector';
 import { Button } from '@/components/ui/button';
 import { usePokemonStore } from '@/lib/stores/pokemon-store';
 import { RotateCcw } from 'lucide-react';
@@ -27,6 +30,9 @@ export function FiltersBar() {
 
           <div className="flex items-center gap-3 flex-wrap">
             <TypeFilter />
+            <GenerationFilter />
+            <StatsFilter />
+            <SortSelector />
 
             {hasActiveFilters && (
               <Button variant="outline" size="sm" onClick={clearFilters} className="flex items-center space-x-2">

@@ -49,7 +49,7 @@ importers:
         specifier: ^1.55.0
         version: 1.55.0
       '@tailwindcss/postcss':
-        specifier: ^4
+        specifier: ^4.1.12
         version: 4.1.12
       '@tanstack/react-query-devtools':
         specifier: ^5.85.5
@@ -100,8 +100,8 @@ importers:
         specifier: ^3.6.2
         version: 3.6.2
       tailwindcss:
-        specifier: ^4
-        version: 4.1.12
+        specifier: ^4.0.0
+        version: 4.0.0
       typescript:
         specifier: ^5
         version: 5.9.2
@@ -3130,6 +3130,9 @@ packages:
 
   tailwind-merge@3.3.1:
     resolution: {integrity: sha512-gBXpgUm/3rp1lMZZrM/w7D8GKqshif0zAymAhbCyIt8KMe+0v9DQ7cdYLR4FHH/cKpdTXb+A/tKKU3eolfsI+g==}
+
+  tailwindcss@4.0.0:
+    resolution: {integrity: sha512-ULRPI3A+e39T7pSaf1xoi58AqqJxVCLg8F/uM5A3FadUbnyDTgltVnXJvdkTjwCOGA6NazqHVcwPJC5h2vRYVQ==}
 
   tailwindcss@4.1.12:
     resolution: {integrity: sha512-DzFtxOi+7NsFf7DBtI3BJsynR+0Yp6etH+nRPTbpWnS2pZBaSksv/JGctNwSWzbFjp0vxSqknaUylseZqMDGrA==}
@@ -6887,6 +6890,8 @@ snapshots:
       '@pkgr/core': 0.2.9
 
   tailwind-merge@3.3.1: {}
+
+  tailwindcss@4.0.0: {}
 
   tailwindcss@4.1.12: {}
 

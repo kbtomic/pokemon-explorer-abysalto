@@ -2,8 +2,7 @@
 
 import { useEffect } from 'react';
 import { Header } from '@/components/layout/header';
-import { FiltersBar } from '@/components/pokemon/filters-bar';
-import { PokemonGrid } from '@/components/pokemon/pokemon-grid';
+import { FiltersBar, PokemonGrid, PokemonModal } from '@/components/pokemon';
 import { usePokemonList, usePokemonBatch } from '@/lib/hooks/use-pokemon';
 import { usePokemonStore } from '@/lib/stores/pokemon-store';
 import { filterPokemon, sortPokemon } from '@/lib/utils/pokemon';
@@ -78,6 +77,8 @@ export default function ExplorerPage() {
 
         <PokemonGrid pokemonList={sortedPokemon} isLoading={isLoading} />
       </main>
+
+      <PokemonModal />
     </div>
   );
 }

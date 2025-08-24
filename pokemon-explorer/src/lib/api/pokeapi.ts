@@ -1,10 +1,4 @@
-import {
-  Pokemon,
-  PokemonListResponse,
-  Type,
-  Generation,
-  Ability,
-} from '@/types';
+import { Pokemon, PokemonListResponse, Type, Generation, Ability } from '@/types';
 
 const BASE_URL = 'https://pokeapi.co/api/v2';
 
@@ -22,10 +16,7 @@ async function fetchAPI<T>(endpoint: string): Promise<T> {
   const response = await fetch(`${BASE_URL}${endpoint}`);
 
   if (!response.ok) {
-    throw new PokeAPIError(
-      `API request failed: ${response.statusText}`,
-      response.status
-    );
+    throw new PokeAPIError(`API request failed: ${response.statusText}`, response.status);
   }
 
   return response.json();
@@ -33,13 +24,8 @@ async function fetchAPI<T>(endpoint: string): Promise<T> {
 
 export const pokeAPI = {
   // Pokemon endpoints
-  async getPokemonList(
-    limit: number = 151,
-    offset: number = 0
-  ): Promise<PokemonListResponse> {
-    return fetchAPI<PokemonListResponse>(
-      `/pokemon?limit=${limit}&offset=${offset}`
-    );
+  async getPokemonList(limit: number = 151, offset: number = 0): Promise<PokemonListResponse> {
+    return fetchAPI<PokemonListResponse>(`/pokemon?limit=${limit}&offset=${offset}`);
   },
 
   async getPokemon(nameOrId: string | number): Promise<Pokemon> {
