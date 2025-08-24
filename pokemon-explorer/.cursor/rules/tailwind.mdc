@@ -1,0 +1,257 @@
+---
+description: Tailwind CSS best practices and patterns for modern web applications
+globs: **/*.tsx,**/*.ts,**/*.css
+---
+
+# Tailwind CSS Best Practices
+
+## Class Organization & Structure
+
+- Order utility classes logically: layout → spacing → sizing → typography → colors → effects
+- Group related utilities together with consistent spacing
+- Use consistent formatting for multi-line class strings
+- Prefer single-line classes when possible, break into multiple lines for readability
+
+```tsx
+// Good - Logical ordering
+<div className="flex items-center justify-between p-4 bg-white rounded-lg shadow-md">
+
+// Good - Multi-line for readability
+<div className="
+  flex items-center justify-between
+  p-4 bg-white rounded-lg
+  shadow-md hover:shadow-lg
+  transition-shadow duration-200
+">
+```
+
+## Responsive Design Patterns
+
+- Follow mobile-first approach: base styles first, then responsive variants
+- Use consistent breakpoint patterns: `sm:`, `md:`, `lg:`, `xl:`, `2xl:`
+- Group responsive utilities together for better readability
+- Avoid unnecessary responsive classes
+
+```tsx
+// Good - Mobile-first with logical grouping
+<div className="
+  w-full p-4
+  sm:w-auto sm:p-6
+  md:flex md:items-center
+  lg:justify-between
+">
+
+// Avoid - Inconsistent ordering
+<div className="md:flex w-full sm:w-auto p-4 sm:p-6 lg:justify-between md:items-center">
+```
+
+## Component Patterns
+
+- Create reusable component class combinations
+- Use consistent spacing scales throughout components
+- Implement consistent border radius and shadow patterns
+- Maintain visual hierarchy with typography scales
+
+```tsx
+// Common button pattern
+const buttonClasses = "px-4 py-2 rounded-md font-medium transition-colors duration-200";
+
+// Primary button
+<button className={`${buttonClasses} bg-blue-600 text-white hover:bg-blue-700`}>
+
+// Secondary button
+<button className={`${buttonClasses} bg-gray-200 text-gray-900 hover:bg-gray-300`}>
+```
+
+## Performance & Best Practices
+
+- Leverage Tailwind's JIT compilation for optimal bundle size
+- Avoid creating custom utilities unless absolutely necessary
+- Use semantic class names for complex components when appropriate
+- Prefer utility classes over custom CSS when possible
+
+```tsx
+// Good - Using utilities
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+// Avoid - Custom CSS when utilities exist
+<div className="custom-grid-layout">
+```
+
+## Customization Guidelines
+
+- Use CSS custom properties for theme values when needed
+- Create consistent spacing and sizing patterns
+- Leverage Tailwind's theme configuration for project-wide consistency
+- Use `@theme` directive for custom theme values
+
+```css
+/* In globals.css */
+@theme inline {
+  --color-primary: #3b82f6;
+  --color-secondary: #6b7280;
+  --spacing-section: 2rem;
+}
+```
+
+## Accessibility Considerations
+
+- Always include focus states for interactive elements
+- Ensure sufficient color contrast ratios
+- Use proper semantic HTML with appropriate styling
+- Implement proper hover and active states
+
+```tsx
+// Good - Accessible button with focus states
+<button className="
+  px-4 py-2 bg-blue-600 text-white rounded-md
+  hover:bg-blue-700 focus:outline-none focus:ring-2
+  focus:ring-blue-500 focus:ring-offset-2
+  transition-colors duration-200
+">
+
+// Good - Accessible form input
+<input className="
+  w-full px-3 py-2 border border-gray-300 rounded-md
+  focus:outline-none focus:ring-2 focus:ring-blue-500
+  focus:border-blue-500
+">
+```
+
+## Layout Patterns
+
+- Use Flexbox and Grid for modern layouts
+- Implement consistent container patterns
+- Use proper spacing scales for layout elements
+- Create responsive layout systems
+
+```tsx
+// Common container pattern
+<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+// Card layout pattern
+<div className="bg-white rounded-lg shadow-md p-6">
+
+// Grid layout pattern
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+```
+
+## Typography Patterns
+
+- Use consistent font sizes and weights
+- Implement proper line heights for readability
+- Create typography hierarchy with consistent scales
+- Use appropriate text colors for contrast
+
+```tsx
+// Heading hierarchy
+<h1 className="text-3xl font-bold text-gray-900 mb-4">
+<h2 className="text-2xl font-semibold text-gray-800 mb-3">
+<h3 className="text-xl font-medium text-gray-700 mb-2">
+
+// Body text
+<p className="text-base text-gray-600 leading-relaxed">
+```
+
+## Interactive States
+
+- Implement consistent hover, focus, and active states
+- Use smooth transitions for better user experience
+- Maintain visual feedback for all interactive elements
+- Ensure states are accessible and visible
+
+```tsx
+// Interactive element with states
+<button className="
+  px-4 py-2 bg-blue-600 text-white rounded-md
+  hover:bg-blue-700 active:bg-blue-800
+  focus:outline-none focus:ring-2 focus:ring-blue-500
+  transition-all duration-200 ease-in-out
+">
+```
+
+## Form Styling
+
+- Use consistent form element styling
+- Implement proper validation states
+- Ensure form accessibility with proper labels
+- Create consistent input sizing and spacing
+
+```tsx
+// Form input pattern
+<div className="space-y-2">
+  <label className="block text-sm font-medium text-gray-700">Email</label>
+  <input
+    type="email"
+    className="
+      w-full px-3 py-2 border border-gray-300 rounded-md
+      focus:outline-none focus:ring-2 focus:ring-blue-500
+      focus:border-blue-500
+      placeholder-gray-400
+    "
+  />
+</div>
+```
+
+## Animation & Transitions
+
+- Use consistent transition durations and easing
+- Implement subtle animations for better UX
+- Avoid excessive animations that distract from content
+- Use appropriate animation properties
+
+```tsx
+// Smooth transitions
+<div className="transition-all duration-300 ease-in-out">
+
+// Hover animations
+<div className="transform hover:scale-105 transition-transform duration-200">
+
+// Loading states
+<div className="animate-pulse bg-gray-200 rounded">
+```
+
+## File Organization
+
+- Keep component-specific styles close to components
+- Use consistent class naming patterns
+- Group related utilities in component files
+- Maintain global styles in globals.css
+
+```tsx
+// Component with organized classes
+const Card = ({ children, className = "" }) => (
+  <div
+    className={`
+    bg-white rounded-lg shadow-md p-6
+    hover:shadow-lg transition-shadow duration-200
+    ${className}
+  `}
+  >
+    {children}
+  </div>
+);
+```
+
+## Utility-First Philosophy
+
+- Prefer utility classes over custom CSS
+- Create reusable component patterns
+- Use consistent spacing and sizing scales
+- Leverage Tailwind's design system
+
+```tsx
+// Good - Utility-first approach
+<div className="flex items-center space-x-4 p-6 bg-white rounded-lg shadow">
+
+// Avoid - Custom CSS when utilities exist
+<div className="custom-card-layout">
+```
+
+---
+
+description:
+globs:
+alwaysApply: false
+
+---
