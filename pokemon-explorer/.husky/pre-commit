@@ -1,0 +1,8 @@
+# This hook is triggered before a commit is created, it blocks the commit if linting fails
+
+# Source Husky's helper script:
+# - Ensures pnpm is available in PATH
+# - Makes hooks more reliable across environments (CLI, GUI, CI, etc.)
+. "$(dirname -- "$0")/_/husky.sh"
+
+pnpm lint-staged
