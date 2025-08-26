@@ -36,3 +36,16 @@ globs: **/*.*
 - When suggesting library integrations, leverage Context7 MCP to provide current version information and compatibility details.
 - Cross-reference Context7 MCP documentation with existing project patterns to ensure consistency.
 - Use Context7 MCP to validate library selection against project's technical constraints and requirements.
+
+## API and Data Verification Rules
+
+- **Always verify data directly from the source** - Never rely on estimates or memory when working with external APIs or data sources.
+- **Use systematic approaches** - Check all endpoints, data points, or resources comprehensively, not just a sample.
+- **Document the verification process** - Show exactly how counts, data, or information was obtained and verified.
+- **Prioritize accuracy over speed** - Take the time to get exact numbers and verified information rather than making assumptions.
+- **Assume APIs and data sources are dynamic** - Counts, endpoints, and data structures can change over time.
+- **Create verification scripts** - Use automated tools to systematically verify all data points when working with large datasets.
+- **Cross-reference multiple sources** - When possible, verify information from multiple authoritative sources.
+- **Update documentation immediately** - When discrepancies are found, update all related documentation and rules immediately.
+- **Question estimates and approximations** - Always seek exact numbers and verified data rather than accepting estimates.
+- **Maintain a verification log** - Keep track of when and how data was verified for future reference.
