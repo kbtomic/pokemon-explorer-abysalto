@@ -4,6 +4,7 @@ import { SearchBar } from './search-bar';
 import { TypeFilter } from './type-filter';
 import { GenerationFilter } from './generation-filter';
 import { StatsFilter } from './stats-filter';
+import { AbilitiesFilter } from './abilities-filter';
 import { SortSelector } from './sort-selector';
 import { Button } from '@/components/ui/button';
 import { usePokemonStore } from '@/lib/stores/pokemon-store';
@@ -32,6 +33,7 @@ export function FiltersBar() {
             <TypeFilter />
             <GenerationFilter />
             <StatsFilter />
+            <AbilitiesFilter />
             <SortSelector />
 
             {hasActiveFilters && (

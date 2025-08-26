@@ -1,16 +1,28 @@
 'use client';
 
+import { useEffect } from 'react';
 import { Modal } from '@/components/ui/modal';
 import { usePokemonStore } from '@/lib/stores/pokemon-store';
 import { usePokemon } from '@/lib/hooks/use-pokemon';
 import { getPokemonImageUrl, getTotalStats, formatPokemonName } from '@/lib/utils';
-import { TYPE_COLORS, STAT_NAMES } from '@/types';
+import { TYPE_COLORS } from '@/types';
+import { AdvancedStatsDisplay } from './advanced-stats-display';
+import { accessibilityUtils, ariaAttributes } from '@/lib/utils/accessibility';
 import Image from 'next/image';
-import { Heart, Zap, Shield, Target, Gauge } from 'lucide-react';
 
 export function PokemonModal() {
   const { isModalOpen, selectedPokemon, closeModal } = usePokemonStore();
   const { data: pokemon, isLoading, error } = usePokemon(selectedPokemon || 1);
+
+  // Announce modal opening to screen readers
+  useEffect(() => {
+    if (isModalOpen && pokemon) {
+      accessibilityUtils.screenReader.announce(
+        `Opened details for ${pokemon.name}, ${pokemon.types.map(t => t.type.name).join(' and ')} type Pokemon`,
+        'assertive'
+      );
+    }
+  }, [isModalOpen, pokemon]);
 
   if (!isModalOpen || !selectedPokemon) return null;
 
@@ -39,34 +51,15 @@ export function PokemonModal() {
   const imageUrl = getPokemonImageUrl(pokemon);
   const totalStats = getTotalStats(pokemon);
 
-  const getStatIcon = (statName: string) => {
-    switch (statName) {
-      case 'hp':
-        return <Heart className="h-4 w-4" />;
-      case 'attack':
-        return <Zap className="h-4 w-4" />;
-      case 'defense':
-        return <Shield className="h-4 w-4" />;
-      case 'speed':
-        return <Gauge className="h-4 w-4" />;
-      case 'special-attack':
-        return <Target className="h-4 w-4" />;
-      case 'special-defense':
-        return <Shield className="h-4 w-4" />;
-      default:
-        return <Zap className="h-4 w-4" />;
-    }
-  };
-
-  const getStatColor = (value: number) => {
-    if (value >= 100) return 'text-green-600';
-    if (value >= 80) return 'text-yellow-600';
-    if (value >= 60) return 'text-orange-600';
-    return 'text-red-600';
-  };
-
   return (
-    <Modal isOpen={isModalOpen} onClose={closeModal} title={formatPokemonName(pokemon.name)}>
+    <Modal
+      isOpen={isModalOpen}
+      onClose={closeModal}
+      title={formatPokemonName(pokemon.name)}
+      role={ariaAttributes.roles.dialog}
+      aria-labelledby="pokemon-modal-title"
+      aria-describedby="pokemon-modal-description"
+    >
       <div className="space-y-6">
         {/* Header with image and basic info */}
         <div className="flex flex-col md:flex-row gap-6">
@@ -117,45 +110,8 @@ export function PokemonModal() {
           </div>
         </div>
 
-        {/* Stats */}
-        <div>
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Base Stats</h3>
-          <div className="space-y-3">
-            {pokemon.stats.map(stat => {
-              const statName = stat.stat.name;
-              const statValue = stat.base_stat;
-              const statPercentage = (statValue / 255) * 100;
-
-              return (
-                <div key={statName} className="space-y-1">
-                  <div className="flex items-center justify-between text-sm">
-                    <div className="flex items-center space-x-2">
-                      {getStatIcon(statName)}
-                      <span className="font-medium text-gray-700 dark:text-gray-300">
-                        {STAT_NAMES[statName as keyof typeof STAT_NAMES] || statName}
-                      </span>
-                    </div>
-                    <span className={`font-semibold ${getStatColor(statValue)}`}>{statValue}</span>
-                  </div>
-                  <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                    <div
-                      className={`h-2 rounded-full transition-all duration-300 ${
-                        statValue >= 100
-                          ? 'bg-green-500'
-                          : statValue >= 80
-                            ? 'bg-yellow-500'
-                            : statValue >= 60
-                              ? 'bg-orange-500'
-                              : 'bg-red-500'
-                      }`}
-                      style={{ width: `${statPercentage}%` }}
-                    />
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
+        {/* Advanced Stats Display */}
+        <AdvancedStatsDisplay pokemon={pokemon} />
 
         {/* Abilities */}
         <div>

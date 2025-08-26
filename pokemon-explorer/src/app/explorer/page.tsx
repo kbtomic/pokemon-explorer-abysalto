@@ -3,7 +3,9 @@
 import { useEffect } from 'react';
 import { Header } from '@/components/layout/header';
 import { FiltersBar, PokemonGrid, PokemonModal } from '@/components/pokemon';
+import { PerformanceIndicator, AccessibilityTester } from '@/components/ui';
 import { usePokemonList, usePokemonBatch } from '@/lib/hooks/use-pokemon';
+import { usePerformanceOptimization } from '@/lib/hooks/use-performance-optimization';
 import { usePokemonStore } from '@/lib/stores/pokemon-store';
 import { filterPokemon, sortPokemon } from '@/lib/utils/pokemon';
 
@@ -39,6 +41,9 @@ export default function ExplorerPage() {
   const filteredPokemon = filterPokemon(pokemonList, filters);
   const sortedPokemon = sortPokemon(filteredPokemon, sort);
 
+  // Performance optimization
+  const { useVirtualization, virtualizationThreshold } = usePerformanceOptimization(sortedPokemon.length);
+
   const isLoading = isLoadingList || isLoadingPokemon;
   const error = listError || pokemonError;
 
@@ -62,8 +67,12 @@ export default function ExplorerPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <Header />
-      <FiltersBar />
+      <div className="sticky top-0 z-40 bg-gray-50 dark:bg-gray-900">
+        <Header />
+        <div className="border-b border-gray-200 dark:border-gray-700">
+          <FiltersBar />
+        </div>
+      </div>
 
       <main className="container mx-auto px-4 py-8">
         <div className="mb-6">
@@ -79,6 +88,9 @@ export default function ExplorerPage() {
       </main>
 
       <PokemonModal />
+
+      <PerformanceIndicator isVirtualized={useVirtualization} itemCount={sortedPokemon.length} threshold={virtualizationThreshold} />
+      <AccessibilityTester />
     </div>
   );
 }

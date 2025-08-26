@@ -2,7 +2,9 @@
 
 import { Pokemon } from '@/types';
 import { PokemonCard } from './pokemon-card';
+import { VirtualizedPokemonGrid } from './virtualized-pokemon-grid';
 import { usePokemonStore } from '@/lib/stores/pokemon-store';
+import { usePerformanceOptimization } from '@/lib/hooks/use-performance-optimization';
 
 interface PokemonGridProps {
   pokemonList: Pokemon[];
@@ -11,10 +13,16 @@ interface PokemonGridProps {
 
 export function PokemonGrid({ pokemonList, isLoading = false }: PokemonGridProps) {
   const openModal = usePokemonStore(state => state.openModal);
+  const { useVirtualization } = usePerformanceOptimization(pokemonList.length);
+
+  // Use virtualized grid for better performance with large lists
+  if (useVirtualization) {
+    return <VirtualizedPokemonGrid pokemonList={pokemonList} isLoading={isLoading} />;
+  }
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 gap-y-8">
         {Array.from({ length: 20 }).map((_, index) => (
           <div key={index} className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6 animate-pulse">
             <div className="flex items-center justify-between mb-4">
@@ -60,7 +68,7 @@ export function PokemonGrid({ pokemonList, isLoading = false }: PokemonGridProps
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 gap-y-8">
       {pokemonList.map(pokemon => (
         <PokemonCard key={pokemon.id} pokemon={pokemon} onClick={() => openModal(pokemon.id)} />
       ))}

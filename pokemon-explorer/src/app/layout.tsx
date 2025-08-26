@@ -15,8 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: 'Pokemon Explorer',
-  description:
-    'Explore the world of Pokemon with advanced filtering and search capabilities',
+  description: 'Explore the world of Pokemon with advanced filtering and search capabilities',
   keywords: ['pokemon', 'pokedex', 'gaming', 'explorer'],
   authors: [{ name: 'Pokemon Explorer Team' }],
 };
@@ -32,10 +31,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+    <html lang="en" className="bg-gray-50 dark:bg-gray-900">
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50 dark:bg-gray-900 min-h-screen`}>
         <Providers>{children}</Providers>
       </body>
     </html>

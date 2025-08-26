@@ -6,8 +6,16 @@
   }
 
   body {
-    background-color: rgb(249 250 251);
     color: rgb(17 24 39);
+    background-color: rgb(249 250 251);
+    overscroll-behavior: none;
+  }
+
+  /* Dark mode support for body background */
+  @media (prefers-color-scheme: dark) {
+    body {
+      background-color: rgb(17 24 39);
+    }
   }
 }
 
@@ -22,5 +30,43 @@
 
   button:hover {
     background-color: rgb(29 78 216);
+  }
+
+  /* Accessibility utilities */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* Focus indicators for better accessibility */
+  .focus-visible {
+    outline: 2px solid #3b82f6;
+    outline-offset: 0px;
+  }
+
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    .focus-visible {
+      outline: 3px solid #000;
+      outline-offset: 0px;
+    }
+  }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }

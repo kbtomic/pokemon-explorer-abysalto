@@ -29,11 +29,10 @@ globs: **/*.*
 - Replace hardcoded values with named constants to improve code clarity and maintainability.
 - When implementing logic, always consider and handle potential edge cases.
 - Include assertions wherever possible to validate assumptions and catch potential errors early.
-
----
-
-description:
-globs:
-alwaysApply: false
-
----
+- When working with external libraries or APIs, use Context7 MCP to fetch up-to-date documentation before implementing solutions.
+- Always resolve library IDs before fetching documentation to ensure accurate and relevant information.
+- Prioritize libraries with higher trust scores (7-10) and better documentation coverage when multiple options exist.
+- Use Context7 MCP documentation to verify API usage patterns and best practices before implementation.
+- When suggesting library integrations, leverage Context7 MCP to provide current version information and compatibility details.
+- Cross-reference Context7 MCP documentation with existing project patterns to ensure consistency.
+- Use Context7 MCP to validate library selection against project's technical constraints and requirements.
