@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { getPokemonImageUrl, getTotalStats, formatPokemonName } from '@/lib/utils';
 import { TYPE_COLORS } from '@/types';
 import { accessibilityUtils, ariaAttributes } from '@/lib/utils/accessibility';
+import { usePokemonSpecies, getEnglishGenus } from '@/lib/hooks/use-pokemon-species';
 
 interface PokemonCardProps {
   pokemon: Pokemon;
@@ -19,6 +20,9 @@ export function PokemonCard({ pokemon, onClick }: PokemonCardProps) {
   const totalStats = getTotalStats(pokemon);
   const cardId = accessibilityUtils.generateId('pokemon-card');
   const description = accessibilityUtils.createPokemonCardDescription(pokemon);
+
+  // Fetch species data for enhanced information
+  const { data: species, isLoading: speciesLoading } = usePokemonSpecies(pokemon.id);
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter' || event.key === ' ') {
@@ -71,6 +75,11 @@ export function PokemonCard({ pokemon, onClick }: PokemonCardProps) {
             <h3 className="text-lg font-bold text-gray-900 dark:text-white capitalize tracking-wide group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">
               {formatPokemonName(pokemon.name)}
             </h3>
+
+            {/* Species Genus */}
+            {species && !speciesLoading && (
+              <p className="text-sm text-gray-600 dark:text-gray-400 italic mt-1">{getEnglishGenus(species)}</p>
+            )}
 
             {/* Enhanced Type Badges */}
             <div className="flex items-center justify-center space-x-2 mt-3" role="list" aria-label="Pokemon types">

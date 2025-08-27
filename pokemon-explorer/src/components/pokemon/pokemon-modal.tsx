@@ -4,15 +4,20 @@ import { useEffect } from 'react';
 import { Modal } from '@/components/ui/modal';
 import { usePokemonStore } from '@/lib/stores/pokemon-store';
 import { usePokemon } from '@/lib/hooks/use-pokemon';
+import Link from 'next/link';
+import { usePokemonSpecies, getEnglishGenus } from '@/lib/hooks/use-pokemon-species';
 import { getPokemonImageUrl, getTotalStats, formatPokemonName } from '@/lib/utils';
 import { TYPE_COLORS } from '@/types';
 import { AdvancedStatsDisplay } from './advanced-stats-display';
+import { Button } from '@/components/ui/button';
+import { ExternalLink, Info } from 'lucide-react';
 import { accessibilityUtils, ariaAttributes } from '@/lib/utils/accessibility';
 import Image from 'next/image';
 
 export function PokemonModal() {
   const { isModalOpen, selectedPokemon, closeModal } = usePokemonStore();
   const { data: pokemon, isLoading, error } = usePokemon(selectedPokemon || 1);
+  const { data: species, isLoading: speciesLoading } = usePokemonSpecies(selectedPokemon || 1);
 
   // Announce modal opening to screen readers
   useEffect(() => {
@@ -64,18 +69,21 @@ export function PokemonModal() {
         {/* Header with image and basic info */}
         <div className="flex flex-col md:flex-row gap-6">
           <div className="flex-shrink-0">
-            <div className="relative w-48 h-48 mx-auto">
-              <Image src={imageUrl} alt={pokemon.name} width={192} height={192} className="object-contain" priority />
+            <div className="relative w-32 h-32 mx-auto md:mx-0">
+              <Image src={imageUrl} alt={pokemon.name} width={128} height={128} className="object-contain" priority />
             </div>
           </div>
 
-          <div className="flex-1 space-y-4">
+          <div className="flex-1 space-y-4 text-center md:text-left">
             <div>
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white capitalize">{formatPokemonName(pokemon.name)}</h2>
               <p className="text-gray-600 dark:text-gray-400">#{pokemon.id.toString().padStart(3, '0')}</p>
+              {species && !speciesLoading && (
+                <p className="text-sm text-gray-500 dark:text-gray-400 italic mt-1">{getEnglishGenus(species)}</p>
+              )}
             </div>
 
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap justify-center md:justify-start gap-2">
               {pokemon.types.map(type => (
                 <span
                   key={type.type.name}
@@ -110,44 +118,27 @@ export function PokemonModal() {
           </div>
         </div>
 
-        {/* Advanced Stats Display */}
-        <AdvancedStatsDisplay pokemon={pokemon} />
-
-        {/* Abilities */}
+        {/* Stats Display */}
         <div>
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Abilities</h3>
-          <div className="space-y-2">
-            {pokemon.abilities.map(ability => (
-              <div key={ability.ability.name} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                <span className="font-medium text-gray-900 dark:text-white capitalize">{ability.ability.name.replace('-', ' ')}</span>
-                {ability.is_hidden && (
-                  <span className="text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded-full">
-                    Hidden
-                  </span>
-                )}
-              </div>
-            ))}
-          </div>
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Base Stats</h3>
+          <AdvancedStatsDisplay pokemon={pokemon} />
         </div>
 
-        {/* Moves (showing first 10) */}
-        {pokemon.moves.length > 0 && (
-          <div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Moves ({pokemon.moves.length} total)</h3>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-              {pokemon.moves.slice(0, 10).map(move => (
-                <div key={move.move.name} className="p-2 bg-gray-50 dark:bg-gray-800 rounded text-sm capitalize">
-                  {move.move.name.replace('-', ' ')}
-                </div>
-              ))}
-              {pokemon.moves.length > 10 && (
-                <div className="p-2 bg-gray-100 dark:bg-gray-700 rounded text-sm text-gray-600 dark:text-gray-400">
-                  +{pokemon.moves.length - 10} more
-                </div>
-              )}
+        {/* Quick Info */}
+        <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <Info className="w-5 h-5 text-blue-600" />
+              <span className="text-sm text-gray-600 dark:text-gray-400">Want to see detailed information about this Pokemon?</span>
             </div>
+            <Link href={`/pokemon/${pokemon.id}`}>
+              <Button onClick={closeModal} className="inline-flex items-center gap-2">
+                <span>View Details</span>
+                <ExternalLink className="w-4 h-4" />
+              </Button>
+            </Link>
           </div>
-        )}
+        </div>
       </div>
     </Modal>
   );

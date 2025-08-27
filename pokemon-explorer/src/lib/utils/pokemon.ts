@@ -1,6 +1,16 @@
-import { Pokemon, PokemonFilters, SortOption } from '@/types';
+import { Pokemon, PokemonFilters, SortOption, PokemonSpecies } from '@/types';
 
-export function getPokemonImageUrl(pokemon: Pokemon, variant: 'default' | 'shiny' = 'default'): string {
+export function getPokemonImageUrl(pokemon: Pokemon, variant?: 'default' | 'shiny'): string;
+export function getPokemonImageUrl(pokemonId: number, variant?: 'default' | 'shiny'): string;
+export function getPokemonImageUrl(pokemonOrId: Pokemon | number, variant: 'default' | 'shiny' = 'default'): string {
+  // If it's a number (Pokemon ID), use the direct URL
+  if (typeof pokemonOrId === 'number') {
+    const baseUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonOrId}.png`;
+    return baseUrl;
+  }
+
+  // If it's a Pokemon object, use the sprites
+  const pokemon = pokemonOrId;
   const artwork = pokemon.sprites.other['official-artwork'];
   if (variant === 'shiny' && artwork.front_shiny) {
     return artwork.front_shiny;
@@ -116,4 +126,10 @@ export function formatPokemonName(name: string): string {
 
 export function formatStatName(statName: string): string {
   return statName.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase());
+}
+
+export function getEvolutionChainId(species: PokemonSpecies): number | null {
+  if (!species.evolution_chain?.url) return null;
+  const match = species.evolution_chain.url.match(/\/evolution-chain\/(\d+)\//);
+  return match ? parseInt(match[1], 10) : null;
 }
