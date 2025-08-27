@@ -22,6 +22,9 @@ export const metadata: Metadata = {
   description: 'Explore the world of Pokemon with advanced filtering and search capabilities',
   keywords: ['pokemon', 'pokedex', 'gaming', 'explorer'],
   authors: [{ name: 'Pokemon Explorer Team' }],
+  icons: {
+    icon: '/favicon.svg',
+  },
 };
 
 export const viewport: Viewport = {
