@@ -233,7 +233,7 @@ export const waitForLoadingToFinish = () => {
   return new Promise(resolve => setTimeout(resolve, 0));
 };
 
-export const mockFetch = (response: any) => {
+export const mockFetch = (response: unknown) => {
   return jest.fn().mockResolvedValue({
     ok: true,
     json: async () => response,

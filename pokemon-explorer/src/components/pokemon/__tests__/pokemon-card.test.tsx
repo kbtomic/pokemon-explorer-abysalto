@@ -15,7 +15,7 @@ describe('PokemonCard', () => {
 
     expect(screen.getByText('Bulbasaur')).toBeInTheDocument();
     expect(screen.getByText('#001')).toBeInTheDocument();
-    expect(screen.getByText('Total: 318')).toBeInTheDocument();
+    expect(screen.getByText('318')).toBeInTheDocument();
     expect(screen.getByText('grass')).toBeInTheDocument();
     expect(screen.getByText('poison')).toBeInTheDocument();
     expect(screen.getByText('45')).toBeInTheDocument(); // HP
@@ -138,8 +138,7 @@ describe('PokemonCard', () => {
 
     render(<PokemonCard pokemon={pokemonWithoutStats} onClick={mockOnClick} />);
 
-    expect(screen.getByText('Total: 0')).toBeInTheDocument();
-    expect(screen.getAllByText('0')).toHaveLength(3); // HP, ATK, DEF
+    expect(screen.getAllByText('0')).toHaveLength(4); // Total stats + HP, ATK, DEF
   });
 
   it('should be focusable', () => {
@@ -155,6 +154,6 @@ describe('PokemonCard', () => {
     render(<PokemonCard pokemon={mockPokemon} onClick={mockOnClick} />);
 
     const card = screen.getByRole('button');
-    expect(card).toHaveClass('cursor-pointer', 'hover:shadow-lg', 'focus-visible');
+    expect(card).toHaveClass('cursor-pointer', 'hover:scale-[1.02]', 'hover:shadow-xl');
   });
 });
