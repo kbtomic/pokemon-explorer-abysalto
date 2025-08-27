@@ -4,6 +4,12 @@ const config: Config = {
   content: ['./src/pages/**/*.{js,ts,jsx,tsx,mdx}', './src/components/**/*.{js,ts,jsx,tsx,mdx}', './src/app/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
+        heading: ['var(--font-montserrat)', 'Montserrat', 'system-ui', 'sans-serif'],
+        montserrat: ['var(--font-montserrat)', 'Montserrat', 'system-ui', 'sans-serif'],
+        inter: ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
+      },
       colors: {
         pokemon: {
           red: '#FF6B6B',
