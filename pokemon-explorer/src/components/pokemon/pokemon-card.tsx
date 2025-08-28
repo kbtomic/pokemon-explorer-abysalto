@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { Pokemon } from '@/types';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { getPokemonImageUrl, getTotalStats, formatPokemonName } from '@/lib/utils';
-import { TYPE_COLORS } from '@/types';
+import { getTypeColor } from '@/lib/utils';
 import { accessibilityUtils, ariaAttributes } from '@/lib/utils/accessibility';
 import { usePokemonSpecies, getEnglishGenus } from '@/lib/hooks/use-pokemon-species';
 
@@ -89,8 +89,8 @@ export function PokemonCard({ pokemon, onClick }: PokemonCardProps) {
                   role="listitem"
                   className="px-3 py-1.5 text-xs font-bold text-white rounded-full capitalize shadow-sm transform group-hover:scale-105 transition-transform duration-200"
                   style={{
-                    backgroundColor: TYPE_COLORS[type.type.name as keyof typeof TYPE_COLORS] || '#6b7280',
-                    boxShadow: `0 2px 4px ${TYPE_COLORS[type.type.name as keyof typeof TYPE_COLORS] || '#6b7280'}40`,
+                    backgroundColor: getTypeColor(type.type.name),
+                    boxShadow: `0 2px 4px ${getTypeColor(type.type.name)}40`,
                   }}
                 >
                   {type.type.name}

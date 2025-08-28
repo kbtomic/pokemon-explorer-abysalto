@@ -21,26 +21,15 @@
   h6 {
     font-family: var(--font-montserrat), Montserrat, system-ui, sans-serif;
   }
-
-  /* Dark mode support for body background */
-  @media (prefers-color-scheme: dark) {
-    body {
-      background-color: rgb(17 24 39);
-    }
-  }
 }
 
 @layer components {
   button {
-    background-color: rgb(37 99 235);
     color: white;
     padding: 0.5rem 1rem;
     border-radius: 0.375rem;
     transition: background-color 0.2s;
-  }
-
-  button:hover {
-    background-color: rgb(29 78 216);
+    cursor: pointer;
   }
 
   /* Accessibility utilities */

@@ -2,7 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import { Header } from '@/components/layout/header';
-import { FiltersBar, PokemonGrid, PokemonModal } from '@/components/pokemon';
+import { FiltersBar } from '@/components/filters/FiltersBar';
+import { PokemonGrid } from '@/components/pokemon/pokemon-grid';
+import { PokemonModal } from '@/components/pokemon/pokemon-modal';
 import { PerformanceIndicator, AccessibilityTester } from '@/components/ui';
 import { usePokemonListPaginated, usePokemonBatchChunked } from '@/lib/hooks/use-pokemon';
 import { usePerformanceOptimization } from '@/lib/hooks/use-performance-optimization';
@@ -72,6 +74,11 @@ export default function ExplorerPage() {
   const filteredPokemon = filterPokemon(pokemonList, filters);
   const sortedPokemon = sortPokemon(filteredPokemon, sort);
 
+  // Debug logging
+  console.log('Filters:', filters);
+  console.log('Pokemon count before filter:', pokemonList.length);
+  console.log('Pokemon count after filter:', filteredPokemon.length);
+
   // Performance optimization
   const { useVirtualization, virtualizationThreshold } = usePerformanceOptimization(sortedPokemon.length);
 
@@ -80,14 +87,17 @@ export default function ExplorerPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <div className="min-h-screen bg-white">
         <Header />
-        <div className="container mx-auto px-4 py-8">
+        <div className="container mx-auto px-4 py-8 sm:py-12 md:py-16">
           <div className="text-center">
-            <div className="text-6xl mb-4">⚠️</div>
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Error Loading Pokemon</h2>
-            <p className="text-gray-600 dark:text-gray-400 mb-4">{error.message}</p>
-            <button onClick={() => window.location.reload()} className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+            <div className="text-4xl sm:text-6xl mb-4">⚠️</div>
+            <h2 className="text-xl sm:text-2xl font-bold text-red-600 mb-2">Error Loading Pokemon</h2>
+            <p className="text-sm sm:text-base text-red-500 mb-4">{error.message}</p>
+            <button
+              onClick={() => window.location.reload()}
+              className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
+            >
               Try Again
             </button>
           </div>
@@ -97,22 +107,22 @@ export default function ExplorerPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <div className="sticky top-0 z-40 bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-white">
+      <div className="sticky top-0 z-40 bg-white border-b border-red-200">
         <Header />
-        <div className="border-b border-gray-200 dark:border-gray-700">
+        <div className="border-b border-red-200">
           <FiltersBar />
         </div>
       </div>
 
-      <main className="container mx-auto px-4 py-8">
-        <div className="mb-6">
-          <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Pokemon Explorer</h2>
-            <div className="text-sm text-gray-600 dark:text-gray-400">
+      <main className="container mx-auto px-4 py-8 sm:py-12 md:py-16">
+        <div className="mb-6 sm:mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-red-600">Pokemon Explorer</h2>
+            <div className="text-sm sm:text-base text-red-500">
               {isLoading ? 'Loading...' : `${sortedPokemon.length} Pokemon found`}
               {pokemonListResponse && (
-                <span className="ml-2 text-xs">
+                <span className="ml-2 text-xs sm:text-sm">
                   (Loaded {allPokemonNames.length} of {pokemonListResponse.pages[0]?.count || 0})
                 </span>
               )}
@@ -124,20 +134,20 @@ export default function ExplorerPage() {
 
         {/* Load More Button */}
         {hasNextPage && (
-          <div className="mt-8 text-center">
+          <div className="mt-8 sm:mt-10 md:mt-12 text-center">
             <Button
               onClick={handleLoadMore}
               disabled={isFetchingNextPage || isLoadingMore}
-              className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+              className="px-4 sm:px-6 py-3 sm:py-4 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:opacity-50 transition-colors text-sm sm:text-base"
             >
               {isFetchingNextPage || isLoadingMore ? (
                 <>
-                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 mr-2 animate-spin" />
                   Loading more Pokemon...
                 </>
               ) : (
                 <>
-                  <ChevronDown className="w-4 h-4 mr-2" />
+                  <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                   Load More Pokemon
                 </>
               )}
@@ -147,10 +157,10 @@ export default function ExplorerPage() {
 
         {/* Progress indicator */}
         {pokemonListResponse && (
-          <div className="mt-4 text-center text-sm text-gray-600 dark:text-gray-400">
-            <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mb-2">
+          <div className="mt-4 sm:mt-6 text-center text-sm sm:text-base text-red-500">
+            <div className="w-full bg-red-200 rounded-full h-2 mb-2">
               <div
-                className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                className="bg-red-600 h-2 rounded-full transition-all duration-300"
                 style={{
                   width: `${Math.min((allPokemonNames.length / (pokemonListResponse.pages[0]?.count || 1)) * 100, 100)}%`,
                 }}

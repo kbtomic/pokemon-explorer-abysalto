@@ -17,12 +17,12 @@ export function Header() {
   ];
 
   return (
-    <header className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+    <header className="bg-white border-b border-red-200">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <Link href="/">
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-white cursor-pointer hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+              <h1 className="text-xl sm:text-2xl font-bold text-red-600 cursor-pointer hover:text-red-700 transition-colors">
                 Pokemon Explorer
               </h1>
             </Link>
@@ -31,9 +31,7 @@ export function Header() {
                 <Link key={item.href} href={item.href}>
                   <span
                     className={`text-sm font-medium cursor-pointer transition-colors ${
-                      pathname === item.href
-                        ? 'text-blue-600 dark:text-blue-400'
-                        : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+                      pathname === item.href ? 'text-red-600' : 'text-red-500 hover:text-red-700'
                     }`}
                   >
                     {item.label}
@@ -41,13 +39,6 @@ export function Header() {
                 </Link>
               ))}
             </nav>
-          </div>
-
-          <div className="flex items-center space-x-2">
-            <Button variant="outline" size="sm">
-              About
-            </Button>
-            <Button size="sm">GitHub</Button>
           </div>
         </div>
       </div>

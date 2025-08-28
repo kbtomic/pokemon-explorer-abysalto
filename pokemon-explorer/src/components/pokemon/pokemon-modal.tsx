@@ -7,7 +7,7 @@ import { usePokemon } from '@/lib/hooks/use-pokemon';
 import Link from 'next/link';
 import { usePokemonSpecies, getEnglishGenus } from '@/lib/hooks/use-pokemon-species';
 import { getPokemonImageUrl, getTotalStats, formatPokemonName } from '@/lib/utils';
-import { TYPE_COLORS } from '@/types';
+import { getTypeColor } from '@/lib/utils';
 import { AdvancedStatsDisplay } from './advanced-stats-display';
 import { Button } from '@/components/ui/button';
 import { ExternalLink, Info } from 'lucide-react';
@@ -89,7 +89,7 @@ export function PokemonModal() {
                   key={type.type.name}
                   className="px-3 py-1 text-sm font-medium text-white rounded-full capitalize"
                   style={{
-                    backgroundColor: TYPE_COLORS[type.type.name as keyof typeof TYPE_COLORS] || '#6b7280',
+                    backgroundColor: getTypeColor(type.type.name),
                   }}
                 >
                   {type.type.name}

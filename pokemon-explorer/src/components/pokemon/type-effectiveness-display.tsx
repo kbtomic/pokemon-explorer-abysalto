@@ -3,7 +3,7 @@
 import { useMemo } from 'react';
 import { PokemonType } from '@/types';
 import { useType } from '@/lib/hooks/use-pokemon';
-import { TYPE_COLORS } from '@/types';
+import { getTypeColor } from '@/lib/utils';
 import { formatPokemonName } from '@/lib/utils';
 
 interface TypeEffectivenessDisplayProps {
@@ -57,7 +57,7 @@ function EffectivenessRow({ title, types, multiplier }: EffectivenessRowProps) {
             key={type}
             className="px-2 py-1 text-xs font-medium text-white rounded capitalize"
             style={{
-              backgroundColor: TYPE_COLORS[type as keyof typeof TYPE_COLORS] || '#6b7280',
+              backgroundColor: getTypeColor(type),
             }}
           >
             {formatPokemonName(type)}

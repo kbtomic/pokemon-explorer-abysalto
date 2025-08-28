@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePokemon } from '@/lib/hooks/use-pokemon';
 import { usePokemonSpecies, getEnglishFlavorText, getEnglishGenus, useEvolutionChain } from '@/lib/hooks/use-pokemon-species';
 import { getPokemonImageUrl, getTotalStats, formatPokemonName, getEvolutionChainId } from '@/lib/utils';
-import { TYPE_COLORS } from '@/types';
+import { getTypeColor } from '@/lib/utils';
 import { AdvancedStatsDisplay } from '@/components/pokemon/advanced-stats-display';
 import { EvolutionChainDisplay } from '@/components/pokemon/evolution-chain-display';
 import { EnhancedAbilitiesDisplay } from '@/components/pokemon/enhanced-abilities-display';
@@ -113,7 +113,7 @@ export default function PokemonDetailPage() {
                     key={type.type.name}
                     className="px-6 py-3 text-lg font-medium text-white rounded-full capitalize shadow-lg"
                     style={{
-                      backgroundColor: TYPE_COLORS[type.type.name as keyof typeof TYPE_COLORS] || '#6b7280',
+                      backgroundColor: getTypeColor(type.type.name),
                     }}
                   >
                     {type.type.name}

@@ -4,7 +4,7 @@ import { useState, useMemo } from 'react';
 import { PokemonMove, Move } from '@/types';
 import { useMove } from '@/lib/hooks/use-pokemon';
 import { formatPokemonName } from '@/lib/utils';
-import { TYPE_COLORS } from '@/types';
+import { getTypeColor } from '@/lib/utils';
 
 interface ComprehensiveMovesDisplayProps {
   moves: PokemonMove[];
@@ -98,7 +98,7 @@ function MoveRow({ pokemonMove, moveData, isLoading }: MoveRowProps) {
         <span
           className="px-2 py-1 text-xs font-medium text-white rounded-full capitalize"
           style={{
-            backgroundColor: moveData?.type ? TYPE_COLORS[moveData.type.name as keyof typeof TYPE_COLORS] || '#6b7280' : '#6b7280',
+            backgroundColor: moveData?.type ? getTypeColor(moveData.type.name) : '#6b7280',
           }}
         >
           {moveData?.type?.name || '???'}

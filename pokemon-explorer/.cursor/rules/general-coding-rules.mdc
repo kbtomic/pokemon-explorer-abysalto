@@ -37,6 +37,12 @@ globs: **/*.*
 - Cross-reference Context7 MCP documentation with existing project patterns to ensure consistency.
 - Use Context7 MCP to validate library selection against project's technical constraints and requirements.
 
+## File and Component Naming Conventions
+
+- **React Components**: Use PascalCase for all component files and component names (e.g., `TypeFilter.tsx`, `PokemonCard.tsx`)
+- **Utility Files and Hooks**: Use camelCase for utility files, hooks, and non-component files (e.g., `usePokemonTypes.ts`, `pokemonUtils.ts`, `apiHelpers.ts`)
+- **Consistent naming**: Maintain this convention across the entire project for better code organization and readability
+
 ## API and Data Verification Rules
 
 - **Always verify data directly from the source** - Never rely on estimates or memory when working with external APIs or data sources.
