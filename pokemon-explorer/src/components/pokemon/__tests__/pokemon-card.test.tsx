@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@/lib/test-utils';
-import { PokemonCard } from '../pokemon-card';
+import { PokemonCard } from '../../pokemonCard/PokemonCard';
 import { mockPokemon } from '@/lib/test-utils';
 
 describe('PokemonCard', () => {

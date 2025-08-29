@@ -3,7 +3,7 @@
 import { useRef, useMemo } from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { Pokemon } from '@/types';
-import { PokemonCard } from './pokemon-card';
+import { PokemonCard } from '../pokemonCard/PokemonCard';
 import { usePokemonStore } from '@/lib/stores/pokemon-store';
 
 interface VirtualizedPokemonGridProps {

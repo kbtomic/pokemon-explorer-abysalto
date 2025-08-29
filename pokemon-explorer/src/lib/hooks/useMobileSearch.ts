@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { usePokemonStore } from '@/lib/stores/pokemon-store';
+import { handleEnter } from '@/lib/utils/keyboard';
 
 export function useMobileSearch(onClose: () => void) {
   const setSearch = usePokemonStore(state => state.setSearch);
@@ -24,9 +25,7 @@ export function useMobileSearch(onClose: () => void) {
   };
 
   const handleKeyDownAndClose = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      handleApplyAndClose();
-    }
+    handleEnter(e, handleApplyAndClose);
   };
 
   return {

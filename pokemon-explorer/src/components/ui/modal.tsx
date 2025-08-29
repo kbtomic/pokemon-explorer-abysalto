@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from './button';
 import { ButtonVariant, ButtonSize } from '@/types/enums';
+import { handleDocumentEscape } from '@/lib/utils/keyboard';
 
 export interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
   isOpen: boolean;
@@ -14,18 +15,13 @@ const Modal = ({ className, isOpen, onClose, title, children, ...props }: ModalP
   const previousFocus = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        onClose();
-      }
-    };
-
     if (isOpen) {
       // Store current focus
       previousFocus.current = document.activeElement as HTMLElement;
 
       // Add event listeners
-      document.addEventListener('keydown', handleEscape);
+      const handleEscapeKey = (e: KeyboardEvent) => handleDocumentEscape(e, onClose);
+      document.addEventListener('keydown', handleEscapeKey);
       document.body.style.overflow = 'hidden';
 
       // Focus first focusable element in modal
@@ -41,7 +37,7 @@ const Modal = ({ className, isOpen, onClose, title, children, ...props }: ModalP
       }, 100);
 
       return () => {
-        document.removeEventListener('keydown', handleEscape);
+        document.removeEventListener('keydown', handleEscapeKey);
         document.body.style.overflow = 'unset';
 
         // Restore previous focus

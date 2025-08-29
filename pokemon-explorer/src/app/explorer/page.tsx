@@ -119,7 +119,7 @@ export default function ExplorerPage() {
       <main className="container mx-auto px-4 py-8 sm:py-12 md:py-16">
         <div className="mb-6 sm:mb-8">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-red-600">Pokemon Explorer</h2>
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-red-600">Explore the Pokemon Universe</h2>
             <div className="text-sm sm:text-base text-red-500">
               {isLoading ? 'Loading...' : `${sortedPokemon.length} Pokemon found`}
               {pokemonListResponse && (

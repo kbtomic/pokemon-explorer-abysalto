@@ -1,7 +1,7 @@
 'use client';
 
 import { Pokemon } from '@/types';
-import { PokemonCard } from './pokemon-card';
+import { PokemonCard } from '../pokemonCard/PokemonCard';
 import { VirtualizedPokemonGrid } from './virtualized-pokemon-grid';
 import { usePokemonStore } from '@/lib/stores/pokemon-store';
 import { usePerformanceOptimization } from '@/lib/hooks/use-performance-optimization';
