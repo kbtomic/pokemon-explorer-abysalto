@@ -4,8 +4,8 @@ import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { usePokemon } from '@/lib/hooks/use-pokemon';
 import { usePokemonSpecies, getEnglishFlavorText, getEnglishGenus, useEvolutionChain } from '@/lib/hooks/use-pokemon-species';
-import { getPokemonImageUrl, getTotalStats, formatPokemonName, getEvolutionChainId } from '@/lib/utils';
-import { getTypeColor } from '@/lib/utils';
+import { getPokemonImageUrl, getTotalStats, formatPokemonName, getEvolutionChainId } from '@/lib/utils/pokemon';
+import { getTypeColor } from '@/lib/utils/typeColors';
 import { AdvancedStatsDisplay } from '@/components/pokemon/advanced-stats-display';
 import { EvolutionChainDisplay } from '@/components/pokemon/evolution-chain-display';
 import { EnhancedAbilitiesDisplay } from '@/components/pokemon/enhanced-abilities-display';
@@ -13,6 +13,7 @@ import { TypeEffectivenessDisplay } from '@/components/pokemon/type-effectivenes
 import { PokemonVarietiesDisplay } from '@/components/pokemon/pokemon-varieties-display';
 import { ComprehensiveMovesDisplay } from '@/components/pokemon/comprehensive-moves-display';
 import { Button } from '@/components/ui/button';
+import { ButtonVariant } from '@/types/enums';
 import Image from 'next/image';
 import { ArrowLeft, Home } from 'lucide-react';
 
@@ -72,13 +73,13 @@ export default function PokemonDetailPage() {
         <div className="mb-8">
           <div className="flex items-center gap-4 mb-6">
             <Link href="/explorer">
-              <Button variant="outline" className="inline-flex items-center gap-2">
+              <Button variant={ButtonVariant.OUTLINE} className="inline-flex items-center gap-2">
                 <ArrowLeft className="w-4 h-4" />
                 Back to Explorer
               </Button>
             </Link>
             <Link href="/">
-              <Button variant="outline" className="inline-flex items-center gap-2">
+              <Button variant={ButtonVariant.OUTLINE} className="inline-flex items-center gap-2">
                 <Home className="w-4 h-4" />
                 Home
               </Button>

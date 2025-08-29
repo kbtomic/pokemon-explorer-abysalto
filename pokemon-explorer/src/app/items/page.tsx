@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Header } from '@/components/layout/header';
 import { ArrowLeft, Package, Star, Zap, Heart, Shield, Sword, ChevronDown, Loader2 } from 'lucide-react';
 import Image from 'next/image';
+import { ButtonSize, ButtonVariant } from '@/types/enums';
 
 const BATCH_SIZE = 50;
 
@@ -112,7 +113,7 @@ function ItemDetailModal({ item, onClose }: ItemDetailModalProps) {
                 )}
               </div>
             </div>
-            <Button onClick={onClose} variant="ghost" size="sm">
+            <Button onClick={onClose} variant={ButtonVariant.GHOST} size={ButtonSize.SM}>
               ✕
             </Button>
           </div>
@@ -280,7 +281,7 @@ export default function ItemsPage() {
         {/* Navigation */}
         <div className="mb-8">
           <Link href="/">
-            <Button variant="outline" className="inline-flex items-center gap-2 mb-4">
+            <Button variant={ButtonVariant.OUTLINE} className="inline-flex items-center gap-2 mb-4">
               <ArrowLeft className="w-4 h-4" />
               Back to Home
             </Button>

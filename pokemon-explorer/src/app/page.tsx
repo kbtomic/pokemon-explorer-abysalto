@@ -1,6 +1,6 @@
 import HeroBanner from '@/components/homePage/HeroBanner';
 import PowerfulFeatures from '@/components/homePage/PowerfulFeatures';
-import Footer from '@/components/homePage/Footer';
+import { Footer } from '@/components/homePage/Footer';
 
 export default function HomePage() {
   return (

@@ -5,9 +5,10 @@ import { Header } from '@/components/layout/header';
 import { FiltersBar } from '@/components/filters/FiltersBar';
 import { PokemonGrid } from '@/components/pokemon/pokemon-grid';
 import { PokemonModal } from '@/components/pokemon/pokemon-modal';
-import { PerformanceIndicator, AccessibilityTester } from '@/components/ui';
+import { PerformanceIndicator } from '@/components/ui';
 import { usePokemonListPaginated, usePokemonBatchChunked } from '@/lib/hooks/use-pokemon';
 import { usePerformanceOptimization } from '@/lib/hooks/use-performance-optimization';
+import { useGenerationMapping } from '@/lib/hooks/useGenerationMapping';
 import { usePokemonStore } from '@/lib/stores/pokemon-store';
 import { filterPokemon, sortPokemon } from '@/lib/utils/pokemon';
 import { Button } from '@/components/ui/button';
@@ -29,6 +30,9 @@ export default function ExplorerPage() {
   } = usePokemonListPaginated(BATCH_SIZE);
 
   const { setPokemonList, setLoading, setError, pokemonList, filters, sort } = usePokemonStore();
+
+  // Use dynamic generation mapping
+  const { getGenerationFromId } = useGenerationMapping();
 
   // Extract all Pokemon names from paginated data
   const allPokemonNames = pokemonListResponse?.pages.flatMap(page => page.results.map(p => p.name)) || [];
@@ -70,14 +74,9 @@ export default function ExplorerPage() {
     }
   };
 
-  // Filter and sort Pokemon
-  const filteredPokemon = filterPokemon(pokemonList, filters);
-  const sortedPokemon = sortPokemon(filteredPokemon, sort);
-
-  // Debug logging
-  console.log('Filters:', filters);
-  console.log('Pokemon count before filter:', pokemonList.length);
-  console.log('Pokemon count after filter:', filteredPokemon.length);
+  // Filter and sort Pokemon using dynamic generation mapping
+  const filteredPokemon = filterPokemon(pokemonList, filters, getGenerationFromId);
+  const sortedPokemon = sortPokemon(filteredPokemon, sort, getGenerationFromId);
 
   // Performance optimization
   const { useVirtualization, virtualizationThreshold } = usePerformanceOptimization(sortedPokemon.length);
@@ -176,7 +175,6 @@ export default function ExplorerPage() {
       <PokemonModal />
 
       <PerformanceIndicator isVirtualized={useVirtualization} itemCount={sortedPokemon.length} threshold={virtualizationThreshold} />
-      <AccessibilityTester />
     </div>
   );
 }

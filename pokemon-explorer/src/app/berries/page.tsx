@@ -14,6 +14,7 @@ import { Button } from '@/components/ui/button';
 import { Header } from '@/components/layout/header';
 import { ArrowLeft, Leaf, Droplets, Flame, Zap, Heart, Shield, Sparkles, ChevronDown, Loader2 } from 'lucide-react';
 import Image from 'next/image';
+import { ButtonSize, ButtonVariant } from '@/types/enums';
 
 const BATCH_SIZE = 50;
 
@@ -110,7 +111,7 @@ function BerryDetailModal({ berry, onClose }: BerryDetailModalProps) {
                 <p className="text-gray-600 dark:text-gray-400">#{berryId}</p>
               </div>
             </div>
-            <Button onClick={onClose} variant="ghost" size="sm">
+            <Button onClick={onClose} variant={ButtonVariant.GHOST} size={ButtonSize.SM}>
               ✕
             </Button>
           </div>
@@ -229,7 +230,7 @@ export default function BerriesPage() {
         {/* Navigation */}
         <div className="mb-8">
           <Link href="/">
-            <Button variant="outline" className="inline-flex items-center gap-2 mb-4">
+            <Button variant={ButtonVariant.OUTLINE} className="inline-flex items-center gap-2 mb-4">
               <ArrowLeft className="w-4 h-4" />
               Back to Home
             </Button>

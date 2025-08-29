@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Zap } from 'lucide-react';
+import { ButtonSize } from '@/types/enums';
 
 export default function HeroBanner() {
   return (
@@ -68,7 +69,7 @@ export default function HeroBanner() {
             </p>
             <Link href="/explorer">
               <Button
-                size="lg"
+                size={ButtonSize.LG}
                 className="relative overflow-hidden bg-gradient-to-r from-white/90 to-white/80 hover:from-white hover:to-gray-100 text-red-600 hover:text-red-700 px-4 sm:px-6 md:px-8 lg:px-10 py-3 sm:py-4 md:py-5 text-sm sm:text-base md:text-lg lg:text-xl font-bold shadow-2xl hover:shadow-2xl transition-all duration-300 border border-white/30 backdrop-blur-sm group cursor-pointer"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>

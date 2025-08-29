@@ -3,17 +3,18 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
+import { NavigationLabel, ButtonVariant } from '@/types/enums';
 
 export function Header() {
   const pathname = usePathname();
 
   const navItems = [
-    { href: '/', label: 'Home' },
-    { href: '/explorer', label: 'Pokemon' },
-    { href: '/berries', label: 'Berries' },
-    { href: '/items', label: 'Items' },
-    { href: '/locations', label: 'Locations' },
-    { href: '/pokemon/species', label: 'Species' },
+    { href: '/', label: NavigationLabel.HOME },
+    { href: '/explorer', label: NavigationLabel.POKEMON },
+    { href: '/berries', label: NavigationLabel.BERRIES },
+    { href: '/items', label: NavigationLabel.ITEMS },
+    { href: '/locations', label: NavigationLabel.LOCATIONS },
+    { href: '/pokemon/species', label: NavigationLabel.SPECIES },
   ];
 
   return (
@@ -29,13 +30,9 @@ export function Header() {
             <nav className="hidden md:flex items-center space-x-4">
               {navItems.map(item => (
                 <Link key={item.href} href={item.href}>
-                  <span
-                    className={`text-sm font-medium cursor-pointer transition-colors ${
-                      pathname === item.href ? 'text-red-600' : 'text-red-500 hover:text-red-700'
-                    }`}
-                  >
+                  <Button variant={pathname === item.href ? ButtonVariant.DEFAULT : ButtonVariant.GHOST} className="text-sm font-medium">
                     {item.label}
-                  </span>
+                  </Button>
                 </Link>
               ))}
             </nav>

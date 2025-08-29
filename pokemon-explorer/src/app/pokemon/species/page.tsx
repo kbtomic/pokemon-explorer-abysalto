@@ -16,6 +16,8 @@ import { pokeAPI } from '@/lib/api/pokeapi';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronDown, Loader2 } from 'lucide-react';
+import { PokemonSpecies } from '@/types';
+import { ButtonVariant } from '@/types/enums';
 
 const BATCH_SIZE = 50;
 
@@ -266,7 +268,7 @@ export default function PokemonSpeciesPage() {
                   setSelectedShape('');
                   setSelectedColor('');
                 }}
-                variant="outline"
+                variant={ButtonVariant.OUTLINE}
                 className="whitespace-nowrap"
               >
                 Clear Filters
