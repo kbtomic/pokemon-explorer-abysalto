@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from './button';
-import { accessibilityUtils } from '@/lib/utils/accessibility';
+import { ButtonVariant, ButtonSize } from '@/types/enums';
 
 export interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
   isOpen: boolean;
@@ -28,30 +28,25 @@ const Modal = ({ className, isOpen, onClose, title, children, ...props }: ModalP
       document.addEventListener('keydown', handleEscape);
       document.body.style.overflow = 'hidden';
 
-      // Focus trap
-      const handleTab = (e: KeyboardEvent) => {
-        if (modalRef.current) {
-          accessibilityUtils.focusManagement.trapFocus(modalRef.current, e);
-        }
-      };
-
-      document.addEventListener('keydown', handleTab);
-
       // Focus first focusable element in modal
       setTimeout(() => {
         if (modalRef.current) {
-          accessibilityUtils.focusManagement.focusFirstElement(modalRef.current);
+          const firstFocusable = modalRef.current.querySelector(
+            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+          ) as HTMLElement;
+          if (firstFocusable) {
+            firstFocusable.focus();
+          }
         }
       }, 100);
 
       return () => {
         document.removeEventListener('keydown', handleEscape);
-        document.removeEventListener('keydown', handleTab);
         document.body.style.overflow = 'unset';
 
         // Restore previous focus
-        if (previousFocus.current) {
-          accessibilityUtils.focusManagement.restoreFocus(previousFocus.current);
+        if (previousFocus.current && typeof previousFocus.current.focus === 'function') {
+          previousFocus.current.focus();
         }
       };
     }
@@ -60,8 +55,8 @@ const Modal = ({ className, isOpen, onClose, title, children, ...props }: ModalP
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center" role="dialog" aria-modal="true">
-      <div className="fixed inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} aria-hidden="true" />
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
+      <div className="fixed inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} />
       <div
         ref={modalRef}
         className={cn('relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-background rounded-lg shadow-lg border', className)}
@@ -69,10 +64,8 @@ const Modal = ({ className, isOpen, onClose, title, children, ...props }: ModalP
       >
         {title && (
           <div className="flex items-center justify-between p-6 border-b">
-            <h2 id="pokemon-modal-title" className="text-xl font-semibold">
-              {title}
-            </h2>
-            <Button variant="ghost" size="icon" onClick={onClose} className="h-8 w-8 focus-visible" aria-label="Close modal">
+            <h2 className="text-xl font-semibold">{title}</h2>
+            <Button variant={ButtonVariant.GHOST} size={ButtonSize.ICON} onClick={onClose} className="h-8 w-8">
               ×
             </Button>
           </div>
