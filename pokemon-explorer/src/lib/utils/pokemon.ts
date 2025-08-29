@@ -1,18 +1,16 @@
-import { Pokemon, PokemonFilters, SortOption, PokemonSpecies } from '@/types';
+import { Pokemon, PokemonFilters, PokemonSpecies, SortOption } from '@/types';
+import { StatName, PokemonImageVariant, SortField, SortDirection } from '@/types/enums';
 
-export function getPokemonImageUrl(pokemon: Pokemon, variant?: 'default' | 'shiny'): string;
-export function getPokemonImageUrl(pokemonId: number, variant?: 'default' | 'shiny'): string;
-export function getPokemonImageUrl(pokemonOrId: Pokemon | number, variant: 'default' | 'shiny' = 'default'): string {
-  // If it's a number (Pokemon ID), use the direct URL
-  if (typeof pokemonOrId === 'number') {
-    const baseUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonOrId}.png`;
-    return baseUrl;
+export function getPokemonImageUrl(pokemonOrId: Pokemon | number, variant: PokemonImageVariant = PokemonImageVariant.DEFAULT): string {
+  const pokemon = typeof pokemonOrId === 'number' ? null : pokemonOrId;
+  const id = typeof pokemonOrId === 'number' ? pokemonOrId : pokemonOrId.id;
+
+  if (!pokemon) {
+    return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
   }
 
-  // If it's a Pokemon object, use the sprites
-  const pokemon = pokemonOrId;
   const artwork = pokemon.sprites.other['official-artwork'];
-  if (variant === 'shiny' && artwork.front_shiny) {
+  if (variant === PokemonImageVariant.SHINY) {
     return artwork.front_shiny;
   }
   return artwork.front_default || pokemon.sprites.front_default || '';
@@ -22,12 +20,16 @@ export function getTotalStats(pokemon: Pokemon): number {
   return pokemon.stats.reduce((total, stat) => total + stat.base_stat, 0);
 }
 
-export function getStatValue(pokemon: Pokemon, statName: string): number {
+export function getStatValue(pokemon: Pokemon, statName: StatName): number {
   const stat = pokemon.stats.find(s => s.stat.name === statName);
   return stat?.base_stat || 0;
 }
 
-export function filterPokemon(pokemonList: Pokemon[], filters: PokemonFilters): Pokemon[] {
+export function filterPokemon(
+  pokemonList: Pokemon[],
+  filters: PokemonFilters,
+  getGenerationFromIdFn: (id: number) => number | null
+): Pokemon[] {
   return pokemonList.filter(pokemon => {
     // Search filter
     if (filters.search && !pokemon.name.toLowerCase().includes(filters.search.toLowerCase())) {
@@ -42,10 +44,10 @@ export function filterPokemon(pokemonList: Pokemon[], filters: PokemonFilters): 
       }
     }
 
-    // Generation filter (simplified - using ID ranges)
+    // Generation filter (using dynamic mapping)
     if (filters.generations.length > 0) {
-      const generation = getGenerationFromId(pokemon.id);
-      if (!filters.generations.includes(generation)) {
+      const generation = getGenerationFromIdFn(pokemon.id);
+      if (generation === null || !filters.generations.includes(generation)) {
         return false;
       }
     }
@@ -60,7 +62,7 @@ export function filterPokemon(pokemonList: Pokemon[], filters: PokemonFilters): 
 
     // Stats filter
     for (const [statName, [min, max]] of Object.entries(filters.stats)) {
-      const statValue = getStatValue(pokemon, statName);
+      const statValue = getStatValue(pokemon, statName as StatName);
       if (statValue < min || statValue > max) {
         return false;
       }
@@ -70,62 +72,86 @@ export function filterPokemon(pokemonList: Pokemon[], filters: PokemonFilters): 
   });
 }
 
-export function sortPokemon(pokemonList: Pokemon[], sort: SortOption): Pokemon[] {
+export function formatAbilityName(name: string): string {
+  return name
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+}
+
+export function sortPokemon(pokemonList: Pokemon[], sort: SortOption, getGenerationFromIdFn: (id: number) => number | null): Pokemon[] {
   return [...pokemonList].sort((a, b) => {
     let aValue: string | number;
     let bValue: string | number;
 
     switch (sort.field) {
-      case 'name':
+      case SortField.NAME:
         aValue = a.name;
         bValue = b.name;
         break;
-      case 'id':
+      case SortField.ID:
         aValue = a.id;
         bValue = b.id;
         break;
-      case 'total-stats':
+      case SortField.GENERATION:
+        aValue = getGenerationFromIdFn(a.id) || 0;
+        bValue = getGenerationFromIdFn(b.id) || 0;
+        break;
+      case SortField.TOTAL_STATS:
         aValue = getTotalStats(a);
         bValue = getTotalStats(b);
         break;
-      default:
-        aValue = getStatValue(a, sort.field);
-        bValue = getStatValue(b, sort.field);
+      case SortField.HP:
+        aValue = getStatValue(a, StatName.HP);
+        bValue = getStatValue(b, StatName.HP);
         break;
+      case SortField.ATTACK:
+        aValue = getStatValue(a, StatName.ATTACK);
+        bValue = getStatValue(b, StatName.ATTACK);
+        break;
+      case SortField.DEFENSE:
+        aValue = getStatValue(a, StatName.DEFENSE);
+        bValue = getStatValue(b, StatName.DEFENSE);
+        break;
+      case SortField.SPEED:
+        aValue = getStatValue(a, StatName.SPEED);
+        bValue = getStatValue(b, StatName.SPEED);
+        break;
+      case SortField.SPECIAL_ATTACK:
+        aValue = getStatValue(a, StatName.SPECIAL_ATTACK);
+        bValue = getStatValue(b, StatName.SPECIAL_ATTACK);
+        break;
+      case SortField.SPECIAL_DEFENSE:
+        aValue = getStatValue(a, StatName.SPECIAL_DEFENSE);
+        bValue = getStatValue(b, StatName.SPECIAL_DEFENSE);
+        break;
+      default:
+        aValue = a.id;
+        bValue = b.id;
     }
 
     if (typeof aValue === 'string' && typeof bValue === 'string') {
       const comparison = aValue.localeCompare(bValue);
-      return sort.direction === 'asc' ? comparison : -comparison;
+      return sort.direction === SortDirection.ASC ? comparison : -comparison;
     }
 
     if (typeof aValue === 'number' && typeof bValue === 'number') {
-      const comparison = aValue - bValue;
-      return sort.direction === 'asc' ? comparison : -comparison;
+      return sort.direction === SortDirection.ASC ? aValue - bValue : bValue - aValue;
     }
 
     return 0;
   });
 }
 
-export function getGenerationFromId(id: number): number {
-  if (id <= 151) return 1;
-  if (id <= 251) return 2;
-  if (id <= 386) return 3;
-  if (id <= 493) return 4;
-  if (id <= 649) return 5;
-  if (id <= 721) return 6;
-  if (id <= 809) return 7;
-  if (id <= 898) return 8;
-  return 9;
-}
-
 export function formatPokemonName(name: string): string {
-  return name.charAt(0).toUpperCase() + name.slice(1).replace('-', ' ');
+  return name.charAt(0).toUpperCase() + name.slice(1);
 }
 
-export function formatStatName(statName: string): string {
-  return statName.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase());
+export function formatStatName(statName: StatName): string {
+  return statName
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
 }
 
 export function getEvolutionChainId(species: PokemonSpecies): number | null {
