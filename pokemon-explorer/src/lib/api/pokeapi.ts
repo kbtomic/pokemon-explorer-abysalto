@@ -50,11 +50,25 @@ async function fetchAPI<T>(endpoint: string): Promise<T> {
   return response.json();
 }
 
+// Generic function to get all items from any endpoint
+async function getAllItems<T extends { count?: number; results?: unknown[] }>(endpoint: string): Promise<T> {
+  const response = await fetchAPI<T>(endpoint);
+
+  // Check if we need to fetch more items
+  if (response.count && response.results && response.count > response.results.length) {
+    return fetchAPI<T>(`${endpoint}?limit=${response.count}`);
+  }
+
+  return response;
+}
+
 export const pokeAPI = {
   // Pokemon endpoints
   async getPokemonList(limit?: number, offset: number = 0): Promise<PokemonListResponse> {
-    const limitParam = limit ? `&limit=${limit}` : '&limit=1302';
-    return fetchAPI<PokemonListResponse>(`/pokemon?offset=${offset}${limitParam}`);
+    if (limit) {
+      return fetchAPI<PokemonListResponse>(`/pokemon?limit=${limit}&offset=${offset}`);
+    }
+    return getAllItems(`/pokemon?offset=${offset}`);
   },
 
   async getPokemon(nameOrId: string | number): Promise<Pokemon> {
@@ -90,7 +104,7 @@ export const pokeAPI = {
     count: number;
     results: { name: string; url: string }[];
   }> {
-    return fetchAPI(`/type`);
+    return getAllItems(`/type`);
   },
 
   async getType(nameOrId: string | number): Promise<Type> {
@@ -102,7 +116,7 @@ export const pokeAPI = {
     count: number;
     results: { name: string; url: string }[];
   }> {
-    return fetchAPI(`/generation`);
+    return getAllItems(`/generation`);
   },
 
   async getGeneration(nameOrId: string | number): Promise<Generation> {
@@ -114,7 +128,7 @@ export const pokeAPI = {
     count: number;
     results: { name: string; url: string }[];
   }> {
-    return fetchAPI(`/ability`);
+    return getAllItems(`/ability`);
   },
 
   async getAbility(nameOrId: string | number): Promise<Ability> {

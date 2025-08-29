@@ -1,6 +1,29 @@
 import { pokeAPI } from '../pokeapi';
 import { mockApiResponses, mockPokemon } from '@/lib/test-utils';
 
+// Helper function to create a proper mock Response
+function createMockResponse(data: any, ok: boolean = true, status: number = 200, statusText: string = 'OK') {
+  return {
+    ok,
+    status,
+    statusText,
+    json: async () => data,
+    headers: new Headers(),
+    redirected: false,
+    type: 'default' as ResponseType,
+    url: '',
+    clone: function () {
+      return this;
+    },
+    arrayBuffer: async () => new ArrayBuffer(0),
+    blob: async () => new Blob(),
+    formData: async () => new FormData(),
+    text: async () => JSON.stringify(data),
+    body: null,
+    bodyUsed: false,
+  } as Response;
+}
+
 // Mock fetch globally
 global.fetch = jest.fn();
 
@@ -12,12 +35,10 @@ describe('PokeAPI Client', () => {
   describe('getPokemonList', () => {
     it('should fetch Pokemon list successfully', async () => {
       const mockFetch = global.fetch as jest.MockedFunction<typeof fetch>;
-      mockFetch.mockResolvedValueOnce({
-        ok: true,
-        json: async () => mockApiResponses.pokemonList,
-      } as Response);
+      const mockResponse = createMockResponse(mockApiResponses.pokemonList);
+      mockFetch.mockResolvedValueOnce(mockResponse);
 
-      const result = await pokeAPI.getPokemonList();
+      const result = await pokeAPI.getPokemonList(151);
 
       expect(mockFetch).toHaveBeenCalledWith('https://pokeapi.co/api/v2/pokemon?limit=151&offset=0');
       expect(result).toEqual(mockApiResponses.pokemonList);
@@ -32,11 +53,7 @@ describe('PokeAPI Client', () => {
 
     it('should handle non-ok response', async () => {
       const mockFetch = global.fetch as jest.MockedFunction<typeof fetch>;
-      mockFetch.mockResolvedValueOnce({
-        ok: false,
-        status: 404,
-        statusText: 'Not Found',
-      } as Response);
+      mockFetch.mockResolvedValueOnce(createMockResponse({}, false, 404, 'Not Found'));
 
       await expect(pokeAPI.getPokemonList()).rejects.toThrow('API request failed: Not Found');
     });
@@ -45,10 +62,7 @@ describe('PokeAPI Client', () => {
   describe('getPokemon', () => {
     it('should fetch Pokemon data successfully', async () => {
       const mockFetch = global.fetch as jest.MockedFunction<typeof fetch>;
-      mockFetch.mockResolvedValueOnce({
-        ok: true,
-        json: async () => mockPokemon,
-      } as Response);
+      mockFetch.mockResolvedValueOnce(createMockResponse(mockPokemon));
 
       const result = await pokeAPI.getPokemon(1);
 
@@ -58,11 +72,7 @@ describe('PokeAPI Client', () => {
 
     it('should handle Pokemon not found', async () => {
       const mockFetch = global.fetch as jest.MockedFunction<typeof fetch>;
-      mockFetch.mockResolvedValueOnce({
-        ok: false,
-        status: 404,
-        statusText: 'Not Found',
-      } as Response);
+      mockFetch.mockResolvedValueOnce(createMockResponse({}, false, 404, 'Not Found'));
 
       await expect(pokeAPI.getPokemon(99999)).rejects.toThrow('API request failed: Not Found');
     });
@@ -78,10 +88,7 @@ describe('PokeAPI Client', () => {
   describe('getTypes', () => {
     it('should fetch types successfully', async () => {
       const mockFetch = global.fetch as jest.MockedFunction<typeof fetch>;
-      mockFetch.mockResolvedValueOnce({
-        ok: true,
-        json: async () => mockApiResponses.types,
-      } as Response);
+      mockFetch.mockResolvedValueOnce(createMockResponse(mockApiResponses.types));
 
       const result = await pokeAPI.getTypes();
 
@@ -100,10 +107,10 @@ describe('PokeAPI Client', () => {
   describe('getAbilities', () => {
     it('should fetch abilities successfully', async () => {
       const mockFetch = global.fetch as jest.MockedFunction<typeof fetch>;
-      mockFetch.mockResolvedValueOnce({
-        ok: true,
-        json: async () => mockApiResponses.abilities,
-      } as Response);
+      // Mock the first call (initial response)
+      mockFetch.mockResolvedValueOnce(createMockResponse(mockApiResponses.abilities));
+      // Mock the second call (when getAllItems fetches all items)
+      mockFetch.mockResolvedValueOnce(createMockResponse(mockApiResponses.abilities));
 
       const result = await pokeAPI.getAbilities();
 
@@ -141,10 +148,7 @@ describe('PokeAPI Client', () => {
       };
 
       const mockFetch = global.fetch as jest.MockedFunction<typeof fetch>;
-      mockFetch.mockResolvedValueOnce({
-        ok: true,
-        json: async () => mockAbility,
-      } as Response);
+      mockFetch.mockResolvedValueOnce(createMockResponse(mockAbility));
 
       const result = await pokeAPI.getAbility('stench');
 
@@ -154,11 +158,7 @@ describe('PokeAPI Client', () => {
 
     it('should handle ability not found', async () => {
       const mockFetch = global.fetch as jest.MockedFunction<typeof fetch>;
-      mockFetch.mockResolvedValueOnce({
-        ok: false,
-        status: 404,
-        statusText: 'Not Found',
-      } as Response);
+      mockFetch.mockResolvedValueOnce(createMockResponse({}, false, 404, 'Not Found'));
 
       await expect(pokeAPI.getAbility('non-existent-ability')).rejects.toThrow('API request failed: Not Found');
     });
@@ -175,11 +175,11 @@ describe('PokeAPI Client', () => {
     it('should handle JSON parsing errors', async () => {
       const mockFetch = global.fetch as jest.MockedFunction<typeof fetch>;
       mockFetch.mockResolvedValueOnce({
-        ok: true,
+        ...createMockResponse({}),
         json: async () => {
           throw new Error('Invalid JSON');
         },
-      } as Response);
+      });
 
       await expect(pokeAPI.getPokemon(1)).rejects.toThrow('Invalid JSON');
     });
@@ -199,10 +199,7 @@ describe('PokeAPI Client', () => {
   describe('URL Construction', () => {
     it('should construct correct URLs for different endpoints', async () => {
       const mockFetch = global.fetch as jest.MockedFunction<typeof fetch>;
-      mockFetch.mockResolvedValue({
-        ok: true,
-        json: async () => ({}),
-      } as Response);
+      mockFetch.mockResolvedValue(createMockResponse({}));
 
       await pokeAPI.getPokemon(1);
       expect(mockFetch).toHaveBeenCalledWith('https://pokeapi.co/api/v2/pokemon/1');
@@ -230,10 +227,7 @@ describe('PokeAPI Client', () => {
       };
 
       const mockFetch = global.fetch as jest.MockedFunction<typeof fetch>;
-      mockFetch.mockResolvedValueOnce({
-        ok: true,
-        json: async () => invalidPokemon,
-      } as Response);
+      mockFetch.mockResolvedValueOnce(createMockResponse(invalidPokemon));
 
       const result = await pokeAPI.getPokemon(1);
       expect(result).toEqual(invalidPokemon);
@@ -242,9 +236,9 @@ describe('PokeAPI Client', () => {
     it('should handle empty responses', async () => {
       const mockFetch = global.fetch as jest.MockedFunction<typeof fetch>;
       mockFetch.mockResolvedValueOnce({
-        ok: true,
+        ...createMockResponse({}),
         json: async () => null,
-      } as Response);
+      });
 
       const result = await pokeAPI.getPokemon(1);
       expect(result).toBeNull();
