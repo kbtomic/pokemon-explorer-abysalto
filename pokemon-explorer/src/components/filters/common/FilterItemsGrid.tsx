@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
-import { FilterItem } from './types';
+import { FilterItem } from '../types';
+import { ButtonVariant } from '@/types/enums';
 
 interface FilterItemsGridProps {
   items: FilterItem[];
@@ -33,7 +34,7 @@ export function FilterItemsGrid({
           return (
             <Button
               key={item.id}
-              variant="type"
+              variant={ButtonVariant.TYPE}
               onClick={() => onToggle(item.id)}
               typeColor={color}
               isSelected={isSelected}
@@ -45,7 +46,12 @@ export function FilterItemsGrid({
         }
 
         return (
-          <Button key={item.id} variant={isSelected ? 'default' : 'outline'} onClick={() => onToggle(item.id)} className="capitalize">
+          <Button
+            key={item.id}
+            variant={isSelected ? ButtonVariant.DEFAULT : ButtonVariant.OUTLINE}
+            onClick={() => onToggle(item.id)}
+            className="capitalize"
+          >
             {displayName}
           </Button>
         );

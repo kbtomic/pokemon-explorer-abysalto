@@ -1,6 +1,11 @@
+import { useState } from 'react';
 import { usePokemonStore } from '@/lib/stores/pokemon-store';
-import { usePokemonTypes, usePokemonGenerations } from '@/lib/hooks';
+import { usePokemonTypes } from '@/lib/hooks/use-pokemon-types';
+import { usePokemonGenerations } from '@/lib/hooks/usePokemonGenerations';
+import { useAbilities } from '@/lib/hooks/useAbilities';
 import { getTypeColor } from '@/lib/utils';
+import { formatAbilityName } from '@/lib/utils/pokemon';
+import { Ability } from '@/types';
 
 // Type Filter Configuration
 export const useTypeFilterConfig = () => {
@@ -103,5 +108,56 @@ export const useGenerationFilterConfig = () => {
     badgeColor: 'bg-red-600',
     gridCols: 1,
     useTypeVariant: false,
+  };
+};
+
+// Abilities Filter Configuration
+export const useAbilitiesFilterConfig = () => {
+  const selectedAbilities = usePokemonStore(state => state.filters.abilities);
+  const setAbilities = usePokemonStore(state => state.setAbilities);
+  const { abilities, isLoading, isLoadingMore, error, hasMore, loadMore, totalCount } = useAbilities();
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleAbilityToggle = (itemId: string | number) => {
+    const abilityName = String(itemId);
+    const newAbilities = selectedAbilities.includes(abilityName)
+      ? selectedAbilities.filter(name => name !== abilityName)
+      : [...selectedAbilities, abilityName];
+
+    setAbilities(newAbilities);
+  };
+
+  const handleClearAll = () => {
+    setAbilities([]);
+  };
+
+  const getItemDisplayName = (item: { name: string }) => formatAbilityName(item.name);
+
+  const allItems = abilities.map((ability: Ability) => ({
+    id: ability.name,
+    name: ability.name,
+    url: '',
+  }));
+
+  const filterItems = allItems.filter(item => getItemDisplayName(item).toLowerCase().includes(searchTerm.toLowerCase()));
+
+  return {
+    title: 'Abilities',
+    items: filterItems,
+    selectedItems: selectedAbilities,
+    onToggle: handleAbilityToggle,
+    onClearAll: handleClearAll,
+    isLoading,
+    error: error ? new Error(error) : null,
+    getItemDisplayName,
+    badgeColor: 'bg-red-600',
+    gridCols: 1,
+    useTypeVariant: false,
+    searchTerm,
+    onSearchChange: setSearchTerm,
+    isLoadingMore,
+    hasMore,
+    onLoadMore: loadMore,
+    totalCount,
   };
 };

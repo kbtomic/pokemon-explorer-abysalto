@@ -1,4 +1,4 @@
-import { FilterItem } from './types';
+import { FilterItem } from '../types';
 import { SelectedItemBadge } from './SelectedItemBadge';
 
 interface SelectedItemsDisplayProps {

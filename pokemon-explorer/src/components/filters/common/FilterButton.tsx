@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button';
+import { ButtonVariant } from '@/types/enums';
 import { Filter } from 'lucide-react';
 
 interface FilterButtonProps {
@@ -12,7 +13,7 @@ interface FilterButtonProps {
 export function FilterButton({ title, selectedCount, badgeColor, onClick, className = '' }: FilterButtonProps) {
   return (
     <Button
-      variant="outline"
+      variant={ButtonVariant.OUTLINE}
       onClick={onClick}
       className={`flex items-center space-x-2 border-red-300 text-red-600 hover:bg-red-50 ${className}`}
     >
