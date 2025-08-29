@@ -5,7 +5,7 @@ import { Header } from '@/components/header/Header';
 import { DesktopFilterBar } from '@/components/filters/desktop/DesktopFilterBar';
 import { MobileFilterBar } from '@/components/filters/mobile/MobileFilterBar';
 import { PokemonGrid } from '@/components/pokemon/pokemon-grid';
-import { PokemonModal } from '@/components/pokemon/pokemon-modal';
+import { PokemonModal } from '@/components/pokemonCard/pokemonModal/PokemonModal';
 import { PerformanceIndicator } from '@/components/ui';
 import { usePokemonListPaginated, usePokemonBatchChunked } from '@/lib/hooks/use-pokemon';
 import { usePerformanceOptimization } from '@/lib/hooks/use-performance-optimization';

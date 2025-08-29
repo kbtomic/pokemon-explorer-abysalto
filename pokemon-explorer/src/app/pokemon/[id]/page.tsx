@@ -6,7 +6,7 @@ import { usePokemon } from '@/lib/hooks/use-pokemon';
 import { usePokemonSpecies, getEnglishFlavorText, getEnglishGenus, useEvolutionChain } from '@/lib/hooks/use-pokemon-species';
 import { getPokemonImageUrl, getTotalStats, formatPokemonName, getEvolutionChainId } from '@/lib/utils/pokemon';
 import { getTypeColor } from '@/lib/utils/typeColors';
-import { AdvancedStatsDisplay } from '@/components/pokemon/advanced-stats-display';
+import { AdvancedStatsDisplay } from '@/components/pokemon/AdvancedStatsDisplay';
 import { EvolutionChainDisplay } from '@/components/pokemon/evolution-chain-display';
 import { EnhancedAbilitiesDisplay } from '@/components/pokemon/enhanced-abilities-display';
 import { TypeEffectivenessDisplay } from '@/components/pokemon/type-effectiveness-display';
