@@ -11,23 +11,12 @@ import { getTypeColor } from '@/lib/utils';
 import { AdvancedStatsDisplay } from './advanced-stats-display';
 import { Button } from '@/components/ui/button';
 import { ExternalLink, Info } from 'lucide-react';
-import { accessibilityUtils, ariaAttributes } from '@/lib/utils/accessibility';
 import Image from 'next/image';
 
 export function PokemonModal() {
   const { isModalOpen, selectedPokemon, closeModal } = usePokemonStore();
   const { data: pokemon, isLoading, error } = usePokemon(selectedPokemon || 1);
   const { data: species, isLoading: speciesLoading } = usePokemonSpecies(selectedPokemon || 1);
-
-  // Announce modal opening to screen readers
-  useEffect(() => {
-    if (isModalOpen && pokemon) {
-      accessibilityUtils.screenReader.announce(
-        `Opened details for ${pokemon.name}, ${pokemon.types.map(t => t.type.name).join(' and ')} type Pokemon`,
-        'assertive'
-      );
-    }
-  }, [isModalOpen, pokemon]);
 
   if (!isModalOpen || !selectedPokemon) return null;
 
@@ -57,14 +46,7 @@ export function PokemonModal() {
   const totalStats = getTotalStats(pokemon);
 
   return (
-    <Modal
-      isOpen={isModalOpen}
-      onClose={closeModal}
-      title={formatPokemonName(pokemon.name)}
-      role={ariaAttributes.roles.dialog}
-      aria-labelledby="pokemon-modal-title"
-      aria-describedby="pokemon-modal-description"
-    >
+    <Modal isOpen={isModalOpen} onClose={closeModal} title={formatPokemonName(pokemon.name)}>
       <div className="space-y-6">
         {/* Header with image and basic info */}
         <div className="flex flex-col md:flex-row gap-6">

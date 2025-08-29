@@ -6,8 +6,8 @@ import { Pokemon } from '@/types';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { getPokemonImageUrl, getTotalStats, formatPokemonName } from '@/lib/utils';
 import { getTypeColor } from '@/lib/utils';
-import { accessibilityUtils, ariaAttributes } from '@/lib/utils/accessibility';
 import { usePokemonSpecies, getEnglishGenus } from '@/lib/hooks/use-pokemon-species';
+import { StatName } from '@/types/enums';
 
 interface PokemonCardProps {
   pokemon: Pokemon;
@@ -18,8 +18,6 @@ export function PokemonCard({ pokemon, onClick }: PokemonCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const imageUrl = getPokemonImageUrl(pokemon);
   const totalStats = getTotalStats(pokemon);
-  const cardId = accessibilityUtils.generateId('pokemon-card');
-  const description = accessibilityUtils.createPokemonCardDescription(pokemon);
 
   // Fetch species data for enhanced information
   const { data: species, isLoading: speciesLoading } = usePokemonSpecies(pokemon.id);
@@ -34,10 +32,7 @@ export function PokemonCard({ pokemon, onClick }: PokemonCardProps) {
   return (
     <Card
       ref={cardRef}
-      role={ariaAttributes.roles.button}
       tabIndex={0}
-      aria-label={accessibilityUtils.createAriaLabel('View details for', pokemon.name)}
-      aria-describedby={`${cardId}-description`}
       className="group cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-xl bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset relative overflow-hidden"
       onClick={onClick}
       onKeyDown={handleKeyDown}
@@ -82,11 +77,10 @@ export function PokemonCard({ pokemon, onClick }: PokemonCardProps) {
             )}
 
             {/* Enhanced Type Badges */}
-            <div className="flex items-center justify-center space-x-2 mt-3" role="list" aria-label="Pokemon types">
+            <div className="flex items-center justify-center space-x-2 mt-3">
               {pokemon.types.map(type => (
                 <span
                   key={type.type.name}
-                  role="listitem"
                   className="px-3 py-1.5 text-xs font-bold text-white rounded-full capitalize shadow-sm transform group-hover:scale-105 transition-transform duration-200"
                   style={{
                     backgroundColor: getTypeColor(type.type.name),
@@ -100,49 +94,26 @@ export function PokemonCard({ pokemon, onClick }: PokemonCardProps) {
           </div>
 
           {/* Enhanced Stats Display */}
-          <div className="grid grid-cols-3 gap-3 w-full text-xs" role="list" aria-label="Base stats">
-            <div className="text-center bg-gray-50 dark:bg-gray-800 rounded-lg p-2" role="listitem">
+          <div className="grid grid-cols-3 gap-3 w-full text-xs">
+            <div className="text-center bg-gray-50 dark:bg-gray-800 rounded-lg p-2">
               <div className="font-bold text-gray-900 dark:text-white mb-1">HP</div>
-              <div
-                className="text-lg font-bold text-red-600 dark:text-red-400"
-                aria-label={accessibilityUtils.formatStatForScreenReader(
-                  'hp',
-                  pokemon.stats.find(s => s.stat.name === 'hp')?.base_stat || 0
-                )}
-              >
-                {pokemon.stats.find(s => s.stat.name === 'hp')?.base_stat || 0}
+              <div className="text-lg font-bold text-red-600 dark:text-red-400">
+                {pokemon.stats.find(s => s.stat.name === StatName.HP)?.base_stat || 0}
               </div>
             </div>
-            <div className="text-center bg-gray-50 dark:bg-gray-800 rounded-lg p-2" role="listitem">
+            <div className="text-center bg-gray-50 dark:bg-gray-800 rounded-lg p-2">
               <div className="font-bold text-gray-900 dark:text-white mb-1">ATK</div>
-              <div
-                className="text-lg font-bold text-orange-600 dark:text-orange-400"
-                aria-label={accessibilityUtils.formatStatForScreenReader(
-                  'attack',
-                  pokemon.stats.find(s => s.stat.name === 'attack')?.base_stat || 0
-                )}
-              >
-                {pokemon.stats.find(s => s.stat.name === 'attack')?.base_stat || 0}
+              <div className="text-lg font-bold text-orange-600 dark:text-orange-400">
+                {pokemon.stats.find(s => s.stat.name === StatName.ATTACK)?.base_stat || 0}
               </div>
             </div>
-            <div className="text-center bg-gray-50 dark:bg-gray-800 rounded-lg p-2" role="listitem">
+            <div className="text-center bg-gray-50 dark:bg-gray-800 rounded-lg p-2">
               <div className="font-bold text-gray-900 dark:text-white mb-1">DEF</div>
-              <div
-                className="text-lg font-bold text-blue-600 dark:text-blue-400"
-                aria-label={accessibilityUtils.formatStatForScreenReader(
-                  'defense',
-                  pokemon.stats.find(s => s.stat.name === 'defense')?.base_stat || 0
-                )}
-              >
-                {pokemon.stats.find(s => s.stat.name === 'defense')?.base_stat || 0}
+              <div className="text-lg font-bold text-blue-600 dark:text-blue-400">
+                {pokemon.stats.find(s => s.stat.name === StatName.DEFENSE)?.base_stat || 0}
               </div>
             </div>
           </div>
-        </div>
-
-        {/* Screen reader description */}
-        <div id={`${cardId}-description`} className="sr-only">
-          {description}
         </div>
       </CardContent>
     </Card>

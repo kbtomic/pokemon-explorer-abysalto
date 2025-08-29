@@ -1,13 +1,13 @@
 import { useQuery, useInfiniteQuery } from '@tanstack/react-query';
 import { pokeAPI } from '@/lib/api/pokeapi';
 import type { PokemonSpecies, Ability } from '@/types';
+import { LanguageCode, VersionGroup } from '@/types/enums';
 
-export function usePokemonSpecies(nameOrId: string | number) {
+export function usePokemonSpecies(pokemonId: number) {
   return useQuery({
-    queryKey: ['pokemon-species', nameOrId],
-    queryFn: () => pokeAPI.getPokemonSpecies(nameOrId),
-    staleTime: 1000 * 60 * 60, // 1 hour
-    gcTime: 1000 * 60 * 60 * 24, // 24 hours
+    queryKey: ['pokemon-species', pokemonId],
+    queryFn: () => pokeAPI.getPokemonSpecies(pokemonId),
+    enabled: !!pokemonId,
   });
 }
 
@@ -76,19 +76,19 @@ export function usePokemonColors() {
 
 // Utility function to get English flavor text
 export function getEnglishFlavorText(species: PokemonSpecies): string {
-  const englishEntry = species.flavor_text_entries.find(entry => entry.language.name === 'en');
+  const englishEntry = species.flavor_text_entries.find(entry => entry.language.name === LanguageCode.ENGLISH);
   return englishEntry?.flavor_text || 'No description available.';
 }
 
 // Utility function to get English genus
 export function getEnglishGenus(species: PokemonSpecies): string {
-  const englishEntry = species.genera.find(entry => entry.language.name === 'en');
+  const englishEntry = species.genera.find(entry => entry.language.name === LanguageCode.ENGLISH);
   return englishEntry?.genus || 'Unknown';
 }
 
 // Utility function to get English name
 export function getEnglishName(species: PokemonSpecies): string {
-  const englishEntry = species.names.find(entry => entry.language.name === 'en');
+  const englishEntry = species.names.find(entry => entry.language.name === LanguageCode.ENGLISH);
   return englishEntry?.name || species.name;
 }
 
@@ -104,14 +104,15 @@ export function useEvolutionChain(evolutionChainId: number | null) {
 
 // Utility function to get English ability effect
 export function getEnglishAbilityEffect(ability: Ability): string {
-  const englishEntry = ability.effect_entries.find(entry => entry.language.name === 'en');
+  const englishEntry = ability.effect_entries.find(entry => entry.language.name === LanguageCode.ENGLISH);
   return englishEntry?.effect || 'No description available.';
 }
 
 // Utility function to get English ability flavor text
 export function getEnglishAbilityFlavorText(ability: Ability): string {
   const englishEntry =
-    ability.flavor_text_entries.find(entry => entry.language.name === 'en' && entry.version_group.name === 'sword-shield') ||
-    ability.flavor_text_entries.find(entry => entry.language.name === 'en');
+    ability.flavor_text_entries.find(
+      entry => entry.language.name === LanguageCode.ENGLISH && entry.version_group.name === VersionGroup.SWORD_SHIELD
+    ) || ability.flavor_text_entries.find(entry => entry.language.name === LanguageCode.ENGLISH);
   return englishEntry?.flavor_text || '';
 }
