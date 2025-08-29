@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { FilterItem } from '../types';
+import { FilterItem } from '@/types/filters';
 import { ButtonVariant } from '@/types/enums';
 
 interface FilterItemsGridProps {

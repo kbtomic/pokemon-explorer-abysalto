@@ -1,14 +1,14 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import { FilterItem } from '../types';
+import { FilterItem } from '@/types/filters';
 import { FilterButton } from '@/components/filters/common/FilterButton';
 import { FilterDropdown } from '@/components/filters/common/FilterDropdown';
 import { FilterHeader } from '@/components/filters/common/FilterHeader';
 import { FilterStates } from '@/components/filters/common/FilterStates';
 import { FilterItemsGrid } from '@/components/filters/common/FilterItemsGrid';
 import { SelectedItemsDisplay } from '@/components/filters/common/SelectedItemsDisplay';
-import { SearchBar } from '@/components/filters/SearchBar';
+import { SearchBar } from './SearchBar';
 import { Loader2 } from 'lucide-react';
 
 interface GenericFilterProps {
@@ -99,15 +99,17 @@ export function GenericFilter({
             !error &&
             (children || (
               <div className={isScrollable ? `overflow-y-auto ${maxHeight}` : ''}>
-                <FilterItemsGrid
-                  items={items}
-                  selectedItems={selectedItems}
-                  onToggle={onToggle!}
-                  getItemColor={getItemColor}
-                  getItemDisplayName={getItemDisplayName}
-                  gridCols={gridCols}
-                  useTypeVariant={useTypeVariant}
-                />
+                {onToggle && (
+                  <FilterItemsGrid
+                    items={items}
+                    selectedItems={selectedItems}
+                    onToggle={onToggle}
+                    getItemColor={getItemColor}
+                    getItemDisplayName={getItemDisplayName}
+                    gridCols={gridCols}
+                    useTypeVariant={useTypeVariant}
+                  />
+                )}
               </div>
             ))}
 
