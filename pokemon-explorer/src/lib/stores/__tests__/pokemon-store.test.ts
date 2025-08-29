@@ -24,12 +24,12 @@ describe('Pokemon Store', () => {
         generations: [],
         abilities: [],
         stats: {
-          hp: [0, 255],
-          attack: [0, 255],
-          defense: [0, 255],
-          speed: [0, 255],
-          'special-attack': [0, 255],
-          'special-defense': [0, 255],
+          hp: [0, 0],
+          attack: [0, 0],
+          defense: [0, 0],
+          speed: [0, 0],
+          'special-attack': [0, 0],
+          'special-defense': [0, 0],
         },
       });
 
@@ -115,7 +115,7 @@ describe('Pokemon Store', () => {
       expect(result.current.filters.types).toEqual([]);
       expect(result.current.filters.generations).toEqual([]);
       expect(result.current.filters.abilities).toEqual([]);
-      expect(result.current.filters.stats.hp).toEqual([0, 255]);
+      expect(result.current.filters.stats.hp).toEqual([0, 0]);
     });
   });
 
