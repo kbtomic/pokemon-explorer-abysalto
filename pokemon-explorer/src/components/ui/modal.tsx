@@ -59,7 +59,7 @@ const Modal = ({ className, isOpen, onClose, title, children, ...props }: ModalP
       <div className="fixed inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} />
       <div
         ref={modalRef}
-        className={cn('relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-background rounded-lg shadow-lg border', className)}
+        className={cn('relative w-full h-full max-w-2xl overflow-y-auto bg-background rounded-lg shadow-lg border', className)}
         {...props}
       >
         {title && (
@@ -70,7 +70,7 @@ const Modal = ({ className, isOpen, onClose, title, children, ...props }: ModalP
             </Button>
           </div>
         )}
-        <div className="p-6">{children}</div>
+        <div className="p-6 h-[-webkit-fill-available]">{children}</div>
       </div>
     </div>
   );

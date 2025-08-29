@@ -2,10 +2,11 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { useLocationsPaginated, useLocation, useLocationAreas, useLocationArea, useRegions, useRegion } from '@/lib/hooks/use-pokemon';
+import { useLocationsPaginated, useLocation, useLocationArea, useRegion } from '@/lib/hooks/use-pokemon';
 import { Button } from '@/components/ui/button';
-import { Header } from '@/components/layout/header';
+import { Header } from '@/components/header/Header';
 import { ArrowLeft, Map, MapPin, Globe, Trees, Mountain, Waves, ChevronDown, Loader2 } from 'lucide-react';
+import { ButtonSize, ButtonVariant } from '@/types/enums';
 
 const BATCH_SIZE = 50;
 
@@ -83,7 +84,7 @@ function LocationDetailModal({ location, onClose }: LocationDetailModalProps) {
                 )}
               </div>
             </div>
-            <Button onClick={onClose} variant="ghost" size="sm">
+            <Button onClick={onClose} variant={ButtonVariant.GHOST} size={ButtonSize.SM}>
               ✕
             </Button>
           </div>
@@ -236,7 +237,7 @@ export default function LocationsPage() {
         {/* Navigation */}
         <div className="mb-8">
           <Link href="/">
-            <Button variant="outline" className="inline-flex items-center gap-2 mb-4">
+            <Button variant={ButtonVariant.OUTLINE} className="inline-flex items-center gap-2 mb-4">
               <ArrowLeft className="w-4 h-4" />
               Back to Home
             </Button>

@@ -2,9 +2,9 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { useItemsPaginated, useItem, useItemCategories, useItemCategory } from '@/lib/hooks/use-pokemon';
+import { useItemsPaginated, useItem, useItemCategory } from '@/lib/hooks/use-pokemon';
 import { Button } from '@/components/ui/button';
-import { Header } from '@/components/layout/header';
+import { Header } from '@/components/header/Header';
 import { ArrowLeft, Package, Star, Zap, Heart, Shield, Sword, ChevronDown, Loader2 } from 'lucide-react';
 import Image from 'next/image';
 import { ButtonSize, ButtonVariant } from '@/types/enums';

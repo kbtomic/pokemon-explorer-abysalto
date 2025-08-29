@@ -97,7 +97,6 @@ export enum VersionGroup {
 }
 
 export enum NavigationLabel {
-  HOME = 'Home',
   POKEMON = 'Pokemon',
   BERRIES = 'Berries',
   ITEMS = 'Items',

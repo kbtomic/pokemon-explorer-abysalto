@@ -1,8 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Header } from '@/components/layout/header';
-import { FiltersBar } from '@/components/filters/FiltersBar';
+import { Header } from '@/components/header/Header';
+import { DesktopFilterBar } from '@/components/filters/desktop/DesktopFilterBar';
+import { MobileFilterBar } from '@/components/filters/mobile/MobileFilterBar';
 import { PokemonGrid } from '@/components/pokemon/pokemon-grid';
 import { PokemonModal } from '@/components/pokemon/pokemon-modal';
 import { PerformanceIndicator } from '@/components/ui';
@@ -107,10 +108,11 @@ export default function ExplorerPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="sticky top-0 z-40 bg-white border-b border-red-200">
+      <div className="sticky top-0 z-40 bg-white ">
         <Header />
         <div className="border-b border-red-200">
-          <FiltersBar />
+          <DesktopFilterBar />
+          <MobileFilterBar />
         </div>
       </div>
 

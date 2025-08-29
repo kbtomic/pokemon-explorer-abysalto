@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect } from 'react';
 import { Modal } from '@/components/ui/modal';
 import { usePokemonStore } from '@/lib/stores/pokemon-store';
 import { usePokemon } from '@/lib/hooks/use-pokemon';

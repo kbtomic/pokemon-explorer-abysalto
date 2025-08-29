@@ -2,16 +2,9 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import {
-  useBerriesPaginated,
-  useBerry,
-  useBerryFirmness,
-  useBerryFirmnessById,
-  useBerryFlavors,
-  useBerryFlavor,
-} from '@/lib/hooks/use-pokemon';
+import { useBerriesPaginated, useBerry, useBerryFirmnessById, useBerryFlavor } from '@/lib/hooks/use-pokemon';
 import { Button } from '@/components/ui/button';
-import { Header } from '@/components/layout/header';
+import { Header } from '@/components/header/Header';
 import { ArrowLeft, Leaf, Droplets, Flame, Zap, Heart, Shield, Sparkles, ChevronDown, Loader2 } from 'lucide-react';
 import Image from 'next/image';
 import { ButtonSize, ButtonVariant } from '@/types/enums';

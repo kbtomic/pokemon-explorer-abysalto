@@ -1,7 +1,7 @@
 import { SortOption } from '@/types';
 import { SortDirection } from '@/types/enums';
 import { SORT_OPTIONS } from '@/lib/utils/sortOptions';
-import { FilterItem } from '@/components/filters/types';
+import { FilterItem } from '@/types/filters';
 
 export function convertSortOptionsToFilterItems(): FilterItem[] {
   return SORT_OPTIONS.map(option => ({

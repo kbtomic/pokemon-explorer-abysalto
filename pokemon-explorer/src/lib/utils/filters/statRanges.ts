@@ -1,7 +1,7 @@
 import { Pokemon } from '@/types';
 import { StatName } from '@/types/enums';
 
-export interface StatRanges extends Record<StatName, [number, number]> {}
+export type StatRanges = Record<StatName, [number, number]>;
 
 export function calculateStatRanges(pokemonList: Pokemon[]): StatRanges {
   if (pokemonList.length === 0) {

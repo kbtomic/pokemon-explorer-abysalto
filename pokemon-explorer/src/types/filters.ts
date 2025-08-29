@@ -27,6 +27,12 @@ export interface FilterState {
   selectedPokemon: number | null;
 }
 
+export interface FilterItem {
+  id: string | number;
+  name: string;
+  url?: string;
+}
+
 export const STAT_NAMES = {
   [StatName.HP]: 'HP',
   [StatName.ATTACK]: 'Attack',
