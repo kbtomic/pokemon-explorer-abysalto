@@ -1,11 +1,14 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { Pokemon, PokemonFilters, SortOption, FilterState } from '@/types';
+import { calculateStatRanges } from '@/lib/utils/filters/statRanges';
+import { SortDirection, SortField, StatName } from '@/types/enums';
 
 interface PokemonStore extends FilterState {
   pokemonList: Pokemon[];
   isLoading: boolean;
   error: string | null;
+  originalStatRanges: PokemonFilters['stats'];
 
   // Actions
   setPokemonList: (pokemon: Pokemon[]) => void;
@@ -17,7 +20,7 @@ interface PokemonStore extends FilterState {
   setTypes: (types: string[]) => void;
   setGenerations: (generations: number[]) => void;
   setAbilities: (abilities: string[]) => void;
-  setStatRange: (statName: string, range: [number, number]) => void;
+  setStatRange: (statName: StatName, range: [number, number]) => void;
   clearFilters: () => void;
 
   // Sort actions
@@ -34,18 +37,18 @@ const initialFilters: PokemonFilters = {
   generations: [],
   abilities: [],
   stats: {
-    hp: [0, 255],
-    attack: [0, 255],
-    defense: [0, 255],
-    speed: [0, 255],
-    'special-attack': [0, 255],
-    'special-defense': [0, 255],
+    [StatName.HP]: [0, 0],
+    [StatName.ATTACK]: [0, 0],
+    [StatName.DEFENSE]: [0, 0],
+    [StatName.SPEED]: [0, 0],
+    [StatName.SPECIAL_ATTACK]: [0, 0],
+    [StatName.SPECIAL_DEFENSE]: [0, 0],
   },
 };
 
 const initialSort: SortOption = {
-  field: 'id',
-  direction: 'asc',
+  field: SortField.ID,
+  direction: SortDirection.ASC,
 };
 
 export const usePokemonStore = create<PokemonStore>()(
@@ -56,12 +59,31 @@ export const usePokemonStore = create<PokemonStore>()(
       isLoading: false,
       error: null,
       filters: initialFilters,
+      originalStatRanges: initialFilters.stats,
       sort: initialSort,
       isModalOpen: false,
       selectedPokemon: null,
 
       // Pokemon list actions
-      setPokemonList: pokemon => set({ pokemonList: pokemon }),
+      setPokemonList: pokemon => {
+        const statRanges = calculateStatRanges(pokemon);
+        const calculatedStats = {
+          [StatName.HP]: statRanges[StatName.HP] || [0, 0],
+          [StatName.ATTACK]: statRanges[StatName.ATTACK] || [0, 0],
+          [StatName.DEFENSE]: statRanges[StatName.DEFENSE] || [0, 0],
+          [StatName.SPEED]: statRanges[StatName.SPEED] || [0, 0],
+          [StatName.SPECIAL_ATTACK]: statRanges[StatName.SPECIAL_ATTACK] || [0, 0],
+          [StatName.SPECIAL_DEFENSE]: statRanges[StatName.SPECIAL_DEFENSE] || [0, 0],
+        };
+        set(state => ({
+          pokemonList: pokemon,
+          originalStatRanges: calculatedStats,
+          filters: {
+            ...state.filters,
+            stats: calculatedStats,
+          },
+        }));
+      },
       setLoading: loading => set({ isLoading: loading }),
       setError: error => set({ error }),
 
@@ -98,26 +120,19 @@ export const usePokemonStore = create<PokemonStore>()(
         })),
 
       clearFilters: () =>
-        set({
-          filters: initialFilters,
-          sort: initialSort,
-        }),
+        set(state => ({
+          filters: {
+            ...initialFilters,
+            stats: state.originalStatRanges,
+          },
+        })),
 
       // Sort actions
       setSort: sort => set({ sort }),
 
       // Modal actions
-      openModal: pokemonId =>
-        set({
-          isModalOpen: true,
-          selectedPokemon: pokemonId,
-        }),
-
-      closeModal: () =>
-        set({
-          isModalOpen: false,
-          selectedPokemon: null,
-        }),
+      openModal: pokemonId => set({ isModalOpen: true, selectedPokemon: pokemonId }),
+      closeModal: () => set({ isModalOpen: false, selectedPokemon: null }),
     }),
     {
       name: 'pokemon-store',
