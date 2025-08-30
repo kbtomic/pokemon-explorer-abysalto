@@ -179,8 +179,20 @@ export function useBerry(nameOrId: string | number) {
   });
 }
 
+// New: Hook to fetch all berries details with optimized chunking
+export function useAllBerriesDetails() {
+  return useQuery({
+    queryKey: ['all-berries-details'],
+    queryFn: () => pokeAPI.getAllBerriesDetails(),
+    staleTime: 60 * 60 * 1000, // 1 hour
+    gcTime: 24 * 60 * 60 * 1000, // 24 hours
+    retry: 2,
+    retryDelay: attemptIndex => Math.min(1000 * 2 ** attemptIndex, 30000),
+  });
+}
+
 // New: Chunked Berries batch hook
-export function useBerriesBatchChunked(namesOrIds: (string | number)[], chunkSize: number = 50) {
+export function useBerriesBatchChunked(namesOrIds: (string | number)[], chunkSize: number = 25) {
   return useQuery({
     queryKey: ['berries-batch-chunked', namesOrIds, chunkSize],
     queryFn: () => pokeAPI.getBerriesBatchChunked(namesOrIds, chunkSize),
@@ -235,6 +247,89 @@ export function useItems() {
     staleTime: 60 * 60 * 1000, // 1 hour
     gcTime: 24 * 60 * 60 * 1000, // 24 hours
   });
+}
+
+// New: Hook to fetch all items at once (like useAllPokemon)
+export function useAllItems() {
+  return useQuery({
+    queryKey: ['all-items'],
+    queryFn: () => pokeAPI.getItems(),
+    staleTime: 60 * 60 * 1000, // 1 hour
+    gcTime: 24 * 60 * 60 * 1000, // 24 hours
+  });
+}
+
+// New: Hook to fetch all items details with optimized chunking
+export function useAllItemsDetails() {
+  return useQuery({
+    queryKey: ['all-items-details'],
+    queryFn: () => pokeAPI.getAllItemsDetails(),
+    staleTime: 60 * 60 * 1000, // 1 hour
+    gcTime: 24 * 60 * 60 * 1000, // 24 hours
+    retry: 1, // Reduce retries to fail faster
+    retryDelay: 1000,
+  });
+}
+
+// Fallback hook that tries full details first, then basic items
+export function useAllItemsWithFallback() {
+  const detailsQuery = useQuery({
+    queryKey: ['all-items-details'],
+    queryFn: () => pokeAPI.getAllItemsDetails(),
+    staleTime: 60 * 60 * 1000, // 1 hour
+    gcTime: 24 * 60 * 60 * 1000, // 24 hours
+    retry: 1,
+    retryDelay: 1000,
+  });
+
+  const basicQuery = useQuery({
+    queryKey: ['all-items-basic'],
+    queryFn: () => pokeAPI.getItems(),
+    staleTime: 60 * 60 * 1000, // 1 hour
+    gcTime: 24 * 60 * 60 * 1000, // 24 hours
+    enabled: detailsQuery.isError, // Only run if details query fails
+  });
+
+  // Debug logging
+  console.log('Items Fallback Hook State:', {
+    detailsLoading: detailsQuery.isLoading,
+    detailsError: detailsQuery.isError,
+    detailsData: !!detailsQuery.data,
+    basicLoading: basicQuery.isLoading,
+    basicError: basicQuery.isError,
+    basicData: !!basicQuery.data,
+  });
+
+  // Return the successful query
+  if (detailsQuery.data) {
+    return {
+      data: detailsQuery.data,
+      isLoading: detailsQuery.isLoading,
+      error: detailsQuery.error,
+      isUsingFallback: false,
+    };
+  }
+
+  if (detailsQuery.isError && basicQuery.data) {
+    // Convert basic items to format expected by store
+    const convertedItems = basicQuery.data.results.map((item: any, index: number) => ({
+      ...item,
+      id: parseInt(item.url.split('/').slice(-2)[0]) || index + 1,
+    }));
+    return {
+      data: convertedItems,
+      isLoading: basicQuery.isLoading,
+      error: basicQuery.error,
+      isUsingFallback: true,
+    };
+  }
+
+  return {
+    data: undefined,
+    isLoading: detailsQuery.isLoading || (detailsQuery.isError && basicQuery.isLoading),
+    error: detailsQuery.error,
+    isUsingFallback: false,
+  };
 }
 
 // New: Paginated Items hook

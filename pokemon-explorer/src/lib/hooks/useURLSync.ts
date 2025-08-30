@@ -1,85 +1,60 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { usePokemonStore } from '@/lib/stores/pokemonStore';
-import { useURLStore } from '@/lib/stores/urlStore';
-import { arraysEqual, statsEqual, sortOptionsEqual } from '@/lib/utils/comparison';
-import { StatName } from '@/lib/constants/enums';
+import { SortDirection, SortField } from '@/lib/constants/enums';
 
-export function useURLSync() {
+interface URLParams {
+  page: number;
+  search: string;
+  sortField: string;
+  sortDirection: string;
+}
+
+interface StoreActions {
+  setSearch: (search: string) => void;
+  setSort: (sort: { field: SortField; direction: SortDirection }) => void;
+  setCurrentPage: (page: number) => void;
+}
+
+export function useURLSync(storeActions: StoreActions) {
+  const [isUpdatingFromURL, setIsUpdatingFromURL] = useState(false);
   const searchParams = useSearchParams();
-  const {
-    filters,
-    sort,
-    pagination,
-    pokemonList,
-    setSearch,
-    setTypes,
-    setGenerations,
-    setAbilities,
-    setStatRange,
-    setSort,
-    setCurrentPage,
-    setItemsPerPage,
-  } = usePokemonStore();
-  const { initialize, getFiltersFromURL, getSortFromURL, getPaginationFromURL } = useURLStore();
 
-  const isInitialized = useRef(false);
-  const isUpdatingFromURL = useRef(false);
+  const { setSearch, setSort, setCurrentPage } = storeActions;
 
-  // Initialize URL store
+  // Parse URL parameters
+  const parseFromURL = (params: URLSearchParams): URLParams => {
+    const page = parseInt(params.get('page') || '1', 10);
+    const search = params.get('search') || '';
+    const sortField = params.get('sortField') || SortField.ID;
+    const sortDirection = params.get('sortDirection') || SortDirection.ASC;
+
+    return {
+      page,
+      search,
+      sortField,
+      sortDirection,
+    };
+  };
+
+  // Initialize store from URL on mount
   useEffect(() => {
-    if (!isInitialized.current) {
-      initialize(searchParams);
-      isInitialized.current = true;
-    }
-  }, [searchParams, initialize]);
+    if (!searchParams) return;
 
-  // Sync URL to store (only when URL changes, not when store changes)
-  useEffect(() => {
-    if (!isInitialized.current) return;
+    setIsUpdatingFromURL(true);
+    const urlParams = parseFromURL(searchParams);
 
-    const urlFilters = getFiltersFromURL(searchParams);
-    const urlSort = getSortFromURL(searchParams);
-    const { page, itemsPerPage } = getPaginationFromURL(searchParams);
+    // Update store with URL parameters
+    setSearch(urlParams.search);
+    setSort({
+      field: urlParams.sortField as SortField,
+      direction: urlParams.sortDirection as SortDirection,
+    });
+    setCurrentPage(urlParams.page);
 
-    isUpdatingFromURL.current = true;
+    setIsUpdatingFromURL(false);
+  }, [searchParams, setSearch, setSort, setCurrentPage]);
 
-    // Update filters if they differ from URL
-    if (urlFilters.search !== filters.search) {
-      setSearch(urlFilters.search);
-    }
-    if (!arraysEqual(urlFilters.types, filters.types)) {
-      setTypes(urlFilters.types);
-    }
-    if (!arraysEqual(urlFilters.generations, filters.generations)) {
-      setGenerations(urlFilters.generations);
-    }
-    if (!arraysEqual(urlFilters.abilities, filters.abilities)) {
-      setAbilities(urlFilters.abilities);
-    }
-    // Only sync stats if Pokemon data has loaded (originalStatRanges are set)
-    if (pokemonList.length > 0 && !statsEqual(urlFilters.stats, filters.stats)) {
-      // Update each stat individually
-      Object.entries(urlFilters.stats).forEach(([statName, range]) => {
-        setStatRange(statName as StatName, range);
-      });
-    }
-
-    // Update sort if it differs from URL
-    if (!sortOptionsEqual(urlSort, sort)) {
-      setSort(urlSort);
-    }
-
-    // Update pagination if it differs from URL
-    if (page !== pagination.currentPage) {
-      setCurrentPage(page);
-    }
-    if (itemsPerPage !== pagination.itemsPerPage) {
-      setItemsPerPage(itemsPerPage);
-    }
-
-    isUpdatingFromURL.current = false;
-  }, [searchParams, getFiltersFromURL, getSortFromURL, getPaginationFromURL]);
-
-  return { isUpdatingFromURL: isUpdatingFromURL.current };
+  return {
+    isUpdatingFromURL,
+  };
 }
