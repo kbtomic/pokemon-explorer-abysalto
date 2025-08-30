@@ -362,15 +362,50 @@ export const pokeAPI = {
     return fetchAPI(`/berry?limit=${limit}&offset=${offset}`);
   },
 
-  // New: Batched Berries details fetching with chunking
-  async getBerriesBatchChunked(namesOrIds: (string | number)[], chunkSize: number = 50): Promise<Berry[]> {
-    const results: Berry[] = [];
+  // New: Get all berries details with optimized parallel chunking
+  async getAllBerriesDetails(): Promise<Berry[]> {
+    return measurePerformance('Berries Fetch All Details', async () => {
+      // First get all berries names
+      const allBerriesList = await this.getBerries();
+      const allNames = allBerriesList.results.map(b => b.name);
 
+      // Fetch all berry details with optimized parallel chunking
+      return this.getBerriesBatchChunked(allNames, 50); // Smaller chunks for berries
+    });
+  },
+
+  // New: Batched Berries details fetching with controlled parallel chunking
+  async getBerriesBatchChunked(namesOrIds: (string | number)[], chunkSize: number = 25): Promise<Berry[]> {
+    // Create all chunks first
+    const chunks: (string | number)[][] = [];
     for (let i = 0; i < namesOrIds.length; i += chunkSize) {
-      const chunk = namesOrIds.slice(i, i + chunkSize);
-      const chunkPromises = chunk.map(id => this.getBerry(id));
-      const chunkResults = await Promise.all(chunkPromises);
-      results.push(...chunkResults);
+      chunks.push(namesOrIds.slice(i, i + chunkSize));
+    }
+
+    // Process chunks with controlled concurrency
+    const results: Berry[] = [];
+    const maxConcurrentChunks = 4; // Limit for berries
+    const delayBetweenBatches = 50; // 50ms delay between batches
+
+    for (let i = 0; i < chunks.length; i += maxConcurrentChunks) {
+      const batch = chunks.slice(i, i + maxConcurrentChunks);
+
+      // Process this batch of chunks in parallel
+      const batchPromises = batch.map(chunk => {
+        const berryPromises = chunk.map(id => this.getBerry(id));
+        return Promise.all(berryPromises);
+      });
+
+      // Wait for this batch to complete
+      const batchResults = await Promise.all(batchPromises);
+
+      // Flatten and add results
+      results.push(...batchResults.flat());
+
+      // Add delay between batches (except for the last batch)
+      if (i + maxConcurrentChunks < chunks.length) {
+        await new Promise(resolve => setTimeout(resolve, delayBetweenBatches));
+      }
     }
 
     return results;
@@ -425,15 +460,63 @@ export const pokeAPI = {
     return fetchAPI(`/item?limit=${limit}&offset=${offset}`);
   },
 
-  // New: Batched Items details fetching with chunking
-  async getItemsBatchChunked(namesOrIds: (string | number)[], chunkSize: number = 50): Promise<Item[]> {
-    const results: Item[] = [];
+  // New: Get all items details with optimized parallel chunking
+  async getAllItemsDetails(): Promise<Item[]> {
+    return measurePerformance('Items Fetch All Details', async () => {
+      // First get all items with URLs
+      const allItemsList = await this.getItems();
+      console.log('Items API: Got', allItemsList.results.length, 'items from basic list');
 
+      // Extract IDs from URLs instead of using names (avoids special character issues)
+      const allIds = allItemsList.results
+        .map(i => {
+          const urlParts = i.url.split('/');
+          return parseInt(urlParts[urlParts.length - 2]);
+        })
+        .filter(id => !isNaN(id));
+
+      console.log('Items API: Extracted', allIds.length, 'valid IDs, starting batch fetch...');
+
+      // Fetch all item details with optimized parallel chunking using IDs
+      return this.getItemsBatchChunked(allIds, 50); // Increase chunk size to speed up
+    });
+  },
+
+  // New: Batched Items details fetching with controlled parallel chunking
+  async getItemsBatchChunked(namesOrIds: (string | number)[], chunkSize: number = 50): Promise<Item[]> {
+    // Create all chunks first
+    const chunks: (string | number)[][] = [];
     for (let i = 0; i < namesOrIds.length; i += chunkSize) {
-      const chunk = namesOrIds.slice(i, i + chunkSize);
-      const chunkPromises = chunk.map(id => this.getItem(id));
-      const chunkResults = await Promise.all(chunkPromises);
-      results.push(...chunkResults);
+      chunks.push(namesOrIds.slice(i, i + chunkSize));
+    }
+
+    // Process chunks with controlled concurrency
+    const results: Item[] = [];
+    const maxConcurrentChunks = 4;
+    const delayBetweenBatches = 50;
+
+    for (let i = 0; i < chunks.length; i += maxConcurrentChunks) {
+      const batch = chunks.slice(i, i + maxConcurrentChunks);
+
+      // Process this batch of chunks in parallel
+      const batchPromises = batch.map(chunk => {
+        const itemPromises = chunk.map(id => this.getItem(id));
+        return Promise.all(itemPromises);
+      });
+
+      // Wait for this batch to complete
+      const batchResults = await Promise.all(batchPromises);
+
+      // Flatten and add results
+      results.push(...batchResults.flat());
+
+      // Progress logging
+      console.log(`Items API: Processed ${results.length}/${namesOrIds.length} items`);
+
+      // Add delay between batches (except for the last batch)
+      if (i + maxConcurrentChunks < chunks.length) {
+        await new Promise(resolve => setTimeout(resolve, delayBetweenBatches));
+      }
     }
 
     return results;
