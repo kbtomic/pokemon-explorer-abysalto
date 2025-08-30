@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { usePokemonStore } from '@/lib/stores/pokemon-store';
+import { usePokemonStore } from '@/lib/stores/pokemonStore';
 import { SortButton } from '@/components/sort/SortButton';
 import { FilterDropdown } from '@/components/filters/common/FilterDropdown';
 import { FilterItemsGrid } from '@/components/filters/common/FilterItemsGrid';
