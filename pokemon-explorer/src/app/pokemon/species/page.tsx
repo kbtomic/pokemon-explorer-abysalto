@@ -22,34 +22,18 @@ import { ButtonVariant } from '@/lib/constants/enums';
 const BATCH_SIZE = 50;
 
 interface SpeciesCardProps {
-  species: {
-    name: string;
-    url?: string;
-    id?: number;
-    habitat?: {
-      name: string;
-    };
-    shape?: {
-      name: string;
-    };
-    color?: {
-      name: string;
-    };
-  };
+  species: PokemonSpecies;
 }
 
 function SpeciesCard({ species }: SpeciesCardProps) {
   const [pokemonId, setPokemonId] = useState<number | null>(null);
 
-  // Extract Pokemon ID from URL or use direct ID
+  // Use the species ID directly
   useEffect(() => {
     if (species.id) {
       setPokemonId(species.id);
-    } else if (species.url) {
-      const id = pokeAPI.extractIdFromUrl(species.url);
-      setPokemonId(id);
     }
-  }, [species.url, species.id]);
+  }, [species.id]);
 
   if (!pokemonId || !species.name) return null;
 
@@ -121,7 +105,7 @@ export default function PokemonSpeciesPage() {
   const [selectedShape, setSelectedShape] = useState<string>('');
   const [selectedColor, setSelectedColor] = useState<string>('');
   const [sortBy, setSortBy] = useState<string>('id');
-  const [loadedSpecies, setLoadedSpecies] = useState<any[]>([]);
+  const [loadedSpecies, setLoadedSpecies] = useState<PokemonSpecies[]>([]);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
   // Fetch paginated species list
@@ -288,7 +272,9 @@ export default function PokemonSpeciesPage() {
           <div className="bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 rounded-lg p-3">
             <div className="flex items-center gap-2 text-sm text-blue-800 dark:text-blue-200">
               <span className="font-medium">Active Filters:</span>
-              {searchQuery && <span className="bg-blue-100 dark:bg-blue-800 px-2 py-1 rounded text-xs">Search: "{searchQuery}"</span>}
+              {searchQuery && (
+                <span className="bg-blue-100 dark:bg-blue-800 px-2 py-1 rounded text-xs">Search: &quot;{searchQuery}&quot;</span>
+              )}
               {selectedHabitat && (
                 <span className="bg-blue-100 dark:bg-blue-800 px-2 py-1 rounded text-xs">Habitat: {selectedHabitat}</span>
               )}

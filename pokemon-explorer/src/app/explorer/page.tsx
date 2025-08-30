@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
 import { Header } from '@/components/header/Header';
 import { DesktopFilterBar } from '@/components/filters/desktop/DesktopFilterBar';
@@ -17,8 +17,9 @@ import { useURLStore } from '@/lib/stores/urlStore';
 import { filterPokemon, sortPokemon } from '@/lib/utils/pokemon';
 import { paginateItems } from '@/lib/utils/pagination';
 import { Pagination } from '@/components/pagination/Pagination';
+import { PageHeader } from '@/components/common/PageHeader';
 
-export default function ExplorerPage() {
+function ExplorerPageContent() {
   const router = useRouter();
 
   const { data: allPokemon, isLoading: isLoadingPokemon, error: pokemonError } = useAllPokemon();
@@ -97,17 +98,11 @@ export default function ExplorerPage() {
     return (
       <div className="min-h-screen bg-white">
         <Header />
-        <div className="container mx-auto px-4 py-8 sm:py-12 md:py-16">
+        <div className="container mx-auto px-4 py-8">
           <div className="text-center">
-            <div className="text-4xl sm:text-6xl mb-4">⚠️</div>
-            <h2 className="text-xl sm:text-2xl font-bold text-red-600 mb-2">Error Loading Pokemon</h2>
-            <p className="text-sm sm:text-base text-red-500 mb-4">{error.message}</p>
-            <button
-              onClick={() => window.location.reload()}
-              className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
-            >
-              Try Again
-            </button>
+            <div className="text-6xl mb-4">⚠️</div>
+            <h2 className="text-2xl font-bold text-red-600 mb-2">Error Loading Pokemon</h2>
+            <p className="text-gray-600">{error.message}</p>
           </div>
         </div>
       </div>
@@ -116,42 +111,60 @@ export default function ExplorerPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="sticky top-0 z-40 bg-white ">
-        <Header />
-        <div className="border-b border-red-200">
+      <Header />
+      <div className="container mx-auto px-4 py-8">
+        <PageHeader title="Pokemon Explorer" description="Discover and filter Pokemon from all generations" />
+
+        {/* Performance Indicator */}
+        <PerformanceIndicator
+          isVirtualized={useVirtualization}
+          itemCount={paginatedResults.items.length}
+          threshold={virtualizationThreshold}
+        />
+
+        {/* Desktop Filter Bar */}
+        <div className="hidden md:block mb-6">
           <DesktopFilterBar />
+        </div>
+
+        {/* Mobile Filter Bar */}
+        <div className="md:hidden mb-6">
           <MobileFilterBar />
         </div>
-      </div>
 
-      <main className="container mx-auto px-4 py-8 sm:py-12 md:py-16">
-        <div className="mb-6 sm:mb-8">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-red-600">Explore the Pokemon Universe</h2>
-            <div className="text-sm sm:text-base text-red-500">
-              {isLoading ? 'Loading...' : `${paginatedResults.totalItems} Pokemon found`}
-              {filters.search || filters.types.length > 0 || filters.generations.length > 0 || filters.abilities.length > 0
-                ? ' (filtered)'
-                : ''}
+        {/* Pokemon Grid */}
+        <PokemonGrid pokemonList={paginatedResults.items} isLoading={isLoading} />
+
+        {/* Pagination */}
+        {!isLoading && paginatedResults.totalPages > 1 && (
+          <div className="mt-8">
+            <Pagination currentPage={pagination.currentPage} totalPages={paginatedResults.totalPages} onPageChange={handlePageChange} />
+          </div>
+        )}
+
+        {/* Pokemon Modal */}
+        <PokemonModal />
+      </div>
+    </div>
+  );
+}
+
+export default function ExplorerPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-white">
+          <Header />
+          <div className="container mx-auto px-4 py-8">
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+              <p className="text-gray-600">Loading explorer...</p>
             </div>
           </div>
         </div>
-
-        <PokemonGrid pokemonList={paginatedResults.items} isLoading={isLoading} />
-
-        {/* Pagination - replacing the old Load More button */}
-        {paginatedResults.totalPages > 1 && (
-          <Pagination currentPage={paginatedResults.currentPage} totalPages={paginatedResults.totalPages} onPageChange={handlePageChange} />
-        )}
-      </main>
-
-      <PokemonModal />
-
-      <PerformanceIndicator
-        isVirtualized={useVirtualization}
-        itemCount={paginatedResults.items.length}
-        threshold={virtualizationThreshold}
-      />
-    </div>
+      }
+    >
+      <ExplorerPageContent />
+    </Suspense>
   );
 }

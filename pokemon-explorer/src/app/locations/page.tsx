@@ -2,10 +2,10 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { useLocationsPaginated, useLocation, useLocationArea, useRegion } from '@/lib/hooks/use-pokemon';
+import { useLocationsPaginated, useLocation, useLocationArea } from '@/lib/hooks/use-pokemon';
 import { Button } from '@/components/ui/button';
 import { Header } from '@/components/header/Header';
-import { ArrowLeft, Map, MapPin, Globe, Trees, Mountain, Waves, ChevronDown, Loader2 } from 'lucide-react';
+import { ArrowLeft, Map, MapPin, Trees, Mountain, Waves, ChevronDown, Loader2 } from 'lucide-react';
 import { ButtonSize, ButtonVariant } from '@/lib/constants/enums';
 
 const BATCH_SIZE = 50;
@@ -63,7 +63,6 @@ interface LocationDetailModalProps {
 function LocationDetailModal({ location, onClose }: LocationDetailModalProps) {
   const locationId = location ? location.url.split('/').slice(-2)[0] : null;
   const { data: locationData, isLoading } = useLocation(locationId || '');
-  const { data: region } = useRegion(locationData?.region?.name || '');
 
   if (!location) return null;
 
@@ -190,7 +189,6 @@ function LocationAreaCard({ area }: LocationAreaCardProps) {
 
 export default function LocationsPage() {
   const [selectedLocation, setSelectedLocation] = useState<{ name: string; url: string } | null>(null);
-  const [selectedRegion, setSelectedRegion] = useState<string>('');
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
   const { data: locationsData, isLoading, error, fetchNextPage, hasNextPage, isFetchingNextPage } = useLocationsPaginated(BATCH_SIZE);
@@ -208,12 +206,8 @@ export default function LocationsPage() {
     }
   };
 
-  // Filter locations by selected region
-  const filteredLocations = allLocations.filter(location => {
-    if (!selectedRegion) return true;
-    // This is a simplified filter - in a real app, you'd need to fetch location details
-    return true; // For now, show all
-  });
+  // Use all locations for now
+  const filteredLocations = allLocations;
 
   if (error) {
     return (

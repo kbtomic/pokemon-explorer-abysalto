@@ -2,12 +2,14 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { useItemsPaginated, useItem, useItemCategory } from '@/lib/hooks/use-pokemon';
+import { useItemsPaginated, useItem } from '@/lib/hooks/use-pokemon';
 import { Button } from '@/components/ui/button';
 import { Header } from '@/components/header/Header';
-import { ArrowLeft, Package, Star, Zap, Heart, Shield, Sword, ChevronDown, Loader2 } from 'lucide-react';
+import { ArrowLeft, Package, Star, Zap, Heart, Sword, ChevronDown, Loader2 } from 'lucide-react';
 import Image from 'next/image';
 import { ButtonSize, ButtonVariant } from '@/lib/constants/enums';
+import { GridSkeleton } from '@/components/common/GridSkeleton';
+import { Theme } from '@/lib/constants/enums';
 
 const BATCH_SIZE = 50;
 
@@ -62,7 +64,6 @@ interface ItemDetailModalProps {
 function ItemDetailModal({ item, onClose }: ItemDetailModalProps) {
   const itemId = item ? item.url.split('/').slice(-2)[0] : null;
   const { data: itemData, isLoading } = useItem(itemId || '');
-  const { data: category } = useItemCategory(itemData?.category?.name || '');
 
   if (!item) return null;
 
@@ -126,18 +127,18 @@ function ItemDetailModal({ item, onClose }: ItemDetailModalProps) {
             <div className="space-y-6">
               {/* Basic Stats */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg text-center">
+                <div className="bg-blue-50 p-4 rounded-lg text-center">
                   <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">{itemData.cost}</div>
                   <div className="text-sm text-gray-600 dark:text-gray-400">Cost</div>
                 </div>
                 {itemData.fling_power && (
-                  <div className="bg-red-50 dark:bg-red-900/20 p-4 rounded-lg text-center">
+                  <div className="bg-red-50 p-4 rounded-lg text-center">
                     <div className="text-2xl font-bold text-red-600 dark:text-red-400">{itemData.fling_power}</div>
                     <div className="text-sm text-gray-600 dark:text-gray-400">Fling Power</div>
                   </div>
                 )}
                 <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg text-center">
-                  <div className="text-2xl font-bold text-green-600 dark:text-green-400">{itemData.attributes?.length || 0}</div>
+                  <div className="text-2xl font-bold text-green-600">{itemData.attributes?.length || 0}</div>
                   <div className="text-sm text-gray-600 dark:text-gray-400">Attributes</div>
                 </div>
                 {itemData.held_by_pokemon && (
@@ -300,12 +301,7 @@ export default function ItemsPage() {
         </div>
 
         {/* Loading State */}
-        {isLoading && (
-          <div className="text-center py-12">
-            <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-600 mx-auto mb-4"></div>
-            <p className="text-xl text-gray-600 dark:text-gray-400">Loading items...</p>
-          </div>
-        )}
+        {isLoading && <GridSkeleton itemCount={24} theme={Theme.BLUE} />}
 
         {/* Items Grid */}
         {!isLoading && itemsData && (
