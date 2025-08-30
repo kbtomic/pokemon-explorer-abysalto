@@ -11,13 +11,12 @@ import { PerformanceIndicator } from '@/components/ui/performance-indicator';
 import { useAllPokemon } from '@/lib/hooks/use-pokemon';
 import { usePerformanceOptimization } from '@/lib/hooks/use-performance-optimization';
 import { useGenerationMapping } from '@/lib/hooks/useGenerationMapping';
-import { useURLSync } from '@/lib/hooks/useURLSync';
+import { useURLSync } from '@/lib/hooks/useExplorerURLSync';
 import { usePokemonStore } from '@/lib/stores/pokemonStore';
 import { useURLStore } from '@/lib/stores/urlStore';
 import { filterPokemon, sortPokemon } from '@/lib/utils/pokemon';
 import { paginateItems } from '@/lib/utils/pagination';
 import { Pagination } from '@/components/pagination/Pagination';
-import { PageHeader } from '@/components/common/PageHeader';
 
 function ExplorerPageContent() {
   const router = useRouter();

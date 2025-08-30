@@ -1,77 +1,128 @@
 'use client';
 
-import { useBerriesPaginated, useBerry } from '@/lib/hooks/use-pokemon';
+import { useAllBerriesDetails, useBerry } from '@/lib/hooks/use-pokemon';
+import { Berry } from '@/types';
 import { Leaf, X } from 'lucide-react';
 import { SearchBar } from '@/components/filters/common/SearchBar';
 import { Pagination } from '@/components/pagination/Pagination';
 import { BerryDetailModal } from '@/components/berries/BerryDetailModal';
-import { BerryGrid } from '@/components/berries/BerryGrid';
-import { useBerrySearch } from '@/lib/hooks/use-berry-search';
-import { useBerryURLSync } from '@/lib/hooks/use-berry-url-sync';
-import type { BerryBasic } from '@/types/pokemon';
-import { useState, useEffect, Suspense } from 'react';
+import { DataGrid } from '@/components/common/DataGrid';
+import { useURLSync } from '@/lib/hooks/useURLSync';
+import { createDataStore } from '@/lib/stores/dataStore';
+import { formatName } from '@/lib/utils/dataUtils';
+import { getImageUrl } from '@/lib/utils/imageUtils';
+import { filterData, sortData } from '@/lib/utils/dataUtils';
+import { paginateItems } from '@/lib/utils/pagination';
+import { usePerformanceOptimization } from '@/lib/hooks/use-performance-optimization';
+import { PerformanceIndicator } from '@/components/ui/performance-indicator';
+import { useEffect, useMemo, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
 import { NoResults } from '@/components/common/NoResults';
 import { PageHeader } from '@/components/common/PageHeader';
 import { ErrorDisplay } from '@/components/common/ErrorDisplay';
 import { PageLayout } from '@/components/common/PageLayout';
-import { DEFAULT_ITEMS_PER_PAGE } from '@/lib/constants/pagination';
-import { Theme } from '@/lib/constants/enums';
+import { ImageType, Theme } from '@/lib/constants/enums';
 
-const BATCH_SIZE = 100; // Fetch all berries in one API call (like Pokemon approach)
+const useBerryStore = createDataStore<Berry>('berry-store');
 
 function BerriesPageContent() {
-  const [selectedBerry, setSelectedBerry] = useState<BerryBasic | null>(null);
-  const [searchValue, setSearchValue] = useState('');
-  const [currentPage, setCurrentPage] = useState(1);
   const router = useRouter();
 
-  const { data: berriesData, isLoading, error, fetchNextPage } = useBerriesPaginated(BATCH_SIZE);
+  const { data: allBerries, isLoading: isLoadingBerries, error: berriesError } = useAllBerriesDetails();
 
-  // Extract all berries from paginated data
-  const allBerries = berriesData?.pages.flatMap(page => page.results) || [];
+  const store = useBerryStore();
+  const {
+    setItemList: setBerryList,
+    setLoading,
+    setError,
+    itemList: berryList,
+    filters,
+    sort,
+    pagination,
+    setCurrentPage,
+    selectedItem: selectedBerry,
+    setSelectedItem: setSelectedBerry,
+    setSearch,
+    setSort,
+  } = store;
 
-  // URL synchronization for search and pagination
-  const { isInitialized } = useBerryURLSync({
-    onPageChange: setCurrentPage,
-    onSearchChange: setSearchValue,
+  // Handle URL synchronization
+  const { isUpdatingFromURL } = useURLSync({
+    setSearch,
+    setSort,
+    setCurrentPage,
   });
 
-  // Update URL when state changes
+  // Update store with fetched data
   useEffect(() => {
-    if (!isInitialized) return;
+    if (allBerries) {
+      setBerryList(allBerries);
+    }
+  }, [allBerries, setBerryList]);
+
+  // Update loading state
+  useEffect(() => {
+    setLoading(isLoadingBerries);
+  }, [isLoadingBerries, setLoading]);
+
+  // Update error state
+  useEffect(() => {
+    setError(berriesError ? berriesError.message : null);
+  }, [berriesError, setError]);
+
+  // Sync store state to URL when filters, sort, or pagination change
+  useEffect(() => {
+    if (isUpdatingFromURL) return; // Prevent infinite loops
 
     const params = new URLSearchParams();
 
-    if (currentPage > 1) {
-      params.set('page', currentPage.toString());
+    if (pagination.currentPage > 1) {
+      params.set('page', pagination.currentPage.toString());
     }
 
-    if (searchValue) {
-      params.set('search', searchValue);
+    if (filters.search) {
+      params.set('search', filters.search);
+    }
+
+    if (sort.field !== 'id') {
+      params.set('sortField', sort.field);
+    }
+
+    if (sort.direction !== 'asc') {
+      params.set('sortDirection', sort.direction);
     }
 
     const queryString = params.toString();
     const url = queryString ? `?${queryString}` : '';
-
-    // Use the full path for proper URL handling
     const fullPath = `/berries${url}`;
     router.replace(fullPath, { scroll: false });
-  }, [currentPage, searchValue, router, isInitialized]);
+  }, [filters, sort, pagination, router, isUpdatingFromURL]);
 
-  // Use the custom hook for search and pagination logic
-  const { paginatedResults } = useBerrySearch({
-    berries: allBerries,
-    searchValue,
-    currentPage,
-    itemsPerPage: DEFAULT_ITEMS_PER_PAGE,
-    onFetchMore: fetchNextPage,
-  });
+  // Filter and sort berries
+  const filteredAndSortedBerries = useMemo(() => {
+    if (!berryList.length) return [];
 
-  // Fetch full berry details when a berry is selected
-  const { data: selectedBerryDetails, isLoading: isLoadingBerryDetails } = useBerry(
-    selectedBerry ? selectedBerry.url.split('/').slice(-2)[0] : ''
-  );
+    const filtered = filterData(berryList, filters);
+    return sortData(filtered, sort);
+  }, [berryList, filters, sort]);
+
+  // Apply pagination to filtered and sorted results
+  const paginatedResults = useMemo(() => {
+    return paginateItems(filteredAndSortedBerries, pagination.currentPage, pagination.itemsPerPage);
+  }, [filteredAndSortedBerries, pagination.currentPage, pagination.itemsPerPage]);
+
+  // Update URL when pagination changes
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const { data: selectedBerryDetails, isLoading: isLoadingBerryDetails } = useBerry(selectedBerry ? selectedBerry.id : '');
+
+  // Performance optimization
+  const { useVirtualization, virtualizationThreshold } = usePerformanceOptimization(paginatedResults.items.length);
+
+  const isLoading = isLoadingBerries;
+  const error = berriesError;
 
   if (error) {
     return <ErrorDisplay title="Error Loading Berries" message={error.message} onRetry={() => window.location.reload()} />;
@@ -80,7 +131,7 @@ function BerriesPageContent() {
   return (
     <PageLayout
       headerContent={
-        <SearchBar placeholder="Search berries..." searchValue={searchValue} onSearchChange={setSearchValue} theme={Theme.GREEN} />
+        <SearchBar placeholder="Search berries..." searchValue={filters.search} onSearchChange={setSearch} theme={Theme.GREEN} />
       }
     >
       <PageHeader
@@ -91,33 +142,49 @@ function BerriesPageContent() {
           isLoading,
           totalItems: paginatedResults.totalItems,
           itemName: 'berries',
-          isFiltered: !!searchValue,
+          isFiltered: !!filters.search,
         }}
       />
 
-      <BerryGrid berries={paginatedResults.items} isLoading={isLoading} onBerryClick={setSelectedBerry} />
+      <PerformanceIndicator
+        isVirtualized={useVirtualization}
+        itemCount={paginatedResults.items.length}
+        threshold={virtualizationThreshold}
+      />
 
-      {/* Pagination */}
+      <DataGrid
+        items={paginatedResults.items}
+        isLoading={isLoading}
+        onItemClick={setSelectedBerry}
+        imageUrl={berry => getImageUrl(berry.name, ImageType.BERRY)}
+        formatName={formatName}
+        theme={{
+          borderColor: 'hover:border-green-300',
+          gradientFrom: 'from-green-100',
+          gradientTo: 'to-green-200',
+          skeletonTheme: Theme.GREEN,
+        }}
+        altText={berry => `${berry.name} berry`}
+      />
+
       {paginatedResults.totalPages > 1 && (
         <div className="mt-8 sm:mt-12">
-          <Pagination currentPage={paginatedResults.currentPage} totalPages={paginatedResults.totalPages} onPageChange={setCurrentPage} />
+          <Pagination currentPage={pagination.currentPage} totalPages={paginatedResults.totalPages} onPageChange={handlePageChange} />
         </div>
       )}
 
-      {/* No results */}
-      {!isLoading && searchValue && paginatedResults.totalItems === 0 && (
+      {!isLoading && filters.search && paginatedResults.totalItems === 0 && (
         <NoResults
           title="No berries found"
-          description={`No berries match your search for "${searchValue}".`}
+          description={`No berries match your search for "${filters.search}".`}
           action={{
             label: 'Clear search',
-            onClick: () => setSearchValue(''),
+            onClick: () => setSearch(''),
             icon: <X className="w-4 h-4" />,
           }}
         />
       )}
 
-      {/* Berry Detail Modal */}
       {selectedBerry && (
         <BerryDetailModal berry={selectedBerryDetails} isLoading={isLoadingBerryDetails} onClose={() => setSelectedBerry(null)} />
       )}
