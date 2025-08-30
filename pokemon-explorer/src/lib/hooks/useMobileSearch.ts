@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { usePokemonStore } from '@/lib/stores/pokemon-store';
+import { usePokemonStore } from '@/lib/stores/pokemonStore';
 import { handleEnter } from '@/lib/utils/keyboard';
 
 export function useMobileSearch(onClose: () => void) {

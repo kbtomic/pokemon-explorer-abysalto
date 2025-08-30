@@ -1,4 +1,5 @@
-import { SortDirection, SortField, StatName } from './enums';
+import { SortDirection, SortField, StatName } from '@/types/enums';
+import { Pokemon } from '@/types';
 
 export interface PokemonFilters {
   search: string;
@@ -24,7 +25,7 @@ export interface FilterState {
   filters: PokemonFilters;
   sort: SortOption;
   isModalOpen: boolean;
-  selectedPokemon: number | null;
+  selectedPokemon: Pokemon | null;
 }
 
 export interface FilterItem {

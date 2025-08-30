@@ -1,6 +1,6 @@
 'use client';
 
-import { usePokemonStore } from '@/lib/stores/pokemon-store';
+import { usePokemonStore } from '@/lib/stores/pokemonStore';
 import { GenericFilter } from '@/components/filters/common/GenericFilter';
 import { StatsContent } from '@/components/filters/stats/StatsContent';
 import { StatName } from '@/types/enums';

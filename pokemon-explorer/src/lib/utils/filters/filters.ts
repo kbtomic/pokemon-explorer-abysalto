@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { usePokemonStore } from '@/lib/stores/pokemon-store';
+import { usePokemonStore } from '@/lib/stores/pokemonStore';
 import { usePokemonTypes } from '@/lib/hooks/use-pokemon-types';
 import { usePokemonGenerations } from '@/lib/hooks/usePokemonGenerations';
 import { useAbilities } from '@/lib/hooks/useAbilities';

@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { usePokemonStore } from '@/lib/stores/pokemon-store';
+import { usePokemonStore } from '@/lib/stores/pokemonStore';
 import { useActiveFilters } from '@/lib/hooks/useActiveFilters';
 import { RotateCcw } from 'lucide-react';
 import { ButtonSize, ButtonVariant } from '@/types/enums';

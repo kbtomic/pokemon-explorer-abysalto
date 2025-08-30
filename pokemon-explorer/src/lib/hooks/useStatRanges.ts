@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { usePokemonStore } from '@/lib/stores/pokemon-store';
+import { usePokemonStore } from '@/lib/stores/pokemonStore';
 import { calculateStatRanges, StatRanges } from '@/lib/utils/filters/statRanges';
 
 export function useStatRanges() {
