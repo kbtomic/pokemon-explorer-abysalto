@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 
 interface DualRangeSliderProps {
   min: number;
@@ -21,21 +21,24 @@ export function DualRangeSlider({ min, max, value, onChange, className = '' }: D
     setIsDragging(handle);
   };
 
-  const handleMouseMove = (e: MouseEvent) => {
-    if (!isDragging || !sliderRef.current) return;
+  const handleMouseMove = useCallback(
+    (e: MouseEvent) => {
+      if (!isDragging || !sliderRef.current) return;
 
-    const rect = sliderRef.current.getBoundingClientRect();
-    const percentage = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
-    const newValue = Math.round((percentage / 100) * (max - min) + min);
+      const rect = sliderRef.current.getBoundingClientRect();
+      const percentage = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
+      const newValue = Math.round((percentage / 100) * (max - min) + min);
 
-    if (isDragging === 'min') {
-      const newMin = Math.min(newValue, value[1] - 1);
-      onChange([newMin, value[1]]);
-    } else {
-      const newMax = Math.max(newValue, value[0] + 1);
-      onChange([value[0], newMax]);
-    }
-  };
+      if (isDragging === 'min') {
+        const newMin = Math.min(newValue, value[1] - 1);
+        onChange([newMin, value[1]]);
+      } else {
+        const newMax = Math.max(newValue, value[0] + 1);
+        onChange([value[0], newMax]);
+      }
+    },
+    [isDragging, max, min, value, onChange]
+  );
 
   const handleMouseUp = () => {
     setIsDragging(null);

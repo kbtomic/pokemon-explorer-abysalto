@@ -180,7 +180,7 @@ export function TypeEffectivenessDisplay({ types }: TypeEffectivenessDisplayProp
           <EffectivenessRow
             title="Weak to:"
             types={effectiveness.weakTo.map(([type]) => type)}
-            multiplier={Math.max(...effectiveness.weakTo.map(([_, mult]) => mult))}
+            multiplier={Math.max(...effectiveness.weakTo.map(([, mult]) => mult))}
           />
         )}
 
@@ -188,7 +188,7 @@ export function TypeEffectivenessDisplay({ types }: TypeEffectivenessDisplayProp
           <EffectivenessRow
             title="Resists:"
             types={effectiveness.resists.map(([type]) => type)}
-            multiplier={Math.min(...effectiveness.resists.map(([_, mult]) => mult))}
+            multiplier={Math.min(...effectiveness.resists.map(([, mult]) => mult))}
           />
         )}
 

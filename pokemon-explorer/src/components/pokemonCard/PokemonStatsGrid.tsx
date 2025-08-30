@@ -1,6 +1,6 @@
 import { StatName } from '@/lib/constants/enums';
 import { Pokemon } from '@/types';
-import { PokemonStatItem } from './PokemonStatItem';
+import { PokemonStatItem } from '@/components/pokemonCard/PokemonStatItem';
 import { cn } from '@/lib/utils/cn';
 
 interface PokemonStatsGridProps {
