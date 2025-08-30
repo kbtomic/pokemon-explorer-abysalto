@@ -27,7 +27,8 @@ import {
   EncounterCondition,
   EvolutionTrigger,
 } from '@/types';
-import { DEFAULT_ITEMS_PER_PAGE } from '@/lib/constants/pagination';
+import { POKEMON_CHUNK_SIZE } from '@/lib/constants/pagination';
+import { measurePerformance } from '@/lib/utils/performance';
 
 const BASE_URL = 'https://pokeapi.co/api/v2';
 
@@ -41,14 +42,28 @@ class PokeAPIError extends Error {
   }
 }
 
-async function fetchAPI<T>(endpoint: string): Promise<T> {
-  const response = await fetch(`${BASE_URL}${endpoint}`);
+async function fetchAPI<T>(endpoint: string, retries: number = 3): Promise<T> {
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    try {
+      const response = await fetch(`${BASE_URL}${endpoint}`);
 
-  if (!response.ok) {
-    throw new PokeAPIError(`API request failed: ${response.statusText}`, response.status);
+      if (!response.ok) {
+        throw new PokeAPIError(`API request failed: ${response.statusText}`, response.status);
+      }
+
+      return response.json();
+    } catch (error) {
+      if (attempt === retries) {
+        throw error;
+      }
+
+      // Wait before retrying (exponential backoff)
+      const delay = Math.min(1000 * Math.pow(2, attempt - 1), 5000);
+      await new Promise(resolve => setTimeout(resolve, delay));
+    }
   }
 
-  return response.json();
+  throw new PokeAPIError('Max retries exceeded', 500);
 }
 
 // Generic function to get all items from any endpoint
@@ -86,14 +101,16 @@ export const pokeAPI = {
     return Promise.all(promises);
   },
 
-  // New: Get all Pokemon details with chunking for better performance
+  // New: Get all Pokemon details with optimized parallel chunking
   async getAllPokemonDetails(): Promise<Pokemon[]> {
-    // First get all Pokemon names
-    const allPokemonList = await this.getAllPokemonList();
-    const allNames = allPokemonList.results.map(p => p.name);
+    return measurePerformance('Pokemon Fetch All Details', async () => {
+      // First get all Pokemon names
+      const allPokemonList = await this.getAllPokemonList();
+      const allNames = allPokemonList.results.map(p => p.name);
 
-    // Fetch all Pokemon details in chunks
-    return this.getPokemonBatchChunked(allNames, DEFAULT_ITEMS_PER_PAGE);
+      // Fetch all Pokemon details with optimized parallel chunking
+      return this.getPokemonBatchChunked(allNames, POKEMON_CHUNK_SIZE);
+    });
   },
 
   // New: Paginated Pokemon fetching
@@ -101,15 +118,38 @@ export const pokeAPI = {
     return fetchAPI<PokemonListResponse>(`/pokemon?limit=${limit}&offset=${offset}`);
   },
 
-  // New: Batched Pokemon details fetching with chunking
+  // New: Batched Pokemon details fetching with controlled parallel chunking to avoid overwhelming PokeAPI
   async getPokemonBatchChunked(namesOrIds: (string | number)[], chunkSize: number = 50): Promise<Pokemon[]> {
-    const results: Pokemon[] = [];
-
+    // Create all chunks first
+    const chunks: (string | number)[][] = [];
     for (let i = 0; i < namesOrIds.length; i += chunkSize) {
-      const chunk = namesOrIds.slice(i, i + chunkSize);
-      const chunkPromises = chunk.map(id => this.getPokemon(id));
-      const chunkResults = await Promise.all(chunkPromises);
-      results.push(...chunkResults);
+      chunks.push(namesOrIds.slice(i, i + chunkSize));
+    }
+
+    // Process chunks with controlled concurrency to avoid overwhelming PokeAPI
+    const results: Pokemon[] = [];
+    const maxConcurrentChunks = 4; // Limit to 4 concurrent chunks to avoid resource exhaustion
+    const delayBetweenBatches = 50; // 50ms delay between batches
+
+    for (let i = 0; i < chunks.length; i += maxConcurrentChunks) {
+      const batch = chunks.slice(i, i + maxConcurrentChunks);
+
+      // Process this batch of chunks in parallel
+      const batchPromises = batch.map(chunk => {
+        const pokemonPromises = chunk.map(id => this.getPokemon(id));
+        return Promise.all(pokemonPromises);
+      });
+
+      // Wait for this batch to complete
+      const batchResults = await Promise.all(batchPromises);
+
+      // Flatten and add results
+      results.push(...batchResults.flat());
+
+      // Add delay between batches (except for the last batch)
+      if (i + maxConcurrentChunks < chunks.length) {
+        await new Promise(resolve => setTimeout(resolve, delayBetweenBatches));
+      }
     }
 
     return results;

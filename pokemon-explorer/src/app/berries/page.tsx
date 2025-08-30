@@ -18,7 +18,7 @@ import { PageLayout } from '@/components/common/PageLayout';
 import { DEFAULT_ITEMS_PER_PAGE } from '@/lib/constants/pagination';
 import { Theme } from '@/lib/constants/enums';
 
-const BATCH_SIZE = 50;
+const BATCH_SIZE = 100; // Fetch all berries in one API call (like Pokemon approach)
 
 function BerriesPageContent() {
   const [selectedBerry, setSelectedBerry] = useState<BerryBasic | null>(null);

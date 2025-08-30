@@ -1,13 +1,15 @@
 import { useQuery, useInfiniteQuery } from '@tanstack/react-query';
 import { pokeAPI } from '@/lib/api/pokeapi';
 
-// New: Hook to fetch all Pokemon at once with enhanced caching
+// New: Hook to fetch all Pokemon at once with enhanced caching and performance monitoring
 export function useAllPokemon() {
   return useQuery({
     queryKey: ['all-pokemon'],
     queryFn: () => pokeAPI.getAllPokemonDetails(),
     staleTime: 24 * 60 * 60 * 1000, // 24 hours
     gcTime: 7 * 24 * 60 * 60 * 1000, // 7 days
+    retry: 2, // Retry failed requests
+    retryDelay: attemptIndex => Math.min(1000 * 2 ** attemptIndex, 30000),
   });
 }
 

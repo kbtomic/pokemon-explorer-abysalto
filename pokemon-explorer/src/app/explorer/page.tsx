@@ -111,9 +111,15 @@ function ExplorerPageContent() {
 
   return (
     <div className="min-h-screen bg-white">
-      <Header />
+      <div className="sticky top-0 z-40 bg-white">
+        <Header />
+        <div className="border-b border-red-200">
+          <DesktopFilterBar />
+          <MobileFilterBar />
+        </div>
+      </div>
       <div className="container mx-auto px-4 py-8">
-        <PageHeader title="Pokemon Explorer" description="Discover and filter Pokemon from all generations" />
+        {/* <PageHeader title="Pokemon Explorer" description="Discover and filter Pokemon from all generations" /> */}
 
         {/* Performance Indicator */}
         <PerformanceIndicator
@@ -121,16 +127,6 @@ function ExplorerPageContent() {
           itemCount={paginatedResults.items.length}
           threshold={virtualizationThreshold}
         />
-
-        {/* Desktop Filter Bar */}
-        <div className="hidden md:block mb-6">
-          <DesktopFilterBar />
-        </div>
-
-        {/* Mobile Filter Bar */}
-        <div className="md:hidden mb-6">
-          <MobileFilterBar />
-        </div>
 
         {/* Pokemon Grid */}
         <PokemonGrid pokemonList={paginatedResults.items} isLoading={isLoading} />
@@ -154,7 +150,9 @@ export default function ExplorerPage() {
     <Suspense
       fallback={
         <div className="min-h-screen bg-white">
-          <Header />
+          <div className="sticky top-0 z-40 bg-white">
+            <Header />
+          </div>
           <div className="container mx-auto px-4 py-8">
             <div className="text-center">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
