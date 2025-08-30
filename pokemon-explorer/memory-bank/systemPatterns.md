@@ -86,415 +86,385 @@ interface PokemonStore {
 }
 ```
 
-#### **React Query Integration**
+#### **URL Synchronization Pattern (NEW)**
 
 ```typescript
-// Optimized data fetching with caching
-const { data, isLoading, error } = usePokemonList();
-const { data: pokemon } = usePokemon(nameOrId);
+// URL sync callback type
+type URLSyncCallback = (filters: PokemonFilters, sort: SortOption) => void;
+
+// Store with URL sync integration
+interface PokemonStore {
+  // ... existing state
+  urlSyncCallback: URLSyncCallback | null;
+
+  // URL sync actions
+  setURLSyncCallback: (callback: URLSyncCallback | null) => void;
+}
+
+// Filter actions with URL sync
+setSearch: search =>
+  set(state => {
+    const newState = {
+      filters: { ...state.filters, search },
+      pagination: { ...state.pagination, currentPage: 1 },
+    };
+
+    // Trigger URL sync if callback is set
+    if (state.urlSyncCallback) {
+      state.urlSyncCallback(newState.filters, state.sort);
+    }
+
+    return newState;
+  }),
 ```
 
-### **4. Data Flow Architecture**
+### **4. Data Fetching Architecture**
 
-#### **Unidirectional Data Flow**
-
-```
-API → React Query → Zustand Store → Components → UI
-```
-
-#### **Event-Driven Updates**
-
-```
-User Action → Component → Store Action → State Update → UI Re-render
-```
-
-## Feature-Specific Patterns
-
-### **1. Pokemon Exploration Pattern**
-
-#### **Progressive Information Disclosure**
-
-```
-Pokemon Grid → Pokemon Card → Modal Overview → Detail Page
-```
-
-#### **Filtering and Sorting Pattern**
+#### **All Pokemon Caching Pattern (NEW)**
 
 ```typescript
-// Composable filter system
-const filteredPokemon = useMemo(() => {
-  return pokemonList
-    .filter(pokemon => matchesTypeFilter(pokemon, filters.types))
-    .filter(pokemon => matchesGenerationFilter(pokemon, filters.generations))
-    .filter(pokemon => matchesStatsFilter(pokemon, filters.stats))
-    .filter(pokemon => matchesSearchFilter(pokemon, filters.search))
-    .sort((a, b) => sortPokemon(a, b, sort));
-}, [pokemonList, filters, sort]);
-```
-
-### **2. API Integration Pattern**
-
-#### **React Query Hooks Pattern**
-
-```typescript
-// Custom hooks for API operations
-export function usePokemonList(limit?: number, offset: number = 0) {
+// Single request to fetch all Pokemon with comprehensive caching
+export function useAllPokemon() {
   return useQuery({
-    queryKey: ['pokemon-list', limit, offset],
-    queryFn: () => pokeAPI.getPokemonList(limit, offset),
+    queryKey: ['pokemon', 'all'],
+    queryFn: () => pokeAPI.getAllPokemonDetails(),
     staleTime: 5 * 60 * 1000, // 5 minutes
     gcTime: 10 * 60 * 1000, // 10 minutes
   });
 }
+
+// Zustand store integration for instant access
+const { setPokemonList, pokemonList } = usePokemonStore();
+
+useEffect(() => {
+  if (allPokemon) {
+    setPokemonList(allPokemon); // Cache all Pokemon in store
+  }
+}, [allPokemon, setPokemonList]);
 ```
 
-#### **Error Handling Pattern**
+#### **Chunked Data Loading Pattern (Legacy - For Other Endpoints)**
+
+```typescript
+// Handle large datasets efficiently for other endpoints
+export function usePokemonSpeciesBatchChunked(speciesNames: string[], batchSize: number) {
+  return useQuery({
+    queryKey: ['pokemon-species', 'batch', speciesNames],
+    queryFn: () => loadSpeciesInChunks(speciesNames, batchSize),
+    enabled: speciesNames.length > 0,
+  });
+}
+```
+
+### **5. Image Handling Architecture (NEW)**
+
+#### **Null-Safe Image Pattern**
+
+```typescript
+// Updated getPokemonImageUrl function
+export function getPokemonImageUrl(
+  pokemonOrId: Pokemon | number,
+  variant: PokemonImageVariant = PokemonImageVariant.DEFAULT
+): string | null {
+  // ... logic to get image URL
+  return artwork.front_default || pokemon.sprites.front_default || null;
+}
+
+// Component with null checking
+export function PokemonImage({ pokemon, size = 112, className }: PokemonImageProps) {
+  const [imageError, setImageError] = useState(false);
+  const imageUrl = getPokemonImageUrl(pokemon);
+
+  // Show fallback if no image URL is available or if there was an error
+  const shouldShowFallback = !imageUrl || imageError;
+
+  return (
+    <div className={cn('relative bg-gradient-to-br from-gray-100 to-gray-200 rounded-full p-2', className)}>
+      {shouldShowFallback ? (
+        <div className="flex items-center justify-center w-full h-full">
+          <Image src="/favicon.svg" alt="Pokemon Explorer" width={size * 0.6} height={size * 0.6} className="object-contain opacity-60" />
+        </div>
+      ) : (
+        <Image
+          src={imageUrl}
+          alt={`${pokemon.name} official artwork`}
+          width={size}
+          height={size}
+          className="object-contain drop-shadow-sm"
+          onError={handleImageError}
+        />
+      )}
+    </div>
+  );
+}
+```
+
+### **6. URL Management Architecture (NEW)**
+
+#### **URL Synchronization Pattern**
+
+```typescript
+// URL sync utilities
+export function updateURLWithFilters(
+  searchParams: URLSearchParams,
+  filters: PokemonFilters,
+  sort: SortOption,
+  router: AppRouterInstance
+): void {
+  const newSearchParams = new URLSearchParams(searchParams);
+
+  // Update filter parameters
+  if (filters.search) {
+    newSearchParams.set('search', filters.search);
+  } else {
+    newSearchParams.delete('search');
+  }
+
+  // ... handle other filters
+
+  // Reset page to 1 when filters change
+  newSearchParams.set('page', '1');
+
+  // Update URL without triggering a page reload
+  router.push(`/explorer?${newSearchParams.toString()}`, { scroll: false });
+}
+
+// URL parsing utilities
+export function parseURLFilters(searchParams: URLSearchParams): {
+  filters: Partial<PokemonFilters>;
+  sort: Partial<SortOption>;
+  page: number;
+  itemsPerPage: number;
+} {
+  // Parse URL parameters back to filter state
+  // ... implementation
+}
+```
+
+#### **Explorer Page Integration Pattern**
+
+```typescript
+// Set up URL sync callback
+useEffect(() => {
+  const urlSyncCallback = (filters: PokemonFilters, sort: SortOption) => {
+    updateURLWithFilters(searchParams, filters, sort, router);
+  };
+
+  setURLSyncCallback(urlSyncCallback);
+
+  return () => setURLSyncCallback(null);
+}, [searchParams, router, setURLSyncCallback]);
+
+// Handle URL parameters for pagination and filters
+useEffect(() => {
+  const { page, itemsPerPage } = parseURLFilters(searchParams);
+
+  if (page && page > 0 && page !== pagination.currentPage) {
+    setCurrentPage(page);
+  }
+
+  if (itemsPerPage && itemsPerPage > 0 && itemsPerPage !== pagination.itemsPerPage) {
+    setItemsPerPage(itemsPerPage);
+  }
+}, [searchParams, pagination.currentPage, pagination.itemsPerPage, setCurrentPage, setItemsPerPage]);
+```
+
+### **7. Filtering and Sorting Architecture**
+
+#### **Filter Chain Pattern**
+
+```typescript
+// Composable filter functions
+export function filterPokemon(
+  pokemonList: Pokemon[],
+  filters: PokemonFilters,
+  getGenerationFromIdFn: (id: number) => number | null
+): Pokemon[] {
+  return pokemonList.filter(pokemon => {
+    // Search filter
+    if (filters.search && !pokemon.name.toLowerCase().includes(filters.search.toLowerCase())) {
+      return false;
+    }
+
+    // Type filter
+    if (filters.types.length > 0) {
+      const pokemonTypes = pokemon.types.map(t => t.type.name);
+      if (!filters.types.some(type => pokemonTypes.includes(type))) {
+        return false;
+      }
+    }
+
+    // ... other filters
+
+    return true;
+  });
+}
+```
+
+#### **Sort Pattern**
+
+```typescript
+// Flexible sorting system
+export function sortPokemon(pokemonList: Pokemon[], sort: SortOption, getGenerationFromIdFn: (id: number) => number | null): Pokemon[] {
+  return [...pokemonList].sort((a, b) => {
+    let aValue: string | number;
+    let bValue: string | number;
+
+    switch (sort.field) {
+      case SortField.NAME:
+        aValue = a.name;
+        bValue = b.name;
+        break;
+      case SortField.ID:
+        aValue = a.id;
+        bValue = b.id;
+        break;
+      // ... other sort fields
+    }
+
+    const comparison = aValue < bValue ? -1 : aValue > bValue ? 1 : 0;
+    return sort.direction === SortDirection.ASC ? comparison : -comparison;
+  });
+}
+```
+
+### **8. Performance Optimization Patterns**
+
+#### **All Pokemon Caching Strategy (NEW)**
+
+```typescript
+// Performance optimization with complete data caching
+const filteredAndSortedPokemon = useMemo(() => {
+  if (!pokemonList.length) return [];
+
+  const filtered = filterPokemon(pokemonList, filters, getGenerationFromId);
+  return sortPokemon(filtered, sort, getGenerationFromId);
+}, [pokemonList, filters, sort, getGenerationFromId]);
+
+const paginatedResults = useMemo(() => {
+  return paginateItems(filteredAndSortedPokemon, pagination.currentPage, pagination.itemsPerPage);
+}, [filteredAndSortedPokemon, pagination.currentPage, pagination.itemsPerPage]);
+```
+
+#### **Virtual Scrolling Pattern (For Large Lists)**
+
+```typescript
+// Performance optimization hook for large datasets
+export function usePerformanceOptimization(itemCount: number) {
+  const useVirtualization = itemCount > VIRTUALIZATION_THRESHOLD;
+  const virtualizationThreshold = VIRTUALIZATION_THRESHOLD;
+
+  return { useVirtualization, virtualizationThreshold };
+}
+```
+
+### **9. Error Handling Architecture**
+
+#### **Error Boundary Pattern**
 
 ```typescript
 // Comprehensive error handling
-if (error) {
+export function ErrorBoundary({ children }: { children: React.ReactNode }) {
   return (
-    <ErrorBoundary>
-      <ErrorMessage error={error} onRetry={refetch} />
+    <ErrorBoundary
+      fallback={<ErrorFallback />}
+      onError={(error, errorInfo) => {
+        console.error('Error caught by boundary:', error, errorInfo);
+      }}
+    >
+      {children}
     </ErrorBoundary>
   );
 }
 ```
 
-### **3. Performance Optimization Patterns**
-
-#### **Virtual Scrolling Pattern**
+#### **API Error Handling Pattern**
 
 ```typescript
-// Efficient rendering for large lists
-const { useVirtualization, virtualizationThreshold } = usePerformanceOptimization(pokemonList.length);
+// Consistent API error handling
+class PokeAPIError extends Error {
+  constructor(
+    message: string,
+    public status?: number
+  ) {
+    super(message);
+    this.name = 'PokeAPIError';
+  }
+}
 
-if (useVirtualization) {
-  return <VirtualizedPokemonGrid pokemonList={pokemonList} />;
+async function fetchAPI<T>(endpoint: string): Promise<T> {
+  const response = await fetch(`${BASE_URL}${endpoint}`);
+
+  if (!response.ok) {
+    throw new PokeAPIError(`API request failed: ${response.statusText}`, response.status);
+  }
+
+  return response.json();
 }
 ```
 
-#### **Image Optimization Pattern**
+### **10. Type Safety Patterns**
 
-```typescript
-// Next.js Image component with optimization
-<Image
-  src={pokemonImageUrl}
-  alt={`${pokemon.name} official artwork`}
-  width={200}
-  height={200}
-  priority={false}
-  placeholder="blur"
-  blurDataURL="data:image/jpeg;base64,..."
-/>
-```
+#### **Strict TypeScript Configuration**
 
-### **4. Accessibility Patterns**
-
-#### **WCAG Compliance Pattern**
-
-```typescript
-// Comprehensive accessibility implementation
-<button
-  aria-label={`View details for ${pokemon.name}`}
-  aria-expanded={isModalOpen}
-  aria-controls="pokemon-modal"
-  onClick={handlePokemonClick}
->
-  <PokemonCard pokemon={pokemon} />
-</button>
-```
-
-#### **Keyboard Navigation Pattern**
-
-```typescript
-// Full keyboard navigation support
-const handleKeyDown = (event: KeyboardEvent) => {
-  if (event.key === 'Enter' || event.key === ' ') {
-    event.preventDefault();
-    handlePokemonClick();
+```json
+{
+  "compilerOptions": {
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true
   }
-};
+}
 ```
 
-## Data Architecture Patterns
-
-### **1. TypeScript Type System**
-
-#### **Comprehensive Type Definitions**
+#### **Type-Safe API Patterns**
 
 ```typescript
-// Complete Pokemon type system
+// Complete type definitions for all API responses
 export interface Pokemon {
   id: number;
   name: string;
+  height: number;
+  weight: number;
+  base_experience: number;
+  sprites: {
+    front_default: string;
+    front_shiny: string;
+    other: {
+      'official-artwork': {
+        front_default: string;
+        front_shiny: string;
+      };
+    };
+  };
   types: PokemonType[];
   stats: PokemonStat[];
   abilities: PokemonAbility[];
-  moves: PokemonMove[];
-  sprites: PokemonSprites;
-  // ... comprehensive type definitions
+  // ... other properties
 }
 ```
 
-#### **API Response Types**
+## Design Patterns Summary
 
-```typescript
-// Type-safe API responses
-export interface PokemonListResponse {
-  count: number;
-  next: string | null;
-  previous: string | null;
-  results: { name: string; url: string }[];
-}
-```
+### **Key Architectural Principles:**
 
-### **2. Data Transformation Patterns**
+1. **Separation of Concerns**: Clear boundaries between data, logic, and presentation
+2. **Single Responsibility**: Each component and function has one clear purpose
+3. **Composition over Inheritance**: Reusable components composed together
+4. **Type Safety**: Full TypeScript coverage with strict configuration
+5. **Performance First**: Optimized rendering and data fetching
+6. **User Experience**: Smooth interactions and proper error handling
+7. **URL State Management**: Filter state preserved in URL for sharing
+8. **Image Fallback**: Graceful handling of unavailable images
 
-#### **Utility Functions Pattern**
+### **Pattern Benefits:**
 
-```typescript
-// Pure functions for data transformation
-export function filterPokemon(pokemonList: Pokemon[], filters: FilterState): Pokemon[] {
-  return pokemonList.filter(pokemon => {
-    const matchesSearch = pokemon.name.toLowerCase().includes(filters.search.toLowerCase());
-    const matchesTypes = filters.types.length === 0 || pokemon.types.some(type => filters.types.includes(type.type.name));
-    // ... additional filter logic
-    return matchesSearch && matchesTypes;
-  });
-}
-```
-
-#### **Memoization Pattern**
-
-```typescript
-// Performance optimization with useMemo
-const filteredPokemon = useMemo(() => {
-  return filterPokemon(pokemonList, filters);
-}, [pokemonList, filters]);
-```
-
-## Styling Architecture Patterns
-
-### **1. Tailwind CSS Utility-First Pattern**
-
-#### **Component Styling**
-
-```typescript
-// Utility-first approach with component composition
-const buttonClasses = "px-4 py-2 rounded-md font-medium transition-colors duration-200";
-
-<button className={`${buttonClasses} bg-blue-600 text-white hover:bg-blue-700`}>
-  Primary Button
-</button>
-```
-
-#### **Responsive Design Pattern**
-
-```typescript
-// Mobile-first responsive design
-<div className="
-  w-full p-4
-  sm:w-auto sm:p-6
-  md:flex md:items-center
-  lg:justify-between
-">
-```
-
-### **2. Dark Mode Pattern**
-
-#### **Theme Switching**
-
-```typescript
-// Dark mode support with Tailwind
-<div className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
-  <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-    Pokemon Explorer
-  </h1>
-</div>
-```
-
-## Testing Architecture Patterns
-
-### **1. Component Testing Pattern**
-
-#### **React Testing Library Pattern**
-
-```typescript
-// Component testing with user-centric approach
-describe('PokemonCard', () => {
-  it('renders pokemon information correctly', () => {
-    render(<PokemonCard pokemon={mockPokemon} />);
-    expect(screen.getByText(mockPokemon.name)).toBeInTheDocument();
-    expect(screen.getByAltText(`${mockPokemon.name} official artwork`)).toBeInTheDocument();
-  });
-});
-```
-
-### **2. Integration Testing Pattern**
-
-#### **API Integration Testing**
-
-```typescript
-// Testing API integration
-describe('Pokemon API Integration', () => {
-  it('fetches pokemon list successfully', async () => {
-    const { result } = renderHook(() => usePokemonList());
-    await waitFor(() => expect(result.current.isLoading).toBe(false));
-    expect(result.current.data).toBeDefined();
-  });
-});
-```
-
-## Error Handling Patterns
-
-### **1. Error Boundary Pattern**
-
-#### **Component Error Boundaries**
-
-```typescript
-// Graceful error handling
-class PokemonErrorBoundary extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { hasError: false };
-  }
-
-  static getDerivedStateFromError(error) {
-    return { hasError: true };
-  }
-
-  render() {
-    if (this.state.hasError) {
-      return <ErrorFallback onReset={() => this.setState({ hasError: false })} />;
-    }
-    return this.props.children;
-  }
-}
-```
-
-### **2. API Error Handling Pattern**
-
-#### **Comprehensive Error States**
-
-```typescript
-// Multiple error handling strategies
-if (error) {
-  if (error.status === 404) {
-    return <NotFoundError />;
-  }
-  if (error.status === 500) {
-    return <ServerError onRetry={refetch} />;
-  }
-  return <GenericError error={error} />;
-}
-```
-
-## Performance Patterns
-
-### **1. Code Splitting Pattern**
-
-#### **Dynamic Imports**
-
-```typescript
-// Lazy loading for performance
-const PokemonModal = dynamic(() => import('./PokemonModal'), {
-  loading: () => <ModalSkeleton />,
-  ssr: false,
-});
-```
-
-### **2. Caching Pattern**
-
-#### **React Query Caching Strategy**
-
-```typescript
-// Optimized caching configuration
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 5 * 60 * 1000, // 5 minutes
-      gcTime: 10 * 60 * 1000, // 10 minutes
-      retry: 3,
-      retryDelay: attemptIndex => Math.min(1000 * 2 ** attemptIndex, 30000),
-    },
-  },
-});
-```
-
-## Security Patterns
-
-### **1. Input Validation Pattern**
-
-#### **Zod Schema Validation**
-
-```typescript
-// Type-safe input validation
-const pokemonSchema = z.object({
-  id: z.number().positive(),
-  name: z.string().min(1).max(50),
-  types: z.array(z.string()).min(1).max(2),
-});
-
-const validatedData = pokemonSchema.parse(inputData);
-```
-
-### **2. XSS Prevention Pattern**
-
-#### **Safe Data Rendering**
-
-```typescript
-// Preventing XSS attacks
-const sanitizedName = DOMPurify.sanitize(pokemon.name);
-return <span dangerouslySetInnerHTML={{ __html: sanitizedName }} />;
-```
-
-## Deployment Patterns
-
-### **1. Environment Configuration Pattern**
-
-#### **Environment Variables**
-
-```typescript
-// Environment-specific configuration
-export const config = {
-  apiUrl: process.env.NEXT_PUBLIC_API_URL || 'https://pokeapi.co/api/v2',
-  environment: process.env.NODE_ENV || 'development',
-  isProduction: process.env.NODE_ENV === 'production',
-};
-```
-
-### **2. Build Optimization Pattern**
-
-#### **Next.js Build Configuration**
-
-```typescript
-// Optimized build configuration
-const nextConfig: NextConfig = {
-  output: 'standalone',
-  compress: true,
-  poweredByHeader: false,
-  generateEtags: false,
-  images: {
-    domains: ['raw.githubusercontent.com'],
-    formats: ['image/webp', 'image/avif'],
-  },
-};
-```
-
-## Summary
-
-The Pokemon Explorer follows **modern React/Next.js best practices** with:
-
-- **Component-based architecture** with clear separation of concerns
-- **State management** with Zustand and React Query
-- **Type safety** with comprehensive TypeScript integration
-- **Performance optimization** with virtual scrolling and image optimization
-- **Accessibility** with WCAG compliance and keyboard navigation
-- **Error handling** with comprehensive error boundaries and states
-- **Testing** with React Testing Library and Jest
-- **Styling** with Tailwind CSS utility-first approach
-- **Security** with input validation and XSS prevention
-- **Deployment** with optimized build configuration
-
-This architecture provides a **scalable, maintainable, and performant** foundation for the Pokemon Explorer application.
+- **Maintainability**: Clean, organized code structure
+- **Scalability**: Easy to add new features and components
+- **Performance**: Optimized rendering and data handling
+- **User Experience**: Smooth, responsive interactions
+- **Developer Experience**: Type safety and clear patterns
+- **Reliability**: Comprehensive error handling and fallbacks
