@@ -17,7 +17,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronDown, Loader2 } from 'lucide-react';
 import { PokemonSpecies } from '@/types';
-import { ButtonVariant } from '@/types/enums';
+import { ButtonVariant } from '@/lib/constants/enums';
 
 const BATCH_SIZE = 50;
 

@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { ButtonVariant, ButtonSize } from '@/types/enums';
+import { ButtonVariant, ButtonSize } from '@/lib/constants/enums';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;

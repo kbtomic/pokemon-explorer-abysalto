@@ -13,7 +13,7 @@ import { TypeEffectivenessDisplay } from '@/components/pokemon/type-effectivenes
 import { PokemonVarietiesDisplay } from '@/components/pokemon/pokemon-varieties-display';
 import { ComprehensiveMovesDisplay } from '@/components/pokemon/comprehensive-moves-display';
 import { Button } from '@/components/ui/button';
-import { ButtonVariant } from '@/types/enums';
+import { ButtonVariant } from '@/lib/constants/enums';
 import Image from 'next/image';
 import { ArrowLeft, Home } from 'lucide-react';
 

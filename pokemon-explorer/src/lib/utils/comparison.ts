@@ -1,4 +1,4 @@
-import { StatName } from '@/types/enums';
+import { StatName } from '@/lib/constants/enums';
 import { SortOption, PokemonFilters } from '@/types/filters';
 
 /**

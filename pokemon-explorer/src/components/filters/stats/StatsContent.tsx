@@ -1,7 +1,7 @@
-import { STAT_NAMES } from '@/types';
+import { STAT_NAMES } from '@/lib/constants/filters';
 import { LoadingStatItem } from './LoadingStatItem';
 import { StatItem } from './StatItem';
-import { StatName } from '@/types/enums';
+import { StatName } from '@/lib/constants/enums';
 
 interface StatsContentProps {
   statRanges: Record<StatName, [number, number]>;

@@ -1,7 +1,7 @@
 import { useQuery, useInfiniteQuery } from '@tanstack/react-query';
 import { pokeAPI } from '@/lib/api/pokeapi';
 import type { PokemonSpecies, Ability } from '@/types';
-import { LanguageCode, VersionGroup } from '@/types/enums';
+import { LanguageCode, VersionGroup } from '@/lib/constants/enums';
 
 export function usePokemonSpecies(pokemonId: number) {
   return useQuery({

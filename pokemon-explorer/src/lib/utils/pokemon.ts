@@ -1,5 +1,5 @@
 import { Pokemon, PokemonFilters, PokemonSpecies, SortOption } from '@/types';
-import { StatName, PokemonImageVariant, SortField, SortDirection } from '@/types/enums';
+import { StatName, PokemonImageVariant, SortField, SortDirection } from '@/lib/constants/enums';
 
 export function getPokemonImageUrl(
   pokemonOrId: Pokemon | number,

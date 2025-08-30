@@ -1,15 +1,13 @@
-import { StatName } from '@/types/enums';
+import { StatName } from '@/lib/constants/enums';
 import { Pokemon } from '@/types';
+import { StatConfig, SummaryItem, InfoCardConfig } from '@/types/stats';
+
+// Re-export SummaryItem for backward compatibility
+export type { SummaryItem };
 
 // ============================================================================
 // STAT CONFIGURATION
 // ============================================================================
-
-export interface StatConfig {
-  name: StatName;
-  color: string;
-  barColor: string;
-}
 
 export const STATS_CONFIG: StatConfig[] = [
   { name: StatName.HP, color: 'text-red-400', barColor: 'bg-red-500' },
@@ -26,12 +24,6 @@ export const MAX_STAT_VALUE = 255;
 // SUMMARY STATS CONFIGURATION
 // ============================================================================
 
-export interface SummaryItem {
-  value: number;
-  label: string;
-  color: string;
-}
-
 export const SUMMARY_ITEMS_CONFIG: Omit<SummaryItem, 'value'>[] = [
   { label: 'Total Stats', color: 'text-white' },
   { label: 'Highest Stat', color: 'text-green-400' },
@@ -42,12 +34,6 @@ export const SUMMARY_ITEMS_CONFIG: Omit<SummaryItem, 'value'>[] = [
 // ============================================================================
 // POKEMON INFO CARDS CONFIGURATION
 // ============================================================================
-
-export interface InfoCardConfig {
-  label: string;
-  valueKey: keyof Pokemon;
-  formatter: (value: number) => string;
-}
 
 export const TOTAL_STATS_LABEL = 'Total Stats';
 

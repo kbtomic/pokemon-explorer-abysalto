@@ -1,7 +1,7 @@
-import { STAT_NAMES } from '@/types';
+import { STAT_NAMES } from '@/lib/constants/filters';
 import { DualRangeSlider } from '@/components/ui/DualRangeSlider';
 import { useStatItem } from '@/lib/hooks/useStatItem';
-import { StatName } from '@/types/enums';
+import { StatName } from '@/lib/constants/enums';
 
 interface StatItemProps {
   statName: StatName;

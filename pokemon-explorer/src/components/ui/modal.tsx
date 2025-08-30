@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from './button';
-import { ButtonVariant, ButtonSize } from '@/types/enums';
+import { ButtonVariant, ButtonSize } from '@/lib/constants/enums';
 import { handleDocumentEscape } from '@/lib/utils/keyboard';
 
 export interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {

@@ -1,11 +1,6 @@
 import { SortOption } from '@/types';
-import { SortField } from '@/types/enums';
-
-export interface SortOptionConfig {
-  value: SortOption['field'];
-  label: string;
-  description?: string;
-}
+import { SortField } from '@/lib/constants/enums';
+import { SortOptionConfig } from '@/types/sort';
 
 export const SORT_OPTIONS: SortOptionConfig[] = [
   { value: SortField.ID, label: 'ID', description: 'Sort by Pokemon ID' },

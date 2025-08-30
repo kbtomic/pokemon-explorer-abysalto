@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { ButtonVariant, ButtonSize } from '@/types/enums';
+import { ButtonVariant, ButtonSize } from '@/lib/constants/enums';
 
 interface PaginationButtonProps {
   page: number;

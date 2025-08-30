@@ -5,9 +5,9 @@ import Link from 'next/link';
 import { useBerriesPaginated, useBerry, useBerryFirmnessById, useBerryFlavor } from '@/lib/hooks/use-pokemon';
 import { Button } from '@/components/ui/button';
 import { Header } from '@/components/header/Header';
-import { ArrowLeft, Leaf, Droplets, Flame, Zap, Heart, Shield, Sparkles, ChevronDown, Loader2 } from 'lucide-react';
+import { ArrowLeft, Leaf, Droplets, Flame, Zap, Heart, Shield, ChevronDown, Loader2 } from 'lucide-react';
 import Image from 'next/image';
-import { ButtonSize, ButtonVariant } from '@/types/enums';
+import { ButtonSize, ButtonVariant } from '@/lib/constants/enums';
 
 const BATCH_SIZE = 50;
 

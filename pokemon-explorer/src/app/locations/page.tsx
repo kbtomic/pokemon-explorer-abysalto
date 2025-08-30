@@ -6,7 +6,7 @@ import { useLocationsPaginated, useLocation, useLocationArea, useRegion } from '
 import { Button } from '@/components/ui/button';
 import { Header } from '@/components/header/Header';
 import { ArrowLeft, Map, MapPin, Globe, Trees, Mountain, Waves, ChevronDown, Loader2 } from 'lucide-react';
-import { ButtonSize, ButtonVariant } from '@/types/enums';
+import { ButtonSize, ButtonVariant } from '@/lib/constants/enums';
 
 const BATCH_SIZE = 50;
 

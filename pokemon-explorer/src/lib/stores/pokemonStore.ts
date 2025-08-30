@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { Pokemon, PokemonFilters, SortOption, FilterState } from '@/types';
 import { calculateStatRanges } from '@/lib/utils/filters/statRanges';
-import { SortDirection, SortField, StatName } from '@/types/enums';
+import { SortDirection, SortField, StatName } from '@/lib/constants/enums';
 import { DEFAULT_ITEMS_PER_PAGE } from '@/lib/constants/pagination';
 
 interface PaginationState {

@@ -1,4 +1,4 @@
-import { StatName } from '@/types/enums';
+import { StatName } from '@/lib/constants/enums';
 import { Heart, Zap, Shield, Target, Gauge } from 'lucide-react';
 
 export const getStatIconComponent = (statName: StatName) => {

@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Header } from '@/components/header/Header';
 import { ArrowLeft, Package, Star, Zap, Heart, Shield, Sword, ChevronDown, Loader2 } from 'lucide-react';
 import Image from 'next/image';
-import { ButtonSize, ButtonVariant } from '@/types/enums';
+import { ButtonSize, ButtonVariant } from '@/lib/constants/enums';
 
 const BATCH_SIZE = 50;
 

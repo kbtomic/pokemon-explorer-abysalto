@@ -1,7 +1,7 @@
 import { SortOption } from '@/types';
 import { Button } from '@/components/ui/button';
 import { ArrowUp, ArrowDown } from 'lucide-react';
-import { SortDirection, ButtonVariant, ButtonSize } from '@/types/enums';
+import { SortDirection, ButtonVariant, ButtonSize } from '@/lib/constants/enums';
 
 interface SortDirectionToggleProps {
   direction: SortOption['direction'];

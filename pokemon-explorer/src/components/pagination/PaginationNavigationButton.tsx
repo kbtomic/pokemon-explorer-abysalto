@@ -1,6 +1,6 @@
 import { LucideIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { ButtonVariant, ButtonSize } from '@/types/enums';
+import { ButtonVariant, ButtonSize } from '@/lib/constants/enums';
 
 interface PaginationNavigationButtonProps {
   icon: LucideIcon;

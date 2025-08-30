@@ -1,5 +1,5 @@
-import { STAT_NAMES } from '@/types';
-import { StatName } from '@/types/enums';
+import { STAT_NAMES } from '@/lib/constants/filters';
+import { StatName } from '@/lib/constants/enums';
 
 interface LoadingStatItemProps {
   statName: StatName;

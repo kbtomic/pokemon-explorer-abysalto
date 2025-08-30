@@ -1,13 +1,5 @@
 import { Filter, BarChart3, Search, Leaf, Package, MapPin } from 'lucide-react';
-import { LucideIcon } from 'lucide-react';
-
-export interface Feature {
-  icon: LucideIcon;
-  title: string;
-  description: string;
-  iconBgColor: string;
-  iconColor: string;
-}
+import { Feature } from '@/types/features';
 
 export const features: Feature[] = [
   {

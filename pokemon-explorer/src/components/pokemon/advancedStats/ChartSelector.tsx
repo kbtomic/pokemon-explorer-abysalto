@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { ButtonVariant, ButtonSize, ChartType } from '@/types/enums';
+import { ButtonVariant, ButtonSize, ChartType } from '@/lib/constants/enums';
 import { capitalize } from '@/lib/utils/stringUtils';
 
 interface ChartSelectorProps {

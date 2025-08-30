@@ -1,5 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Feature } from '@/lib/data/features';
+import { Feature } from '@/types/features';
 
 export default function FeatureCard({ icon: Icon, title, description, iconBgColor, iconColor }: Feature) {
   return (

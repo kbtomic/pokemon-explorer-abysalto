@@ -1,5 +1,5 @@
 import { Pokemon } from '@/types';
-import { STAT_NAMES } from '@/types/filters';
+import { STAT_NAMES } from '@/lib/constants/filters';
 import { getStatData, getStatBarColor } from '@/lib/utils/chartUtils';
 import {
   MAX_STAT_VALUE,

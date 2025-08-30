@@ -1,5 +1,5 @@
 import { SortOption } from '@/types';
-import { SortDirection } from '@/types/enums';
+import { SortDirection } from '@/lib/constants/enums';
 import { SORT_OPTIONS } from '@/lib/utils/sortOptions';
 import { FilterItem } from '@/types/filters';
 

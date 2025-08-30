@@ -1,4 +1,4 @@
-import { StatName } from '@/types/enums';
+import { StatName } from '@/lib/constants/enums';
 
 export function useStatItem(statName: StatName, statRange: [number, number], currentFilter: [number, number]) {
   const effectiveRange: [number, number] = currentFilter && currentFilter[0] !== currentFilter[1] ? currentFilter : statRange;

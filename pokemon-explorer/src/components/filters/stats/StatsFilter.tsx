@@ -3,7 +3,7 @@
 import { usePokemonStore } from '@/lib/stores/pokemonStore';
 import { GenericFilter } from '@/components/filters/common/GenericFilter';
 import { StatsContent } from '@/components/filters/stats/StatsContent';
-import { StatName } from '@/types/enums';
+import { StatName } from '@/lib/constants/enums';
 
 export function StatsFilter() {
   const statsFilters = usePokemonStore(state => state.filters.stats);

@@ -1,0 +1,159 @@
+---
+title: File Organization Structure
+description: Guidelines for organizing files by type across the codebase
+---
+
+# File Organization Structure
+
+This document outlines the standardized file organization structure for the Pokemon Explorer project.
+
+## Directory Structure Overview
+
+```
+src/
+├── types/           # TypeScript interfaces and type definitions
+├── lib/
+│   ├── constants/   # Configuration constants and enums
+│   │   ├── enums/   # All enum definitions
+│   │   └── ...      # Other configuration files
+│   └── ...
+└── ...
+```
+
+## Organization Rules
+
+### 1. Types Directory (`src/types/`)
+
+**Purpose**: Contains all TypeScript interfaces, types, and type definitions.
+
+**What belongs here**:
+
+- Interface definitions
+- Type aliases
+- Mapped types
+- Union types
+- Generic type definitions
+
+**Examples**:
+
+- `Pokemon.ts` - Pokemon-related interfaces
+- `filters.ts` - Filter-related interfaces
+- `stats.ts` - Statistics-related interfaces
+- `sort.ts` - Sorting-related interfaces
+- `features.ts` - Feature-related interfaces
+
+### 2. Constants Directory (`src/lib/constants/`)
+
+**Purpose**: Contains all configuration constants, enums, and static data.
+
+**What belongs here**:
+
+- Configuration constants
+- Enum definitions
+- Static lookup tables
+- Default values
+- Magic numbers (as named constants)
+
+**Examples**:
+
+- `pagination.ts` - Pagination configuration
+- `statsConfig.ts` - Statistics display configuration
+- `enums/` directory - All enum definitions
+- `filters.ts` - Filter-related constants
+
+### 3. Enums Directory (`src/lib/constants/enums/`)
+
+**Purpose**: Contains all enum definitions and related constants.
+
+**What belongs here**:
+
+- All enum declarations
+- Enum-related constants (e.g., `SORT_DIRECTIONS`)
+- Enum utility functions (if needed)
+
+**Examples**:
+
+- `enums.ts` - All enum definitions
+- Enum-specific constant files
+
+## File Naming Conventions
+
+### Types Files
+
+- Use PascalCase for file names
+- Use descriptive names that indicate content
+- Examples: `Pokemon.ts`, `FilterState.ts`, `ChartConfig.ts`
+
+### Constants Files
+
+- Use camelCase for file names
+- Use descriptive names that indicate purpose
+- Examples: `pagination.ts`, `statsConfig.ts`, `filters.ts`
+
+### Enums Files
+
+- Use descriptive names
+- Examples: `enums.ts`, `chartEnums.ts`
+
+## Import Patterns
+
+### From Types
+
+```typescript
+import { Pokemon, PokemonFilters } from '@/types';
+import { StatConfig } from '@/types/stats';
+```
+
+### From Constants
+
+```typescript
+import { DEFAULT_ITEMS_PER_PAGE } from '@/lib/constants/pagination';
+import { STATS_CONFIG } from '@/lib/constants/statsConfig';
+```
+
+### From Enums
+
+```typescript
+import { SortDirection, SortField } from '@/lib/constants/enums';
+import { StatName } from '@/lib/constants/enums';
+```
+
+## Benefits of This Structure
+
+1. **Clear Separation of Concerns**: Types and constants are logically separated
+2. **Easier Maintenance**: Related files are grouped together
+3. **Better Discoverability**: Easy to find interfaces vs constants
+4. **Consistent Patterns**: Predictable file locations
+5. **Reduced Coupling**: Types and constants can be updated independently
+
+## Migration Notes
+
+- All enum definitions have been moved from `src/types/enums.ts` to `src/lib/constants/enums/enums.ts`
+- Interfaces extracted from constants files have been moved to appropriate types files
+- Constants extracted from types files have been moved to appropriate constants files
+- All import statements have been updated to reflect new locations
+
+## Implementation Checklist
+
+- [x] Create constants/enums folder structure
+- [x] Move enums.ts from types/ to constants/enums/
+- [x] Extract interfaces from constants files to types/
+- [x] Move interfaces from utils files to types/
+- [x] Move constants from types files to constants/
+- [x] Update all import statements
+- [x] Verify no linter errors remain
+
+## Enforcement
+
+This structure should be enforced through:
+
+- Code reviews
+- Linting rules (where possible)
+- Documentation in this rule file
+- Consistent application across all new code
+
+## Related Rules
+
+- [TypeScript Best Practices](../typescript.mdc)
+- [Clean Code Guidelines](../clean-code.mdc)
+- [General Coding Rules](../general-coding-rules.mdc)

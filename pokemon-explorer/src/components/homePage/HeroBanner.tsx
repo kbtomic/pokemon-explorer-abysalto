@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Zap } from 'lucide-react';
-import { ButtonSize } from '@/types/enums';
+import { ButtonSize } from '@/lib/constants/enums';
 
 export default function HeroBanner() {
   return (

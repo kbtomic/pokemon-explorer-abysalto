@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { MobileFilters } from '@/components/filters/mobile/MobileFilters';
 import { MobileSearchModal } from '@/components/filters/mobile/MobileSearchModal/MobileSearchModal';
 import { Search, Filter } from 'lucide-react';
-import { ButtonSize, ButtonVariant } from '@/types/enums';
+import { ButtonSize, ButtonVariant } from '@/lib/constants/enums';
 
 export function MobileFilterBar() {
   const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
