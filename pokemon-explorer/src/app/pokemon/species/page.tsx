@@ -74,6 +74,12 @@ function SpeciesCard({ species }: SpeciesCardProps) {
                 height={112}
                 className="object-contain drop-shadow-sm"
                 loading="lazy"
+                onError={e => {
+                  // Fallback to favicon if image fails to load
+                  const target = e.target as HTMLImageElement;
+                  target.src = '/favicon.svg';
+                  target.className = 'object-contain opacity-60';
+                }}
               />
             </div>
 

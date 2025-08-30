@@ -24,7 +24,13 @@ function EvolutionNode({ pokemon, currentPokemonId, level = 0 }: EvolutionNodePr
   return (
     <div className={`flex flex-col items-center space-y-2 ${level > 0 ? 'ml-8' : ''}`}>
       <div className={`relative w-20 h-20 ${isCurrentPokemon ? 'ring-2 ring-blue-500 rounded-full' : ''}`}>
-        <Image src={imageUrl} alt={pokemonName} width={80} height={80} className="object-contain" />
+        {imageUrl ? (
+          <Image src={imageUrl} alt={pokemonName} width={80} height={80} className="object-contain" />
+        ) : (
+          <div className="flex items-center justify-center w-full h-full">
+            <Image src="/favicon.svg" alt="Pokemon Explorer" width={40} height={40} className="object-contain opacity-60" />
+          </div>
+        )}
       </div>
       <span className={`text-sm font-medium text-center ${isCurrentPokemon ? 'text-blue-600' : 'text-gray-900 dark:text-white'}`}>
         {pokemonName}

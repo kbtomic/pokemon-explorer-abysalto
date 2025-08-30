@@ -1,7 +1,7 @@
-import Image from 'next/image';
 import { getPokemonImageUrl } from '@/lib/utils';
 import { Pokemon } from '@/types';
 import { cn } from '@/lib/utils/cn';
+import { ImageWithFallback } from '@/components/ui/ImageWithFallback';
 
 interface PokemonImageProps {
   pokemon: Pokemon;
@@ -21,8 +21,8 @@ export function PokemonImage({ pokemon, size = 112, className }: PokemonImagePro
       )}
       style={{ width: containerSize, height: containerSize }}
     >
-      <Image
-        src={imageUrl}
+      <ImageWithFallback
+        src={imageUrl || ''}
         alt={`${pokemon.name} official artwork`}
         width={size}
         height={size}

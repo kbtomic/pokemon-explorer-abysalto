@@ -35,7 +35,13 @@ function VarietyCard({ variety, currentPokemonId }: VarietyCardProps) {
       }`}
     >
       <div className="relative w-16 h-16 mb-2">
-        <Image src={imageUrl} alt={pokemonName} width={64} height={64} className="object-contain" />
+        {imageUrl ? (
+          <Image src={imageUrl} alt={pokemonName} width={64} height={64} className="object-contain" />
+        ) : (
+          <div className="flex items-center justify-center w-full h-full">
+            <Image src="/favicon.svg" alt="Pokemon Explorer" width={32} height={32} className="object-contain opacity-60" />
+          </div>
+        )}
       </div>
       <span
         className={`text-xs font-medium text-center ${

@@ -1,7 +1,10 @@
 import { Pokemon, PokemonFilters, PokemonSpecies, SortOption } from '@/types';
 import { StatName, PokemonImageVariant, SortField, SortDirection } from '@/types/enums';
 
-export function getPokemonImageUrl(pokemonOrId: Pokemon | number, variant: PokemonImageVariant = PokemonImageVariant.DEFAULT): string {
+export function getPokemonImageUrl(
+  pokemonOrId: Pokemon | number,
+  variant: PokemonImageVariant = PokemonImageVariant.DEFAULT
+): string | null {
   const pokemon = typeof pokemonOrId === 'number' ? null : pokemonOrId;
   const id = typeof pokemonOrId === 'number' ? pokemonOrId : pokemonOrId.id;
 
@@ -11,9 +14,9 @@ export function getPokemonImageUrl(pokemonOrId: Pokemon | number, variant: Pokem
 
   const artwork = pokemon.sprites.other['official-artwork'];
   if (variant === PokemonImageVariant.SHINY) {
-    return artwork.front_shiny;
+    return artwork.front_shiny || null;
   }
-  return artwork.front_default || pokemon.sprites.front_default || '';
+  return artwork.front_default || pokemon.sprites.front_default || null;
 }
 
 export function getTotalStats(pokemon: Pokemon): number {
@@ -62,6 +65,10 @@ export function filterPokemon(
 
     // Stats filter
     for (const [statName, [min, max]] of Object.entries(filters.stats)) {
+      // Skip stats with [0, 0] as they indicate no filter is applied
+      if (min === 0 && max === 0) {
+        continue;
+      }
       const statValue = getStatValue(pokemon, statName as StatName);
       if (statValue < min || statValue > max) {
         return false;

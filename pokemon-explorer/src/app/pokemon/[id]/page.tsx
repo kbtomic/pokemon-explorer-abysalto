@@ -93,7 +93,20 @@ export default function PokemonDetailPage() {
             {/* Pokemon Image */}
             <div className="flex-shrink-0">
               <div className="relative w-64 h-64 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-600 rounded-2xl p-4 shadow-inner">
-                <Image src={imageUrl} alt={pokemon.name} width={256} height={256} className="object-contain drop-shadow-lg" priority />
+                {imageUrl ? (
+                  <Image src={imageUrl} alt={pokemon.name} width={256} height={256} className="object-contain drop-shadow-lg" priority />
+                ) : (
+                  <div className="flex items-center justify-center w-full h-full">
+                    <Image
+                      src="/favicon.svg"
+                      alt="Pokemon Explorer"
+                      width={128}
+                      height={128}
+                      className="object-contain opacity-60"
+                      priority
+                    />
+                  </div>
+                )}
               </div>
             </div>
 
