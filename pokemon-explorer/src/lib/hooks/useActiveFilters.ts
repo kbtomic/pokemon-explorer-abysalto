@@ -1,4 +1,4 @@
-import { usePokemonStore } from '@/lib/stores/pokemon-store';
+import { usePokemonStore } from '@/lib/stores/pokemonStore';
 import { SortDirection, SortField } from '@/types/enums';
 
 export function useActiveFilters() {

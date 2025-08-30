@@ -1,89 +1,97 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo } from 'react';
+import { useRouter } from 'next/navigation';
 import { Header } from '@/components/header/Header';
 import { DesktopFilterBar } from '@/components/filters/desktop/DesktopFilterBar';
 import { MobileFilterBar } from '@/components/filters/mobile/MobileFilterBar';
 import { PokemonGrid } from '@/components/pokemon/pokemon-grid';
 import { PokemonModal } from '@/components/pokemonCard/pokemonModal/PokemonModal';
-import { PerformanceIndicator } from '@/components/ui';
-import { usePokemonListPaginated, usePokemonBatchChunked } from '@/lib/hooks/use-pokemon';
+import { PerformanceIndicator } from '@/components/ui/performance-indicator';
+import { useAllPokemon } from '@/lib/hooks/use-pokemon';
 import { usePerformanceOptimization } from '@/lib/hooks/use-performance-optimization';
 import { useGenerationMapping } from '@/lib/hooks/useGenerationMapping';
-import { usePokemonStore } from '@/lib/stores/pokemon-store';
+import { useURLSync } from '@/lib/hooks/useURLSync';
+import { usePokemonStore } from '@/lib/stores/pokemonStore';
+import { useURLStore } from '@/lib/stores/urlStore';
 import { filterPokemon, sortPokemon } from '@/lib/utils/pokemon';
-import { Button } from '@/components/ui/button';
-import { ChevronDown, Loader2 } from 'lucide-react';
-
-const BATCH_SIZE = 50;
+import { paginateItems } from '@/lib/utils/pagination';
+import { Pagination } from '@/components/pagination/Pagination';
 
 export default function ExplorerPage() {
-  const [loadedPokemon, setLoadedPokemon] = useState<any[]>([]);
-  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const router = useRouter();
 
-  const {
-    data: pokemonListResponse,
-    isLoading: isLoadingList,
-    error: listError,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-  } = usePokemonListPaginated(BATCH_SIZE);
+  const { data: allPokemon, isLoading: isLoadingPokemon, error: pokemonError } = useAllPokemon();
 
-  const { setPokemonList, setLoading, setError, pokemonList, filters, sort } = usePokemonStore();
+  const { setPokemonList, setLoading, setError, pokemonList, filters, sort, pagination, setCurrentPage } = usePokemonStore();
+
+  const { updateSearchParams, syncWithRouter } = useURLStore();
+
+  // Handle URL synchronization
+  const { isUpdatingFromURL } = useURLSync();
 
   // Use dynamic generation mapping
   const { getGenerationFromId } = useGenerationMapping();
 
-  // Extract all Pokemon names from paginated data
-  const allPokemonNames = pokemonListResponse?.pages.flatMap(page => page.results.map(p => p.name)) || [];
-
-  // Load Pokemon details in chunks
-  const { data: pokemonData, isLoading: isLoadingPokemon, error: pokemonError } = usePokemonBatchChunked(allPokemonNames, BATCH_SIZE);
-
-  // Update loaded Pokemon when new data arrives
-  useEffect(() => {
-    if (pokemonData) {
-      setLoadedPokemon(pokemonData);
-    }
-  }, [pokemonData]);
-
   // Update store with fetched data
   useEffect(() => {
-    if (loadedPokemon.length > 0) {
-      setPokemonList(loadedPokemon);
+    if (allPokemon) {
+      setPokemonList(allPokemon);
     }
-  }, [loadedPokemon, setPokemonList]);
+  }, [allPokemon, setPokemonList]);
 
   // Update loading state
   useEffect(() => {
-    setLoading(isLoadingList || isLoadingPokemon || isFetchingNextPage);
-  }, [isLoadingList, isLoadingPokemon, isFetchingNextPage, setLoading]);
+    setLoading(isLoadingPokemon);
+  }, [isLoadingPokemon, setLoading]);
 
   // Update error state
   useEffect(() => {
-    const error = listError || pokemonError;
-    setError(error ? error.message : null);
-  }, [listError, pokemonError, setError]);
+    setError(pokemonError ? pokemonError.message : null);
+  }, [pokemonError, setError]);
 
-  // Load more Pokemon
-  const handleLoadMore = async () => {
-    if (hasNextPage && !isFetchingNextPage) {
-      setIsLoadingMore(true);
-      await fetchNextPage();
-      setIsLoadingMore(false);
-    }
-  };
+  // Sync store state to URL when filters, sort, or pagination change
+  useEffect(() => {
+    if (isUpdatingFromURL) return; // Prevent infinite loops
+
+    updateSearchParams({
+      search: filters.search,
+      types: filters.types,
+      generations: filters.generations,
+      abilities: filters.abilities,
+      stats: filters.stats,
+      sortField: sort.field,
+      sortDirection: sort.direction,
+      page: pagination.currentPage,
+      itemsPerPage: pagination.itemsPerPage,
+    });
+    syncWithRouter(router);
+  }, [filters, sort, pagination, updateSearchParams, syncWithRouter, router, isUpdatingFromURL]);
 
   // Filter and sort Pokemon using dynamic generation mapping
-  const filteredPokemon = filterPokemon(pokemonList, filters, getGenerationFromId);
-  const sortedPokemon = sortPokemon(filteredPokemon, sort, getGenerationFromId);
+  const filteredAndSortedPokemon = useMemo(() => {
+    if (!pokemonList.length) return [];
+
+    const filtered = filterPokemon(pokemonList, filters, getGenerationFromId);
+    return sortPokemon(filtered, sort, getGenerationFromId);
+  }, [pokemonList, filters, sort, getGenerationFromId]);
+
+  // Apply pagination to filtered and sorted results
+  const paginatedResults = useMemo(() => {
+    return paginateItems(filteredAndSortedPokemon, pagination.currentPage, pagination.itemsPerPage);
+  }, [filteredAndSortedPokemon, pagination.currentPage, pagination.itemsPerPage]);
+
+  // Update URL when pagination changes
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    // URL will be updated automatically by the useEffect above
+  };
 
   // Performance optimization
-  const { useVirtualization, virtualizationThreshold } = usePerformanceOptimization(sortedPokemon.length);
+  const { useVirtualization, virtualizationThreshold } = usePerformanceOptimization(paginatedResults.items.length);
 
-  const isLoading = isLoadingList || isLoadingPokemon || isFetchingNextPage;
-  const error = listError || pokemonError;
+  const isLoading = isLoadingPokemon;
+  const error = pokemonError;
 
   if (error) {
     return (
@@ -121,62 +129,29 @@ export default function ExplorerPage() {
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-red-600">Explore the Pokemon Universe</h2>
             <div className="text-sm sm:text-base text-red-500">
-              {isLoading ? 'Loading...' : `${sortedPokemon.length} Pokemon found`}
-              {pokemonListResponse && (
-                <span className="ml-2 text-xs sm:text-sm">
-                  (Loaded {allPokemonNames.length} of {pokemonListResponse.pages[0]?.count || 0})
-                </span>
-              )}
+              {isLoading ? 'Loading...' : `${paginatedResults.totalItems} Pokemon found`}
+              {filters.search || filters.types.length > 0 || filters.generations.length > 0 || filters.abilities.length > 0
+                ? ' (filtered)'
+                : ''}
             </div>
           </div>
         </div>
 
-        <PokemonGrid pokemonList={sortedPokemon} isLoading={isLoading} />
+        <PokemonGrid pokemonList={paginatedResults.items} isLoading={isLoading} />
 
-        {/* Load More Button */}
-        {hasNextPage && (
-          <div className="mt-8 sm:mt-10 md:mt-12 text-center">
-            <Button
-              onClick={handleLoadMore}
-              disabled={isFetchingNextPage || isLoadingMore}
-              className="px-4 sm:px-6 py-3 sm:py-4 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:opacity-50 transition-colors text-sm sm:text-base"
-            >
-              {isFetchingNextPage || isLoadingMore ? (
-                <>
-                  <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 mr-2 animate-spin" />
-                  Loading more Pokemon...
-                </>
-              ) : (
-                <>
-                  <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                  Load More Pokemon
-                </>
-              )}
-            </Button>
-          </div>
-        )}
-
-        {/* Progress indicator */}
-        {pokemonListResponse && (
-          <div className="mt-4 sm:mt-6 text-center text-sm sm:text-base text-red-500">
-            <div className="w-full bg-red-200 rounded-full h-2 mb-2">
-              <div
-                className="bg-red-600 h-2 rounded-full transition-all duration-300"
-                style={{
-                  width: `${Math.min((allPokemonNames.length / (pokemonListResponse.pages[0]?.count || 1)) * 100, 100)}%`,
-                }}
-              ></div>
-            </div>
-            <p>
-              Loaded {allPokemonNames.length} of {pokemonListResponse.pages[0]?.count || 0} Pokemon
-            </p>
-          </div>
+        {/* Pagination - replacing the old Load More button */}
+        {paginatedResults.totalPages > 1 && (
+          <Pagination currentPage={paginatedResults.currentPage} totalPages={paginatedResults.totalPages} onPageChange={handlePageChange} />
         )}
       </main>
 
       <PokemonModal />
 
-      <PerformanceIndicator isVirtualized={useVirtualization} itemCount={sortedPokemon.length} threshold={virtualizationThreshold} />
+      <PerformanceIndicator
+        isVirtualized={useVirtualization}
+        itemCount={paginatedResults.items.length}
+        threshold={virtualizationThreshold}
+      />
     </div>
   );
 }
