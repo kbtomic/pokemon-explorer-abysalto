@@ -1,22 +1,25 @@
 import { useQuery, useInfiniteQuery } from '@tanstack/react-query';
 import { pokeAPI } from '@/lib/api/pokeapi';
-import type {
-  Berry,
-  BerryFirmness,
-  BerryFlavor,
-  Item,
-  ItemCategory,
-  Machine,
-  Location,
-  LocationArea,
-  Region,
-  Pokedex,
-  Version,
-  VersionGroup,
-  EncounterMethod,
-  EncounterCondition,
-  EvolutionTrigger,
-} from '@/types';
+
+// New: Hook to fetch all Pokemon at once with enhanced caching
+export function useAllPokemon() {
+  return useQuery({
+    queryKey: ['all-pokemon'],
+    queryFn: () => pokeAPI.getAllPokemonDetails(),
+    staleTime: 24 * 60 * 60 * 1000, // 24 hours
+    gcTime: 7 * 24 * 60 * 60 * 1000, // 7 days
+  });
+}
+
+// New: Hook to get all Pokemon list (names only) for quick access
+export function useAllPokemonList() {
+  return useQuery({
+    queryKey: ['all-pokemon-list'],
+    queryFn: () => pokeAPI.getAllPokemonList(),
+    staleTime: 24 * 60 * 60 * 1000, // 24 hours
+    gcTime: 7 * 24 * 60 * 60 * 1000, // 7 days
+  });
+}
 
 export function usePokemonList(limit?: number, offset: number = 0) {
   return useQuery({

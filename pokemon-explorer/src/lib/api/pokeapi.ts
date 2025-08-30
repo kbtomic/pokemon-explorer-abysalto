@@ -27,6 +27,7 @@ import {
   EncounterCondition,
   EvolutionTrigger,
 } from '@/types';
+import { DEFAULT_ITEMS_PER_PAGE } from '@/lib/constants/pagination';
 
 const BASE_URL = 'https://pokeapi.co/api/v2';
 
@@ -71,6 +72,11 @@ export const pokeAPI = {
     return getAllItems(`/pokemon?offset=${offset}`);
   },
 
+  // New: Get all Pokemon list in one request
+  async getAllPokemonList(): Promise<PokemonListResponse> {
+    return getAllItems('/pokemon');
+  },
+
   async getPokemon(nameOrId: string | number): Promise<Pokemon> {
     return fetchAPI<Pokemon>(`/pokemon/${nameOrId}`);
   },
@@ -78,6 +84,16 @@ export const pokeAPI = {
   async getPokemonBatch(namesOrIds: (string | number)[]): Promise<Pokemon[]> {
     const promises = namesOrIds.map(id => this.getPokemon(id));
     return Promise.all(promises);
+  },
+
+  // New: Get all Pokemon details with chunking for better performance
+  async getAllPokemonDetails(): Promise<Pokemon[]> {
+    // First get all Pokemon names
+    const allPokemonList = await this.getAllPokemonList();
+    const allNames = allPokemonList.results.map(p => p.name);
+
+    // Fetch all Pokemon details in chunks
+    return this.getPokemonBatchChunked(allNames, DEFAULT_ITEMS_PER_PAGE);
   },
 
   // New: Paginated Pokemon fetching

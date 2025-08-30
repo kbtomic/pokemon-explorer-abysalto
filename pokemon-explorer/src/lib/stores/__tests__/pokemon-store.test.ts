@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react';
-import { usePokemonStore } from '../pokemon-store';
+import { usePokemonStore } from '../pokemonStore';
 
 describe('Pokemon Store', () => {
   beforeEach(() => {
