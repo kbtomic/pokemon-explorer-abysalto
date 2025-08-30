@@ -3,6 +3,7 @@ import { useSearchParams } from 'next/navigation';
 import { usePokemonStore } from '@/lib/stores/pokemonStore';
 import { useURLStore } from '@/lib/stores/urlStore';
 import { arraysEqual, statsEqual, sortOptionsEqual } from '@/lib/utils/comparison';
+import { StatName } from '@/lib/constants/enums';
 
 export function useURLSync() {
   const searchParams = useSearchParams();
@@ -60,7 +61,7 @@ export function useURLSync() {
     if (pokemonList.length > 0 && !statsEqual(urlFilters.stats, filters.stats)) {
       // Update each stat individually
       Object.entries(urlFilters.stats).forEach(([statName, range]) => {
-        setStatRange(statName as any, range);
+        setStatRange(statName as StatName, range);
       });
     }
 

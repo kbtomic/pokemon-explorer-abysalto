@@ -34,7 +34,7 @@ export function useAbilities() {
         setAbilities(uniqueAbilities);
 
         setHasMore(response.results.length > BATCH_SIZE);
-      } catch (err) {
+      } catch {
         setError('Failed to load abilities');
       } finally {
         setIsLoading(false);
@@ -69,7 +69,7 @@ export function useAbilities() {
         return [...prev, ...uniqueNewAbilities];
       });
       setHasMore(currentCount + BATCH_SIZE < allAbilityNames.length);
-    } catch (err) {
+    } catch {
       setError('Failed to load more abilities');
     } finally {
       setIsLoadingMore(false);

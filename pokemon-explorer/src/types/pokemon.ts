@@ -399,6 +399,12 @@ export interface EvolutionChain {
   chain: EvolutionChainLink;
 }
 
+// Basic berry data from list API
+export interface BerryBasic {
+  name: string;
+  url: string;
+}
+
 export interface Berry {
   id: number;
   name: string;

@@ -114,6 +114,13 @@ export enum RangeBound {
   MAX = 'max',
 }
 
+export enum Theme {
+  RED = 'red',
+  GREEN = 'green',
+  BLUE = 'blue',
+  GRAY = 'gray',
+}
+
 export const SORT_DIRECTIONS = {
   ASC: SortDirection.ASC,
   DESC: SortDirection.DESC,

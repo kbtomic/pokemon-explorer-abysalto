@@ -158,7 +158,7 @@ export const usePokemonStore = create<PokemonStore>()(
 
       // Sort actions
       setSort: sort =>
-        set(state => ({
+        set(() => ({
           sort,
         })),
 

@@ -2,7 +2,7 @@ import { pokeAPI } from '../pokeapi';
 import { mockApiResponses, mockPokemon } from '@/lib/test-utils';
 
 // Helper function to create a proper mock Response
-function createMockResponse(data: any, ok: boolean = true, status: number = 200, statusText: string = 'OK') {
+function createMockResponse(data: unknown, ok: boolean = true, status: number = 200, statusText: string = 'OK') {
   return {
     ok,
     status,
