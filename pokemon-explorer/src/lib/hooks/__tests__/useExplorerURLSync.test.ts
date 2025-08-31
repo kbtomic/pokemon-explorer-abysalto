@@ -1,4 +1,4 @@
-import { renderHook, act } from '@testing-library/react';
+import { renderHook } from '@testing-library/react';
 import { useSearchParams } from 'next/navigation';
 import { useURLSync } from '@/lib/hooks/useExplorerURLSync';
 import { usePokemonStore } from '@/lib/stores/pokemonStore';
@@ -83,7 +83,7 @@ describe('useURLSync', () => {
       entries: () => [],
       keys: () => [],
       values: () => [],
-    } as any);
+    } as unknown as ReturnType<typeof useSearchParams>);
   });
 
   it('should initialize URL store on mount', () => {
@@ -122,7 +122,7 @@ describe('useURLSync', () => {
       entries: () => [],
       keys: () => [],
       values: () => [],
-    } as any);
+    } as unknown as ReturnType<typeof useSearchParams>);
 
     renderHook(() => useURLSync());
 
