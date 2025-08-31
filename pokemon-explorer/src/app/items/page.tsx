@@ -1,6 +1,6 @@
 'use client';
 
-import { useAllItemsDetails, useItem } from '@/lib/hooks/use-pokemon';
+import { useAllItemsDetails, useItem } from '@/lib/hooks/usePokemon';
 import { Item } from '@/types';
 import { Package, X } from 'lucide-react';
 import { SearchBar } from '@/components/filters/common/SearchBar';
@@ -14,7 +14,7 @@ import { getImageUrl } from '@/lib/utils/imageUtils';
 import { paginateItems } from '@/lib/utils/pagination';
 import { usePerformanceOptimization } from '@/lib/hooks/use-performance-optimization';
 import { PerformanceIndicator } from '@/components/ui/performance-indicator';
-import { ImageType, Theme } from '@/lib/constants/enums';
+import { ImageType, Theme, NavigationLabel, SortField, SortDirection } from '@/lib/constants/enums';
 import { useEffect, useMemo, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
 import { NoResults } from '@/components/common/NoResults';
@@ -85,11 +85,11 @@ function ItemsPageContent() {
       params.set('search', filters.search);
     }
 
-    if (sort.field !== 'id') {
+    if (sort.field !== SortField.ID) {
       params.set('sortField', sort.field);
     }
 
-    if (sort.direction !== 'asc') {
+    if (sort.direction !== SortDirection.ASC) {
       params.set('sortDirection', sort.direction);
     }
 
@@ -141,7 +141,7 @@ function ItemsPageContent() {
         stats={{
           isLoading,
           totalItems: paginatedResults.totalItems,
-          itemName: 'items',
+          itemName: NavigationLabel.ITEMS.toLowerCase(),
           isFiltered: !!filters.search,
         }}
       />

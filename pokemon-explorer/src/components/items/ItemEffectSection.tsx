@@ -1,5 +1,6 @@
 import { ContentSection } from '@/components/common/ContentSection';
 import type { Item } from '@/types/pokemon';
+import { ContentSectionTitle } from '@/lib/constants/enums';
 
 interface ItemEffectSectionProps {
   item: Item;
@@ -10,7 +11,7 @@ export function ItemEffectSection({ item }: ItemEffectSectionProps) {
     <>
       {/* Description */}
       {item.effect_entries && item.effect_entries.length > 0 && (
-        <ContentSection title="Effect">
+        <ContentSection title={ContentSectionTitle.EFFECT}>
           <div className="bg-white/10 p-4 rounded-lg">
             <p className="text-white">
               {item.effect_entries.find(entry => entry.language.name === 'en')?.effect || 'No description available.'}
@@ -21,7 +22,7 @@ export function ItemEffectSection({ item }: ItemEffectSectionProps) {
 
       {/* Flavor Text */}
       {item.flavor_text_entries && item.flavor_text_entries.length > 0 && (
-        <ContentSection title="In-Game Description">
+        <ContentSection title={ContentSectionTitle.IN_GAME_DESCRIPTION}>
           <div className="bg-white/10 p-4 rounded-lg">
             <p className="text-white italic">
               &ldquo;

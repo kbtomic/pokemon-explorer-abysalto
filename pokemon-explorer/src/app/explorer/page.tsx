@@ -5,10 +5,10 @@ import { useRouter } from 'next/navigation';
 import { Header } from '@/components/header/Header';
 import { DesktopFilterBar } from '@/components/filters/desktop/DesktopFilterBar';
 import { MobileFilterBar } from '@/components/filters/mobile/MobileFilterBar';
-import { PokemonGrid } from '@/components/pokemon/pokemon-grid';
+import { PokemonGrid } from '@/components/pokemon/PokemonGrid';
 import { PokemonModal } from '@/components/pokemonCard/pokemonModal/PokemonModal';
 import { PerformanceIndicator } from '@/components/ui/performance-indicator';
-import { useAllPokemon } from '@/lib/hooks/use-pokemon';
+import { useAllPokemon } from '@/lib/hooks/usePokemon';
 import { usePerformanceOptimization } from '@/lib/hooks/use-performance-optimization';
 import { useGenerationMapping } from '@/lib/hooks/useGenerationMapping';
 import { useURLSync } from '@/lib/hooks/useExplorerURLSync';
@@ -118,8 +118,6 @@ function ExplorerPageContent() {
         </div>
       </div>
       <div className="container mx-auto px-4 py-8">
-        {/* <PageHeader title="Pokemon Explorer" description="Discover and filter Pokemon from all generations" /> */}
-
         {/* Performance Indicator */}
         <PerformanceIndicator
           isVirtualized={useVirtualization}
@@ -127,17 +125,14 @@ function ExplorerPageContent() {
           threshold={virtualizationThreshold}
         />
 
-        {/* Pokemon Grid */}
         <PokemonGrid pokemonList={paginatedResults.items} isLoading={isLoading} />
 
-        {/* Pagination */}
         {!isLoading && paginatedResults.totalPages > 1 && (
           <div className="mt-8">
             <Pagination currentPage={pagination.currentPage} totalPages={paginatedResults.totalPages} onPageChange={handlePageChange} />
           </div>
         )}
 
-        {/* Pokemon Modal */}
         <PokemonModal />
       </div>
     </div>

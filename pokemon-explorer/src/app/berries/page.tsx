@@ -1,6 +1,6 @@
 'use client';
 
-import { useAllBerriesDetails, useBerry } from '@/lib/hooks/use-pokemon';
+import { useAllBerriesDetails, useBerry } from '@/lib/hooks/usePokemon';
 import { Berry } from '@/types';
 import { Leaf, X } from 'lucide-react';
 import { SearchBar } from '@/components/filters/common/SearchBar';
@@ -21,7 +21,7 @@ import { NoResults } from '@/components/common/NoResults';
 import { PageHeader } from '@/components/common/PageHeader';
 import { ErrorDisplay } from '@/components/common/ErrorDisplay';
 import { PageLayout } from '@/components/common/PageLayout';
-import { ImageType, Theme } from '@/lib/constants/enums';
+import { ImageType, Theme, NavigationLabel, SortField, SortDirection } from '@/lib/constants/enums';
 
 const useBerryStore = createDataStore<Berry>('berry-store');
 
@@ -84,11 +84,11 @@ function BerriesPageContent() {
       params.set('search', filters.search);
     }
 
-    if (sort.field !== 'id') {
+    if (sort.field !== SortField.ID) {
       params.set('sortField', sort.field);
     }
 
-    if (sort.direction !== 'asc') {
+    if (sort.direction !== SortDirection.ASC) {
       params.set('sortDirection', sort.direction);
     }
 
@@ -141,7 +141,7 @@ function BerriesPageContent() {
         stats={{
           isLoading,
           totalItems: paginatedResults.totalItems,
-          itemName: 'berries',
+          itemName: NavigationLabel.BERRIES.toLowerCase(),
           isFiltered: !!filters.search,
         }}
       />
