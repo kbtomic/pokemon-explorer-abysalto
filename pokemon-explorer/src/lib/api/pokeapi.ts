@@ -572,15 +572,63 @@ export const pokeAPI = {
     return fetchAPI(`/location?limit=${limit}&offset=${offset}`);
   },
 
-  // New: Batched Locations details fetching with chunking
-  async getLocationsBatchChunked(namesOrIds: (string | number)[], chunkSize: number = 50): Promise<Location[]> {
-    const results: Location[] = [];
+  // New: Get all locations details with optimized parallel chunking
+  async getAllLocationsDetails(): Promise<Location[]> {
+    return measurePerformance('Locations Fetch All Details', async () => {
+      // First get all locations with URLs
+      const allLocationsList = await this.getLocations();
+      console.log('Locations API: Got', allLocationsList.results.length, 'locations from basic list');
 
+      // Extract IDs from URLs instead of using names (avoids special character issues)
+      const allIds = allLocationsList.results
+        .map(l => {
+          const urlParts = l.url.split('/');
+          return parseInt(urlParts[urlParts.length - 2]);
+        })
+        .filter(id => !isNaN(id));
+
+      console.log('Locations API: Extracted', allIds.length, 'valid IDs, starting batch fetch...');
+
+      // Fetch all location details with optimized parallel chunking using IDs
+      return this.getLocationsBatchChunked(allIds, 50); // Increase chunk size to speed up
+    });
+  },
+
+  // New: Batched Locations details fetching with controlled parallel chunking
+  async getLocationsBatchChunked(namesOrIds: (string | number)[], chunkSize: number = 50): Promise<Location[]> {
+    // Create all chunks first
+    const chunks: (string | number)[][] = [];
     for (let i = 0; i < namesOrIds.length; i += chunkSize) {
-      const chunk = namesOrIds.slice(i, i + chunkSize);
-      const chunkPromises = chunk.map(id => this.getLocation(id));
-      const chunkResults = await Promise.all(chunkPromises);
-      results.push(...chunkResults);
+      chunks.push(namesOrIds.slice(i, i + chunkSize));
+    }
+
+    // Process chunks with controlled concurrency
+    const results: Location[] = [];
+    const maxConcurrentChunks = 4;
+    const delayBetweenBatches = 50;
+
+    for (let i = 0; i < chunks.length; i += maxConcurrentChunks) {
+      const batch = chunks.slice(i, i + maxConcurrentChunks);
+
+      // Process this batch of chunks in parallel
+      const batchPromises = batch.map(chunk => {
+        const locationPromises = chunk.map(id => this.getLocation(id));
+        return Promise.all(locationPromises);
+      });
+
+      // Wait for this batch to complete
+      const batchResults = await Promise.all(batchPromises);
+
+      // Flatten and add results
+      results.push(...batchResults.flat());
+
+      // Progress logging
+      console.log(`Locations API: Processed ${results.length}/${namesOrIds.length} locations`);
+
+      // Add delay between batches (except for the last batch)
+      if (i + maxConcurrentChunks < chunks.length) {
+        await new Promise(resolve => setTimeout(resolve, delayBetweenBatches));
+      }
     }
 
     return results;

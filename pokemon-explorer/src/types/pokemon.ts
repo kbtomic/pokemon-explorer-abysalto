@@ -71,6 +71,14 @@ export interface PokemonMove {
   }[];
 }
 
+export interface PokemonVariety {
+  is_default: boolean;
+  pokemon: {
+    name: string;
+    url: string;
+  };
+}
+
 export interface PokemonSpecies {
   id: number;
   name: string;
@@ -154,13 +162,7 @@ export interface PokemonSpecies {
       url: string;
     };
   }[];
-  varieties: {
-    is_default: boolean;
-    pokemon: {
-      name: string;
-      url: string;
-    };
-  }[];
+  varieties: PokemonVariety[];
 }
 
 export interface PokemonForm {
