@@ -1,5 +1,5 @@
-import { Navigation } from '@/components/header/Navigation';
-import { Logo } from '@/components/header/Logo';
+import { Navigation } from '@/components/navigation/Navigation';
+import { Logo } from '@/components/navigation/Logo';
 
 export function DesktopHeader() {
   return (

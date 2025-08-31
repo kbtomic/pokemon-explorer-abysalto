@@ -1,14 +1,14 @@
 import { Modal } from '@/components/ui/Modal';
 import { ModalHeaderMobile } from '@/components/common/ModalHeaderMobile';
-import { MobileSearchInput } from '@/components/filters/mobile/MobileSearchModal/MobileSearchInput';
+import { SearchInput } from '@/components/filters/search/SearchInput';
 import { useMobileSearch } from '@/lib/hooks/ui/useMobileSearch';
 
-interface MobileSearchModalProps {
+interface SearchModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-export function MobileSearchModal({ isOpen, onClose }: MobileSearchModalProps) {
+export function SearchModal({ isOpen, onClose }: SearchModalProps) {
   const { localSearchValue, setLocalSearchValue, handleApplyAndClose, handleClear, handleKeyDownAndClose } = useMobileSearch(onClose);
 
   return (
@@ -16,7 +16,7 @@ export function MobileSearchModal({ isOpen, onClose }: MobileSearchModalProps) {
       <div className="flex flex-col h-full md:h-auto">
         <ModalHeaderMobile onClose={onClose} title="Search" />
 
-        <MobileSearchInput
+        <SearchInput
           value={localSearchValue}
           onChange={setLocalSearchValue}
           onApply={handleApplyAndClose}

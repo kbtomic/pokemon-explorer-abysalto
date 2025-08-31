@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { Header } from '@/components/header/Header';
+import { Header } from '@/components/navigation/Header';
 import { cn } from '@/lib/utils/formatting/cn';
 
 interface PageLayoutProps {

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/Button';
 import { MobileFilters } from '@/components/filters/mobile/MobileFilters';
-import { MobileSearchModal } from '@/components/filters/mobile/MobileSearchModal/MobileSearchModal';
+import { SearchModal } from '@/components/filters/search/SearchModal';
 import { Search, Filter } from 'lucide-react';
 import { ButtonSize, ButtonVariant } from '@/lib/constants/ui/buttons';
 
@@ -27,7 +27,7 @@ export function MobileFilterBar() {
 
       <MobileFilters isOpen={isFilterDrawerOpen} onClose={() => setIsFilterDrawerOpen(false)} />
 
-      <MobileSearchModal isOpen={isSearchModalOpen} onClose={() => setIsSearchModalOpen(false)} />
+      <SearchModal isOpen={isSearchModalOpen} onClose={() => setIsSearchModalOpen(false)} />
     </>
   );
 }

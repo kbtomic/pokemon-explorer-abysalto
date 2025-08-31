@@ -1,5 +1,5 @@
-import { MobileHeader } from '@/components/header/MobileHeader';
-import { DesktopHeader } from '@/components/header/DesktopHeader';
+import { MobileHeader } from '@/components/navigation/MobileHeader';
+import { DesktopHeader } from '@/components/navigation/DesktopHeader';
 
 export function Header() {
   return (

@@ -1,6 +1,6 @@
 import { Modal } from '@/components/ui/Modal';
 import { ModalHeaderMobile } from '@/components/common/ModalHeaderMobile';
-import { Navigation } from '@/components/header/Navigation';
+import { Navigation } from '@/components/navigation/Navigation';
 
 interface MobileNavigationMenuProps {
   isOpen: boolean;

@@ -4,6 +4,8 @@ import { Pokemon } from '@/types/pokemon/core';
 import { getSpeciesIdFromPokemon } from '@/lib/utils/pokemon/pokemon';
 import { ONE_DAY, ONE_WEEK, FIVE_MINUTES, TEN_MINUTES, THIRTY_MINUTES, ONE_HOUR } from '@/lib/constants/api/reactQuery';
 
+const BATCH_SIZE = 50;
+
 // Hook to fetch all Pokemon at once with enhanced caching and performance monitoring
 export function useAllPokemon() {
   return useQuery({
@@ -167,7 +169,6 @@ export function useAbilitiesInfinite() {
       const response = await pokemonAPI.getAbilities();
       const allAbilityNames = response.results.map(ability => ability.name);
 
-      const BATCH_SIZE = 50;
       const startIndex = pageParam;
       const endIndex = startIndex + BATCH_SIZE;
       const batchNames = allAbilityNames.slice(startIndex, endIndex);
@@ -182,7 +183,6 @@ export function useAbilitiesInfinite() {
       };
     },
     getNextPageParam: (lastPage, allPages) => {
-      const BATCH_SIZE = 50;
       const currentCount = allPages.length * BATCH_SIZE;
       return lastPage.hasMore ? currentCount : undefined;
     },

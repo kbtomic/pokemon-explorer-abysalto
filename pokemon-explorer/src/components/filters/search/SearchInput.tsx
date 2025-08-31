@@ -3,7 +3,7 @@
 import { Input } from '@/components/ui/Input';
 import { X, Search, ChevronRight } from 'lucide-react';
 
-interface MobileSearchInputProps {
+interface SearchInputProps {
   value: string;
   onChange: (value: string) => void;
   onApply: () => void;
@@ -11,7 +11,7 @@ interface MobileSearchInputProps {
   onKeyDown: (e: React.KeyboardEvent) => void;
 }
 
-export function MobileSearchInput({ value, onChange, onApply, onClear, onKeyDown }: MobileSearchInputProps) {
+export function SearchInput({ value, onChange, onApply, onClear, onKeyDown }: SearchInputProps) {
   return (
     <div className="flex items-center justify-between">
       <div className="flex-1 relative">

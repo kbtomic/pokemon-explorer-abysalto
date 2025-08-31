@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
-import { Header } from '@/components/header/Header';
+import { Header } from '@/components/navigation/Header';
 import { DesktopFilterBar } from '@/components/filters/desktop/DesktopFilterBar';
 import { MobileFilterBar } from '@/components/filters/mobile/MobileFilterBar';
 import { PokemonGrid } from '@/components/pokemon/PokemonGrid';

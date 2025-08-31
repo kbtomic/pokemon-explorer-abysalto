@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { MobileNavigationMenu } from '@/components/header/MobileNavigationMenu';
+import { MobileNavigationMenu } from '@/components/navigation/MobileNavigationMenu';
 import { Menu } from 'lucide-react';
-import { Logo } from '@/components/header/Logo';
+import { Logo } from '@/components/navigation/Logo';
 
 export function MobileHeader() {
   const [isNavMenuOpen, setIsNavMenuOpen] = useState(false);
