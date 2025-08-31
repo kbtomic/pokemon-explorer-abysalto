@@ -1,4 +1,4 @@
-import { pokeAPI } from '../pokeapi';
+import { pokemonAPI as pokeAPI } from '@/lib/api/pokemon';
 import { mockApiResponses, mockPokemon } from '@/lib/test-utils';
 
 // Helper function to create a proper mock Response

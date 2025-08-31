@@ -1,13 +1,13 @@
 'use client';
 
-import { useAllItemsDetails, useItem } from '@/lib/hooks/usePokemon';
+import { useAllItemsDetails, useItem } from '@/lib/hooks/items/useItems';
 import { Item } from '@/types/items/items';
 import { Package, X } from 'lucide-react';
 import { SearchBar } from '@/components/filters/common/SearchBar';
 import { Pagination } from '@/components/pagination/Pagination';
 import { ItemDetailModal } from '@/components/items/ItemDetailModal';
 import { DataGrid } from '@/components/common/DataGrid';
-import { useURLSync } from '@/lib/hooks/useURLSync';
+import { useURLSync } from '@/lib/hooks/sync/useURLSync';
 import { createDataStore } from '@/lib/stores/dataStore';
 import { formatName } from '@/lib/utils/formatting/stringUtils';
 import { filterData, sortData } from '@/lib/utils/data/dataUtils';

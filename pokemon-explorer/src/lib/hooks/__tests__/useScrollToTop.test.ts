@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react';
-import { useScrollToTop } from '../useScrollToTop';
+import { useScrollToTop } from '../ui/useScrollToTop';
 
 // Mock window.scrollTo
 const mockScrollTo = jest.fn();

@@ -1,8 +1,8 @@
 'use client';
 
 import { useParams } from 'next/navigation';
-import { usePokemon } from '@/lib/hooks/usePokemon';
-import { usePokemonSpecies, useEvolutionChain } from '@/lib/hooks/usePokemonSpecies';
+import { usePokemon } from '@/lib/hooks/pokemon/usePokemon';
+import { usePokemonSpecies, useEvolutionChain } from '@/lib/hooks/pokemon/usePokemon';
 import { getEnglishFlavorText, getEnglishGenus } from '@/lib/utils/pokemon/speciesUtils';
 import { formatPokemonName, getEvolutionChainId } from '@/lib/utils/pokemon/pokemon';
 import { AdvancedStatsDisplay } from '@/components/pokemon/AdvancedStatsDisplay';

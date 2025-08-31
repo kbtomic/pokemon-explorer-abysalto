@@ -7,9 +7,9 @@ import { DesktopFilterBar } from '@/components/filters/desktop/DesktopFilterBar'
 import { MobileFilterBar } from '@/components/filters/mobile/MobileFilterBar';
 import { PokemonGrid } from '@/components/pokemon/PokemonGrid';
 import { PokemonModal } from '@/components/pokemonCard/pokemonModal/PokemonModal';
-import { useAllPokemon } from '@/lib/hooks/usePokemon';
-import { useGenerationMapping } from '@/lib/hooks/useGenerationMapping';
-import { useURLSync } from '@/lib/hooks/useExplorerURLSync';
+import { useAllPokemon } from '@/lib/hooks/pokemon/usePokemon';
+import { useGenerationMapping } from '@/lib/hooks/pokemon/useGenerationMapping';
+import { useURLSync } from '@/lib/hooks/sync/useExplorerURLSync';
 import { usePokemonStore } from '@/lib/stores/pokemonStore';
 import { useURLStore } from '@/lib/stores/urlStore';
 import { filterPokemon, sortPokemon } from '@/lib/utils/pokemon/pokemon';

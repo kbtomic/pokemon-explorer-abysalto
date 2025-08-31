@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { usePokemonStore } from '@/lib/stores/pokemonStore';
-import { usePokemonTypes } from '@/lib/hooks/usePokemonTypes';
-import { usePokemonGenerations } from '@/lib/hooks/usePokemonGenerations';
-import { useAbilities } from '@/lib/hooks/useAbilities';
+import { usePokemonTypes } from '@/lib/hooks/pokemon/usePokemon';
+import { usePokemonGenerations, useAbilitiesInfinite } from '@/lib/hooks/pokemon/usePokemon';
 import { getTypeColor } from '@/lib/utils/ui/typeColors';
 import { formatAbilityName } from '@/lib/utils/formatting/stringUtils';
 import { Ability } from '@/types/pokemon/abilities';
@@ -116,7 +115,7 @@ export const useGenerationFilterConfig = () => {
 export const useAbilitiesFilterConfig = () => {
   const selectedAbilities = usePokemonStore(state => state.filters.abilities);
   const setAbilities = usePokemonStore(state => state.setAbilities);
-  const { data, isLoading, isFetchingNextPage, error, hasNextPage, fetchNextPage } = useAbilities();
+  const { data, isLoading, isFetchingNextPage, error, hasNextPage, fetchNextPage } = useAbilitiesInfinite();
   const abilities = data?.pages.flatMap(page => page.abilities) || [];
   const totalCount = data?.pages[0]?.totalCount || 0;
   const [searchTerm, setSearchTerm] = useState('');

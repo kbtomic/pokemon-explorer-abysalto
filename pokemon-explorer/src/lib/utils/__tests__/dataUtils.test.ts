@@ -1,5 +1,6 @@
-import { filterData, sortData, formatName, formatNameCapitalized, needsMoreData, calculateItemsNeeded } from '../dataUtils';
-import { SortDirection, SortField } from '@/lib/constants/enums';
+import { filterData, sortData, needsMoreData, calculateItemsNeeded } from '@/lib/utils/data/dataUtils';
+import { formatName, formatNameCapitalized } from '@/lib/utils/formatting/stringUtils';
+import { SortDirection, SortField } from '@/lib/constants/pokemon/sorting';
 
 describe('dataUtils', () => {
   const mockData = [
@@ -120,7 +121,7 @@ describe('dataUtils', () => {
       const result = filterData(mockData, filters);
 
       expect(result).toHaveLength(3);
-      expect(result.every(item => item.name.includes('char'))).toBe(true);
+      expect(result.every((item: { name: string }) => item.name.includes('char'))).toBe(true);
     });
   });
 

@@ -1,4 +1,5 @@
-import { SortDirection, SortField, StatName } from '@/lib/constants/enums';
+import { SortDirection, SortField } from '@/lib/constants/pokemon/sorting';
+import { StatName } from '@/lib/constants/pokemon/stats';
 import { Pokemon } from '@/types/pokemon/core';
 
 export interface PokemonFilters {

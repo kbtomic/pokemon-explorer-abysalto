@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { PokemonMove } from '@/types/pokemon/core';
-import { useMovesData } from '@/lib/hooks/useMovesData';
+import { useMovesData } from '@/lib/hooks/pokemon/useMovesData';
 import { MovesFilters } from '@/components/pokemon/moves/MovesFilters';
 import { MovesTable } from '@/components/pokemon/moves/MovesTable';
 import { filterMoves, sortMoves } from '@/lib/utils/pokemon/movesUtils';

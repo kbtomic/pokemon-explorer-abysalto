@@ -1,6 +1,6 @@
 import { STAT_NAMES } from '@/lib/constants/filters/stats';
 import { DualRangeSlider } from '@/components/ui/DualRangeSlider';
-import { useStatItem } from '@/lib/hooks/useStatItem';
+import { useStatItem } from '@/lib/hooks/filters/useStatItem';
 import { StatName } from '@/lib/constants/pokemon/stats';
 
 interface StatItemProps {

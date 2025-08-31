@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { PokemonMove } from '@/types/pokemon/core';
 import { Move } from '@/types/pokemon/moves';
-import { useMove } from '@/lib/hooks/usePokemon';
+import { useMove } from '@/lib/hooks/pokemon/usePokemon';
 
 export function useMovesData(moves: PokemonMove[]) {
   // Fetch move data for all moves

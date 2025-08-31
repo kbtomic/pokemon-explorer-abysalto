@@ -19,6 +19,7 @@
 // Time constants in milliseconds
 export const FIVE_MINUTES = 5 * 60 * 1000;
 export const TEN_MINUTES = 10 * 60 * 1000;
+export const THIRTY_MINUTES = 30 * 60 * 1000;
 export const ONE_HOUR = 1000 * 60 * 60;
 export const ONE_DAY = 1000 * 60 * 60 * 24;
 export const ONE_WEEK = 1000 * 60 * 60 * 24 * 7;
@@ -48,7 +49,7 @@ export const CACHE_STRATEGIES = {
 
   // Real-time data that changes frequently (if needed in the future)
   REAL_TIME: {
-    staleTime: 1000 * 60 * 5, // 5 minutes
+    staleTime: FIVE_MINUTES, // 5 minutes
     gcTime: ONE_HOUR, // 1 hour
   },
 } as const;

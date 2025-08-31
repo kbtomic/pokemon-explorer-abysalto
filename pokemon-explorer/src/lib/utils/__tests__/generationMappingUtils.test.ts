@@ -1,4 +1,4 @@
-import { createGenerationMapping, getGenerationFromId, clearGenerationMappingCache } from '../generationMapping';
+import { createGenerationMapping, getGenerationFromId, clearGenerationMappingCache } from '@/lib/utils/routing/generationMapping';
 import { Generation } from '@/types/pokemon/core';
 
 // Mock generation data for testing

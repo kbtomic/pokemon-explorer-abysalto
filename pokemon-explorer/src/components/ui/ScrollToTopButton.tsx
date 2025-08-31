@@ -2,7 +2,7 @@
 
 import { ChevronUp } from 'lucide-react';
 import { cn } from '@/lib/utils/formatting/cn';
-import { useScrollToTop } from '@/lib/hooks/useScrollToTop';
+import { useScrollToTop } from '@/lib/hooks/ui/useScrollToTop';
 
 interface ScrollToTopButtonProps {
   className?: string;

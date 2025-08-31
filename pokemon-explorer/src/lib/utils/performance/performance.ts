@@ -38,22 +38,14 @@ export class PerformanceMonitor {
       averageRequestTime,
     };
   }
-
-  logMetrics(label: string): void {
-    const metrics = this.getMetrics();
-  }
 }
 
 // Utility function to measure async operation performance
-export async function measurePerformance<T>(label: string, operation: () => Promise<T>): Promise<T> {
-  const monitor = new PerformanceMonitor();
-
+export async function measurePerformance<T>(operation: () => Promise<T>): Promise<T> {
   try {
     const result = await operation();
-    monitor.logMetrics(label);
     return result;
   } catch (error) {
-    console.error(`❌ ${label} failed:`, error);
     throw error;
   }
 }

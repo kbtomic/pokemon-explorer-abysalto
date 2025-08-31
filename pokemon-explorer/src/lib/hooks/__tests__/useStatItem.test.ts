@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react';
-import { useStatItem } from '../useStatItem';
-import { StatName } from '@/lib/constants/enums';
+import { useStatItem } from '../filters/useStatItem';
+import { StatName } from '@/lib/constants/pokemon/stats';
 
 describe('useStatItem', () => {
   const mockStatRange: [number, number] = [0, 255];

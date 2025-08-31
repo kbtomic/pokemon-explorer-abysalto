@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useFullGenerations } from './useFullGenerations';
+import { useFullGenerations } from './usePokemon';
 import { getGenerationFromId as getGenerationFromIdUtil, clearGenerationMappingCache } from '@/lib/utils/routing/generationMapping';
 import { Generation } from '@/types/pokemon/core';
 

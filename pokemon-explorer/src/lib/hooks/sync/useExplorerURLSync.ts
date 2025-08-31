@@ -3,7 +3,7 @@ import { useSearchParams } from 'next/navigation';
 import { usePokemonStore } from '@/lib/stores/pokemonStore';
 import { useURLStore } from '@/lib/stores/urlStore';
 import { arraysEqual, statsEqual, sortOptionsEqual } from '@/lib/utils/interaction/comparison';
-import { StatName } from '@/lib/constants/enums';
+import { StatName } from '@/lib/constants/pokemon/stats';
 
 export function useURLSync() {
   const searchParams = useSearchParams();

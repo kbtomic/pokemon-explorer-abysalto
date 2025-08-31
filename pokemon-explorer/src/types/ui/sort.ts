@@ -1,4 +1,4 @@
-import { SortField } from '@/lib/constants/enums';
+import { SortField } from '@/lib/constants/pokemon/sorting';
 
 export interface SortOptionConfig {
   value: SortField;

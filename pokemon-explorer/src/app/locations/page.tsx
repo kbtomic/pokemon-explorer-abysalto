@@ -1,13 +1,13 @@
 'use client';
 
-import { useAllLocationsDetails, useLocation } from '@/lib/hooks/usePokemon';
+import { useAllLocationsDetails, useLocation } from '@/lib/hooks/locations/useLocations';
 import { Location } from '@/types/locations/locations';
 import { Map, X } from 'lucide-react';
 import { SearchBar } from '@/components/filters/common/SearchBar';
 import { Pagination } from '@/components/pagination/Pagination';
 import { LocationDetailModal } from '@/components/locations/LocationDetailModal';
 import { DataGrid } from '@/components/common/DataGrid';
-import { useURLSync } from '@/lib/hooks/useURLSync';
+import { useURLSync } from '@/lib/hooks/sync/useURLSync';
 import { createDataStore } from '@/lib/stores/dataStore';
 import { formatName } from '@/lib/utils/formatting/stringUtils';
 import { getImageUrl } from '@/lib/utils/ui/imageUtils';

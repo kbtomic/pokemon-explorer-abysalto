@@ -1,9 +1,9 @@
 import { renderHook } from '@testing-library/react';
 import { useSearchParams } from 'next/navigation';
-import { useURLSync } from '@/lib/hooks/useExplorerURLSync';
+import { useURLSync } from '@/lib/hooks/sync/useExplorerURLSync';
 import { usePokemonStore } from '@/lib/stores/pokemonStore';
 import { useURLStore } from '@/lib/stores/urlStore';
-import { StatName } from '@/lib/constants/enums';
+import { StatName } from '@/lib/constants/pokemon/stats';
 
 // Mock Next.js navigation
 jest.mock('next/navigation', () => ({

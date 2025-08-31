@@ -1,5 +1,6 @@
 import { usePokemonStore } from '@/lib/stores/pokemonStore';
 import { SortDirection, SortField } from '@/lib/constants/pokemon/sorting';
+import { StatName } from '@/lib/constants/pokemon/stats';
 
 export function useActiveFilters() {
   const { filters, sort, originalStatRanges } = usePokemonStore();
@@ -10,7 +11,7 @@ export function useActiveFilters() {
   const hasActiveAbilities = filters.abilities.length > 0;
 
   const hasActiveStats = Object.entries(filters.stats).some(([statName, [min, max]]) => {
-    const [originalMin, originalMax] = originalStatRanges[statName as keyof typeof originalStatRanges] || [0, 0];
+    const [originalMin, originalMax] = (originalStatRanges as Record<StatName, [number, number]>)[statName as StatName] || [0, 0];
     return min !== originalMin || max !== originalMax;
   });
 

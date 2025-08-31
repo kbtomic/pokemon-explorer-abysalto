@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@/lib/test-utils';
 import { Pagination } from '../Pagination';
-import { SortDirection, SortField } from '@/lib/constants/enums';
+import { SortDirection, SortField } from '@/lib/constants/pokemon/sorting';
 
 // Mock Next.js Link component
 jest.mock('next/link', () => {

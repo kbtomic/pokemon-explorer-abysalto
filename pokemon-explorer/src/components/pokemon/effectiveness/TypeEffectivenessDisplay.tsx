@@ -1,5 +1,5 @@
 import { PokemonType } from '@/types/pokemon/core';
-import { useTypeEffectiveness } from '@/lib/hooks/useTypeEffectiveness';
+import { useTypeEffectiveness } from '@/lib/hooks/filters/useTypeEffectiveness';
 import { TypeEffectivenessTable } from './TypeEffectivenessTable';
 
 interface TypeEffectivenessDisplayProps {

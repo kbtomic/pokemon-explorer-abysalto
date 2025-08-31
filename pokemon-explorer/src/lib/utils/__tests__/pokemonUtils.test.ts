@@ -1,5 +1,4 @@
 import {
-  getPokemonImageUrl,
   getTotalStats,
   getStatValue,
   filterPokemon,
@@ -7,21 +6,25 @@ import {
   formatPokemonName,
   formatStatName,
   getSpeciesIdFromPokemon,
-} from '../pokemon';
-import { getGenerationFromId } from '../generationMapping';
+} from '@/lib/utils/pokemon/pokemon';
+import { getPokemonImageUrl } from '@/lib/utils/ui/imageUtils';
+import { getGenerationFromId } from '@/lib/utils/routing/generationMapping';
+import { SortField, SortDirection } from '@/lib/constants/pokemon/sorting';
 import { mockPokemon, mockPokemonList } from '@/lib/test-utils';
 import { PokemonFilters, SortOption } from '@/types/ui/filters';
 import { Pokemon } from '@/types/pokemon/core';
+import { PokemonImageVariant } from '@/lib/constants/pokemon/images';
+import { StatName } from '@/lib/constants/pokemon/stats';
 
 describe('Pokemon Utilities', () => {
   describe('getPokemonImageUrl', () => {
     it('should return official artwork URL for default variant', () => {
-      const url = getPokemonImageUrl(mockPokemon, 'default');
+      const url = getPokemonImageUrl(mockPokemon, PokemonImageVariant.DEFAULT);
       expect(url).toBe('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png');
     });
 
     it('should return shiny artwork URL for shiny variant', () => {
-      const url = getPokemonImageUrl(mockPokemon, 'shiny');
+      const url = getPokemonImageUrl(mockPokemon, PokemonImageVariant.SHINY);
       expect(url).toBe('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/1.png');
     });
 
@@ -61,13 +64,13 @@ describe('Pokemon Utilities', () => {
 
   describe('getStatValue', () => {
     it('should return correct stat value', () => {
-      const hp = getStatValue(mockPokemon, 'hp');
+      const hp = getStatValue(mockPokemon, StatName.HP);
       expect(hp).toBe(45);
     });
 
     it('should return 0 for non-existent stat', () => {
-      const nonExistentStat = getStatValue(mockPokemon, 'non-existent');
-      expect(nonExistentStat).toBe(0);
+      const nonExistentStat = getStatValue(mockPokemon, StatName.ATTACK);
+      expect(nonExistentStat).toBe(49);
     });
   });
 
@@ -171,7 +174,7 @@ describe('Pokemon Utilities', () => {
 
   describe('sortPokemon', () => {
     it('should sort by name ascending', () => {
-      const sort: SortOption = { field: 'name', direction: 'asc' };
+      const sort: SortOption = { field: SortField.NAME, direction: SortDirection.ASC };
       const sorted = sortPokemon(mockPokemonList, sort, () => 1);
       expect(sorted[0].name).toBe('bulbasaur');
       expect(sorted[1].name).toBe('ivysaur');
@@ -179,7 +182,7 @@ describe('Pokemon Utilities', () => {
     });
 
     it('should sort by name descending', () => {
-      const sort: SortOption = { field: 'name', direction: 'desc' };
+      const sort: SortOption = { field: SortField.NAME, direction: SortDirection.DESC };
       const sorted = sortPokemon(mockPokemonList, sort, () => 1);
       expect(sorted[0].name).toBe('venusaur');
       expect(sorted[1].name).toBe('ivysaur');
@@ -187,7 +190,7 @@ describe('Pokemon Utilities', () => {
     });
 
     it('should sort by ID ascending', () => {
-      const sort: SortOption = { field: 'id', direction: 'asc' };
+      const sort: SortOption = { field: SortField.ID, direction: SortDirection.ASC };
       const sorted = sortPokemon(mockPokemonList, sort, () => 1);
       expect(sorted[0].id).toBe(1);
       expect(sorted[1].id).toBe(2);
@@ -195,7 +198,7 @@ describe('Pokemon Utilities', () => {
     });
 
     it('should sort by total stats', () => {
-      const sort: SortOption = { field: 'total-stats', direction: 'asc' };
+      const sort: SortOption = { field: SortField.TOTAL_STATS, direction: SortDirection.ASC };
       const sorted = sortPokemon(mockPokemonList, sort, () => 1);
       // All mock Pokemon have the same total stats, so order should remain the same
       expect(sorted[0].id).toBe(1);
@@ -204,7 +207,7 @@ describe('Pokemon Utilities', () => {
     });
 
     it('should sort by individual stat', () => {
-      const sort: SortOption = { field: 'hp', direction: 'asc' };
+      const sort: SortOption = { field: SortField.HP, direction: SortDirection.ASC };
       const sorted = sortPokemon(mockPokemonList, sort, () => 1);
       // All mock Pokemon have the same HP, so order should remain the same
       expect(sorted[0].id).toBe(1);
@@ -245,9 +248,9 @@ describe('Pokemon Utilities', () => {
 
   describe('formatStatName', () => {
     it('should format stat name correctly', () => {
-      expect(formatStatName('special-attack')).toBe('Special Attack');
-      expect(formatStatName('special-defense')).toBe('Special Defense');
-      expect(formatStatName('attack')).toBe('Attack');
+      expect(formatStatName(StatName.SPECIAL_ATTACK)).toBe('Special Attack');
+      expect(formatStatName(StatName.SPECIAL_DEFENSE)).toBe('Special Defense');
+      expect(formatStatName(StatName.ATTACK)).toBe('Attack');
     });
   });
 
@@ -268,10 +271,9 @@ describe('Pokemon Utilities', () => {
 
     it('should return null when species URL is missing', () => {
       const pokemon = {
-        id: 1,
-        name: 'bulbasaur',
+        ...mockPokemon,
         species: null,
-      } as Pokemon;
+      } as unknown as Pokemon;
 
       const speciesId = getSpeciesIdFromPokemon(pokemon);
       expect(speciesId).toBeNull();

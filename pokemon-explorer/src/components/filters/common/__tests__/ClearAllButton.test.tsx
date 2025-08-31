@@ -7,12 +7,12 @@ jest.mock('@/lib/stores/pokemonStore', () => ({
   usePokemonStore: jest.fn(),
 }));
 
-jest.mock('@/lib/hooks/useActiveFilters', () => ({
+jest.mock('@/lib/hooks/ui/useActiveFilters', () => ({
   useActiveFilters: jest.fn(),
 }));
 
 import { usePokemonStore } from '@/lib/stores/pokemonStore';
-import { useActiveFilters } from '@/lib/hooks/useActiveFilters';
+import { useActiveFilters } from '@/lib/hooks/ui/useActiveFilters';
 
 const mockUsePokemonStore = usePokemonStore as jest.MockedFunction<typeof usePokemonStore>;
 const mockUseActiveFilters = useActiveFilters as jest.MockedFunction<typeof useActiveFilters>;

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { PokemonAbility } from '@/types/pokemon/core';
-import { useAbility } from '@/lib/hooks/usePokemon';
+import { useAbility } from '@/lib/hooks/pokemon/usePokemon';
 
 import { ChevronDown } from 'lucide-react';
 import { AbilityHeader } from '@/components/pokemon/abilities/AbilityHeader';

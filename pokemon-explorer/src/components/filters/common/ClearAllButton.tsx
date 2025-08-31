@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { usePokemonStore } from '@/lib/stores/pokemonStore';
-import { useActiveFilters } from '@/lib/hooks/useActiveFilters';
+import { useActiveFilters } from '@/lib/hooks/ui/useActiveFilters';
 import { RotateCcw } from 'lucide-react';
 import { ButtonSize, ButtonVariant } from '@/lib/constants/ui/buttons';
 

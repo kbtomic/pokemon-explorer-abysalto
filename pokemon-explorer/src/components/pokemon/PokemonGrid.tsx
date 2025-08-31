@@ -2,7 +2,7 @@ import { Pokemon } from '@/types/pokemon/core';
 import { PokemonCard } from '@/components/pokemonCard/PokemonCard';
 import { VirtualizedPokemonGrid } from '@/components/pokemon/VirtualizedPokemonGrid';
 import { usePokemonStore } from '@/lib/stores/pokemonStore';
-import { usePerformanceOptimization } from '@/lib/hooks/usePerformanceOptimization';
+import { usePerformanceOptimization } from '@/lib/hooks/performance/usePerformanceOptimization';
 import { NoResults } from '@/components/common/NoResults';
 import { GridSkeleton } from '@/components/common/GridSkeleton';
 import { Theme } from '@/lib/constants/ui/themes';

@@ -1,5 +1,5 @@
 import { formatPokemonName } from '@/lib/utils/pokemon/pokemon';
-import { usePokemonSpecies } from '@/lib/hooks/usePokemonSpecies';
+import { usePokemonSpecies } from '@/lib/hooks/pokemon/usePokemon';
 import { getEnglishGenus } from '@/lib/utils/pokemon/speciesUtils';
 import { Pokemon } from '@/types/pokemon/core';
 import { PokemonTypeBadge } from '@/components/pokemonCard/PokemonTypeBadge';

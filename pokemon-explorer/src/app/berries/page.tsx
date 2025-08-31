@@ -1,13 +1,13 @@
 'use client';
 
-import { useAllBerriesDetails, useBerry } from '@/lib/hooks/usePokemon';
+import { useAllBerriesDetails, useBerry } from '@/lib/hooks/berries/useBerries';
 import { Berry } from '@/types/items/berries';
 import { Leaf, X } from 'lucide-react';
 import { SearchBar } from '@/components/filters/common/SearchBar';
 import { Pagination } from '@/components/pagination/Pagination';
 import { BerryDetailModal } from '@/components/berries/BerryDetailModal';
 import { DataGrid } from '@/components/common/DataGrid';
-import { useURLSync } from '@/lib/hooks/useURLSync';
+import { useURLSync } from '@/lib/hooks/sync/useURLSync';
 import { createDataStore } from '@/lib/stores/dataStore';
 import { formatName } from '@/lib/utils/formatting/stringUtils';
 import { getImageUrl } from '@/lib/utils/ui/imageUtils';
