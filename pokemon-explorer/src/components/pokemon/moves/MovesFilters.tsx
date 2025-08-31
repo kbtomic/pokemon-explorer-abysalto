@@ -3,7 +3,8 @@ import { Move } from '@/types/pokemon/moves';
 import { SearchBar } from '@/components/filters/common/SearchBar';
 import { FilterSelect } from '@/components/ui/FilterSelect';
 import { getAvailableMoveTypes, getSortOptions } from '@/lib/utils/pokemon/movesUtils';
-import { Theme, MoveSortField } from '@/lib/constants/enums';
+import { Theme } from '@/lib/constants/ui/themes';
+import { MoveSortField } from '@/lib/constants/moves/sorting';
 
 interface MovesFiltersProps {
   searchQuery: string;

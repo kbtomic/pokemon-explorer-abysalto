@@ -1,5 +1,5 @@
 import { SortOption } from '@/types/ui/filters';
-import { SortField } from '@/lib/constants/enums';
+import { SortField } from '@/lib/constants/pokemon/sorting';
 import { SortOptionConfig } from '@/types/ui/sort';
 
 export const SORT_OPTIONS: SortOptionConfig[] = [

@@ -1,5 +1,5 @@
 import { Location } from '@/types/locations/locations';
-import { LocationIconType } from '@/lib/constants/enums';
+import { LocationIconType } from '@/lib/constants/locations/icons';
 
 export function getLocationIcon(locationName: string): LocationIconType {
   const name = locationName.toLowerCase();

@@ -2,7 +2,7 @@ import { Ability } from '@/types/pokemon/abilities';
 import { getEnglishAbilityEffect, getEnglishAbilityFlavorText } from '@/lib/utils/pokemon/abilityUtils';
 import { AbilityContentSection } from '@/components/pokemon/abilities/AbilityContentSection';
 import { AbilityMetadata } from '@/components/pokemon/abilities/AbilityMetadata';
-import { ContentSectionTitle } from '@/lib/constants/enums';
+import { ContentSectionTitle } from '@/lib/constants/ui/content';
 
 interface AbilityDetailsProps {
   abilityData: Ability;

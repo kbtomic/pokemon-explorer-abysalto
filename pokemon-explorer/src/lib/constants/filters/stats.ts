@@ -1,4 +1,4 @@
-import { StatName } from '@/lib/constants/enums';
+import { StatName } from '@/lib/constants/pokemon/stats';
 
 export const STAT_NAMES = {
   [StatName.HP]: 'HP',

@@ -3,7 +3,7 @@ import { StatsGrid } from '@/components/common/StatsGrid';
 import { formatName } from '@/lib/utils/formatting/stringUtils';
 import { getImageUrl } from '@/lib/utils/ui/imageUtils';
 import { getItemStats } from '@/lib/utils/items/itemStats';
-import { ImageType } from '@/lib/constants/enums';
+import { ImageType } from '@/lib/constants/items/images';
 import { ItemEffectSection } from '@/components/items/ItemEffectSection';
 import { ItemAttributesSection } from '@/components/items/ItemAttributesSection';
 import { ItemHeldBySection } from '@/components/items/ItemHeldBySection';

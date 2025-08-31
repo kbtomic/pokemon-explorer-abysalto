@@ -10,7 +10,7 @@ import { Region } from '@/types/locations/regions';
 import { Pokedex } from '@/types/game/pokedex';
 import { Version, VersionGroup } from '@/types/game/versions';
 import { EncounterMethod, EncounterCondition } from '@/types/game/encounters';
-import { POKEMON_CHUNK_SIZE } from '@/lib/constants/pagination';
+import { POKEMON_CHUNK_SIZE } from '@/lib/constants/api/pagination';
 import { measurePerformance } from '@/lib/utils/performance/performance';
 
 const BASE_URL = 'https://pokeapi.co/api/v2';

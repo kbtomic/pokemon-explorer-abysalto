@@ -1,8 +1,8 @@
 import { DataCard } from '@/components/common/DataCard';
-import { DEFAULT_ITEMS_PER_PAGE } from '@/lib/constants/pagination';
+import { DEFAULT_ITEMS_PER_PAGE } from '@/lib/constants/api/pagination';
 import { getOptimalGridColumns } from '@/lib/utils/ui/gridLayout';
 import { GridSkeleton } from '@/components/common/GridSkeleton';
-import { Theme } from '@/lib/constants/enums';
+import { Theme } from '@/lib/constants/ui/themes';
 
 interface DataGridProps<T extends { name: string; id?: number; url?: string }> {
   items: T[];

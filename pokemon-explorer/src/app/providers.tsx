@@ -2,7 +2,7 @@
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useState } from 'react';
-import { FIVE_MINUTES, TEN_MINUTES, DEFAULT_RETRY_ATTEMPTS } from '@/lib/constants/reactQuery';
+import { FIVE_MINUTES, TEN_MINUTES, DEFAULT_RETRY_ATTEMPTS } from '@/lib/constants/api/reactQuery';
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(

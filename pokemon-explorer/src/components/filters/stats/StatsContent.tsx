@@ -1,7 +1,7 @@
-import { STAT_NAMES } from '@/lib/constants/filters';
+import { STAT_NAMES } from '@/lib/constants/filters/stats';
 import { LoadingStatItem } from './LoadingStatItem';
 import { StatItem } from './StatItem';
-import { StatName } from '@/lib/constants/enums';
+import { StatName } from '@/lib/constants/pokemon/stats';
 
 interface StatsContentProps {
   statRanges: Record<StatName, [number, number]>;

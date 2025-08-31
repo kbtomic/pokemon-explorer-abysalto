@@ -1,4 +1,4 @@
-import { NavigationLabel } from '@/lib/constants/enums';
+import { NavigationLabel } from '@/lib/constants/navigation/labels';
 
 export const navigationItems = [
   { href: '/explorer', label: NavigationLabel.POKEMON },

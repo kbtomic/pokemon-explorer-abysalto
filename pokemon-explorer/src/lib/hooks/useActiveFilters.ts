@@ -1,5 +1,5 @@
 import { usePokemonStore } from '@/lib/stores/pokemonStore';
-import { SortDirection, SortField } from '@/lib/constants/enums';
+import { SortDirection, SortField } from '@/lib/constants/pokemon/sorting';
 
 export function useActiveFilters() {
   const { filters, sort, originalStatRanges } = usePokemonStore();

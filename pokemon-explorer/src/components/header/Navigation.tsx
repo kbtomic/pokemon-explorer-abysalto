@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { ButtonVariant } from '@/lib/constants/enums';
+import { ButtonVariant } from '@/lib/constants/ui/buttons';
 import { navigationItems } from '@/lib/data/navigation';
 
 export function Navigation() {

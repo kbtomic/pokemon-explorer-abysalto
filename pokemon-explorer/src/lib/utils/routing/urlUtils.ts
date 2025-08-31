@@ -1,6 +1,7 @@
 import { PokemonFilters, SortOption } from '@/types/ui/filters';
-import { SortDirection, SortField, NavigationLabel } from '@/lib/constants/enums';
-import { URL_PARAMS } from '@/lib/constants/urlParams';
+import { SortDirection, SortField } from '@/lib/constants/pokemon/sorting';
+import { NavigationLabel } from '@/lib/constants/navigation/labels';
+import { URL_PARAMS } from '@/lib/constants/api/urlParams';
 
 /**
  * Generic interface for basic filters

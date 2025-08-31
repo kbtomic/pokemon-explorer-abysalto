@@ -2,7 +2,7 @@ import { DetailModal } from '@/components/common/DetailModal';
 import { StatsGrid } from '@/components/common/StatsGrid';
 import { formatName } from '@/lib/utils/formatting/stringUtils';
 import { getImageUrl } from '@/lib/utils/ui/imageUtils';
-import { ImageType } from '@/lib/constants/enums';
+import { ImageType } from '@/lib/constants/items/images';
 import { BerryDataSection } from '@/components/berries/BerryDataSection';
 import { getBerryStats } from '@/lib/utils/items/berryStats';
 import { getBerryCharacteristics, getBerryFlavors } from '@/lib/utils/items/berryDataUtils';

@@ -1,5 +1,5 @@
 import type { Ability } from '@/types/pokemon/abilities';
-import { LanguageCode, VersionGroup } from '@/lib/constants/enums';
+import { LanguageCode, VersionGroup } from '@/lib/constants/pokemon/species';
 
 export function getEnglishAbilityEffect(ability: Ability): string {
   const englishEntry = ability.effect_entries.find(entry => entry.language.name === LanguageCode.ENGLISH);

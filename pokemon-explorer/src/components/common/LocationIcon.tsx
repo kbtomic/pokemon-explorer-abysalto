@@ -1,6 +1,6 @@
 import { MapPin, Trees, Mountain, Waves, Building } from 'lucide-react';
 import { getLocationIcon } from '@/lib/utils/locations/locationDataUtils';
-import { LocationIconType } from '@/lib/constants/enums';
+import { LocationIconType } from '@/lib/constants/locations/icons';
 
 interface LocationIconProps {
   locationName: string;

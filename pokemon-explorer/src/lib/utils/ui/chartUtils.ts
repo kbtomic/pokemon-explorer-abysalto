@@ -1,5 +1,5 @@
 import { Pokemon } from '@/types/pokemon/core';
-import { StatName } from '@/lib/constants/enums';
+import { StatName } from '@/lib/constants/pokemon/stats';
 import { getStatValue } from '@/lib/utils/pokemon/pokemon';
 import { STATS_CONFIG, MAX_STAT_VALUE } from '@/lib/constants/statsConfig';
 import { getStatIconComponent } from '@/lib/utils/ui/iconUtils';

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { SortDirection, SortField } from '@/lib/constants/enums';
+import { SortDirection, SortField } from '@/lib/constants/pokemon/sorting';
 
 interface URLParams {
   page: number;

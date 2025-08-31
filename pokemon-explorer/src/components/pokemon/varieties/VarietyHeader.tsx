@@ -1,4 +1,4 @@
-import { VarietyLabel } from '@/lib/constants/enums';
+import { VarietyLabel } from '@/lib/constants/navigation/labels';
 
 interface VarietyHeaderProps {
   varietyCount: number;

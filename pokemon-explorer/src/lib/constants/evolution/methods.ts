@@ -1,0 +1,18 @@
+export enum EvolutionMethod {
+  LEVEL = 'Level',
+  ITEM = 'Item',
+  TRADE = 'Trade',
+  HELD_ITEM = 'Holding',
+  KNOWN_MOVE = 'Knows',
+  TIME_OF_DAY = 'Time',
+  LOCATION = 'At',
+  FRIENDSHIP = 'High friendship',
+  BEAUTY = 'High beauty',
+  RAIN = 'Rain',
+  PARTY_SPECIES = 'With species in party',
+  PARTY_TYPE = 'With type in party',
+  PHYSICAL_STATS = 'Physical stats',
+  TRADE_SPECIES = 'Trade for',
+  UPSIDE_DOWN = 'Turn console upside down',
+  SPECIAL = 'Special',
+}

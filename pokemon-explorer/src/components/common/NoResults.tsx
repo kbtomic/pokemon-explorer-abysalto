@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { ButtonVariant } from '@/lib/constants/enums';
+import { ButtonVariant } from '@/lib/constants/ui/buttons';
 import { cn } from '@/lib/utils/formatting/cn';
 
 interface NoResultsProps {

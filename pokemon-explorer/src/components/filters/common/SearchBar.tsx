@@ -2,7 +2,7 @@
 
 import { Search } from 'lucide-react';
 import { cn } from '@/lib/utils/formatting/cn';
-import { Theme } from '@/lib/constants/enums';
+import { Theme } from '@/lib/constants/ui/themes';
 import { usePokemonStore } from '@/lib/stores/pokemonStore';
 
 interface SearchBarProps {

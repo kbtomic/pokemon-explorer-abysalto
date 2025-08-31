@@ -20,7 +20,10 @@ import { NoResults } from '@/components/common/NoResults';
 import { PageHeader } from '@/components/common/PageHeader';
 import { ErrorDisplay } from '@/components/common/ErrorDisplay';
 import { PageLayout } from '@/components/common/PageLayout';
-import { ImageType, Theme, NavigationLabel, SortField, SortDirection } from '@/lib/constants/enums';
+import { ImageType } from '@/lib/constants/items/images';
+import { Theme } from '@/lib/constants/ui/themes';
+import { NavigationLabel } from '@/lib/constants/navigation/labels';
+import { SortField, SortDirection } from '@/lib/constants/pokemon/sorting';
 
 const useBerryStore = createDataStore<Berry>('berry-store');
 

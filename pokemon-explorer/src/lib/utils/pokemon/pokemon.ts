@@ -1,7 +1,8 @@
 import { Pokemon } from '@/types/pokemon/core';
 import { PokemonFilters, SortOption } from '@/types/ui/filters';
 import { PokemonSpecies } from '@/types/pokemon/species';
-import { StatName, SortField, SortDirection } from '@/lib/constants/enums';
+import { StatName } from '@/lib/constants/pokemon/stats';
+import { SortField, SortDirection } from '@/lib/constants/pokemon/sorting';
 
 export function getTotalStats(pokemon: Pokemon): number {
   return pokemon.stats.reduce((total, stat) => total + stat.base_stat, 0);

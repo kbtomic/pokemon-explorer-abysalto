@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { pokeAPI } from '@/lib/api/pokeapi';
-import { CACHE_STRATEGIES } from '@/lib/constants';
+import { CACHE_STRATEGIES } from '@/lib/constants/api/reactQuery';
 
 export function usePokemonGenerations() {
   return useQuery({

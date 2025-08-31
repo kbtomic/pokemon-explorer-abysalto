@@ -1,6 +1,6 @@
 import { ContentSection } from '@/components/common/ContentSection';
 import type { Item } from '@/types/items/items';
-import { ContentSectionTitle } from '@/lib/constants/enums';
+import { ContentSectionTitle } from '@/lib/constants/ui/content';
 
 interface ItemEffectSectionProps {
   item: Item;

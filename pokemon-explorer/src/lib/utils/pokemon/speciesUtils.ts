@@ -1,5 +1,5 @@
 import type { PokemonSpecies } from '@/types/pokemon/species';
-import { LanguageCode } from '@/lib/constants/enums';
+import { LanguageCode } from '@/lib/constants/pokemon/species';
 
 export const formatGeneration = (generation: { name: string } | null): string => {
   if (!generation) return 'Unknown';

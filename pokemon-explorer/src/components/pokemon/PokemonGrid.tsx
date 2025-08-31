@@ -5,7 +5,7 @@ import { usePokemonStore } from '@/lib/stores/pokemonStore';
 import { usePerformanceOptimization } from '@/lib/hooks/usePerformanceOptimization';
 import { NoResults } from '@/components/common/NoResults';
 import { GridSkeleton } from '@/components/common/GridSkeleton';
-import { Theme } from '@/lib/constants/enums';
+import { Theme } from '@/lib/constants/ui/themes';
 
 interface PokemonGridProps {
   pokemonList: Pokemon[];

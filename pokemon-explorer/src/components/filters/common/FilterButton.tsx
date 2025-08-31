@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { ButtonVariant } from '@/lib/constants/enums';
+import { ButtonVariant } from '@/lib/constants/ui/buttons';
 import { Filter } from 'lucide-react';
 
 interface FilterButtonProps {

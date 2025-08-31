@@ -1,5 +1,5 @@
 import { Pokemon } from '@/types/pokemon/core';
-import { STAT_NAMES } from '@/lib/constants/filters';
+import { STAT_NAMES } from '@/lib/constants/filters/stats';
 import { getStatData, calculateRadarPoint, calculateRadarLabel } from '@/lib/utils/ui/chartUtils';
 import {
   CHART_CENTER,

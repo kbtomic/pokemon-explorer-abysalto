@@ -1,5 +1,5 @@
 import { getOptimalGridColumns } from '@/lib/utils/ui/gridLayout';
-import { Theme } from '@/lib/constants/enums';
+import { Theme } from '@/lib/constants/ui/themes';
 
 interface GridSkeletonProps {
   itemCount?: number;

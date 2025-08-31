@@ -1,5 +1,5 @@
 import { SortOption } from '@/types/ui/filters';
-import { SortDirection } from '@/lib/constants/enums';
+import { SortDirection } from '@/lib/constants/pokemon/sorting';
 import { SORT_OPTIONS } from '@/lib/utils/data/sortOptions';
 import { FilterItem } from '@/types/ui/filters';
 

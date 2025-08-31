@@ -1,5 +1,6 @@
 import { EvolutionDetail } from '@/types/pokemon/evolution';
-import { EvolutionTriggerType, EvolutionMethod } from '@/lib/constants/enums';
+import { EvolutionTriggerType } from '@/lib/constants/evolution/triggers';
+import { EvolutionMethod } from '@/lib/constants/evolution/methods';
 
 export const getPokemonIdFromUrl = (url: string): number => {
   return parseInt(url.split('/').slice(-2)[0]);

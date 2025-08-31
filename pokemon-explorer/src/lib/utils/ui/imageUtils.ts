@@ -1,4 +1,5 @@
-import { ImageType, PokemonImageVariant } from '@/lib/constants/enums';
+import { ImageType } from '@/lib/constants/items/images';
+import { PokemonImageVariant } from '@/lib/constants/pokemon/images';
 import { Pokemon } from '@/types/pokemon/core';
 
 // Generic image URL utilities

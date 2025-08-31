@@ -1,4 +1,4 @@
-import { DEFAULT_ITEMS_PER_PAGE } from '@/lib/constants/pagination';
+import { DEFAULT_ITEMS_PER_PAGE } from '@/lib/constants/api/pagination';
 
 export interface GridOptions {
   minColumns?: number;

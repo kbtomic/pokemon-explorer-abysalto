@@ -3,7 +3,7 @@ import { PokemonCard } from '../pokemonCard/PokemonCard';
 import { usePokemonStore } from '@/lib/stores/pokemonStore';
 import { NoResults } from '@/components/common/NoResults';
 import { GridSkeleton } from '@/components/common/GridSkeleton';
-import { Theme } from '@/lib/constants/enums';
+import { Theme } from '@/lib/constants/ui/themes';
 
 interface VirtualizedPokemonGridProps {
   pokemonList: Pokemon[];

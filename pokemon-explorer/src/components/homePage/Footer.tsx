@@ -1,5 +1,5 @@
 import TechnologyBadge from './TechnologyBadge';
-import { TechnologyName } from '@/lib/constants/enums';
+import { TechnologyName } from '@/lib/constants/navigation/technology';
 
 export function Footer() {
   return (

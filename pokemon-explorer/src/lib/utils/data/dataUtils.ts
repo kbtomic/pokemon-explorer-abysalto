@@ -1,6 +1,6 @@
 // Generic data utilities for filtering, sorting, and formatting any data type
 
-import { SortDirection, SortField } from '@/lib/constants/enums';
+import { SortDirection, SortField } from '@/lib/constants/pokemon/sorting';
 import { formatName } from '@/lib/utils/formatting/stringUtils';
 
 // Check if more data is needed for pagination

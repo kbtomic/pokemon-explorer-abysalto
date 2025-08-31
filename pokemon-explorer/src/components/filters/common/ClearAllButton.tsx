@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { usePokemonStore } from '@/lib/stores/pokemonStore';
 import { useActiveFilters } from '@/lib/hooks/useActiveFilters';
 import { RotateCcw } from 'lucide-react';
-import { ButtonSize, ButtonVariant } from '@/lib/constants/enums';
+import { ButtonSize, ButtonVariant } from '@/lib/constants/ui/buttons';
 
 interface ClearAllButtonProps {
   size?: ButtonSize;

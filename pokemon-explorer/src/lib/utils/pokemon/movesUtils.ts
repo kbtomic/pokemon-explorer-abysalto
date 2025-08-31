@@ -1,6 +1,7 @@
 import { PokemonMove } from '@/types/pokemon/core';
 import { Move } from '@/types/pokemon/moves';
-import { MoveLearnMethod, MoveSortField } from '@/lib/constants/enums';
+import { MoveLearnMethod } from '@/lib/constants/moves/learning';
+import { MoveSortField } from '@/lib/constants/moves/sorting';
 import { formatPokemonName } from './pokemon';
 
 // Complex sorting for moves that can't use the generic function

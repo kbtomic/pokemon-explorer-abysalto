@@ -16,7 +16,7 @@ import { filterPokemon, sortPokemon } from '@/lib/utils/pokemon/pokemon';
 import { paginateItems } from '@/lib/utils/data/pagination';
 import { getNavigationUrl } from '@/lib/utils/routing/urlUtils';
 import { Pagination } from '@/components/pagination/Pagination';
-import { NavigationLabel } from '@/lib/constants/enums';
+import { NavigationLabel } from '@/lib/constants/navigation/labels';
 
 function ExplorerPageContent() {
   const router = useRouter();

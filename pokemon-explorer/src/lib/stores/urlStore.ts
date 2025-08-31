@@ -1,9 +1,10 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { PokemonFilters, SortOption } from '@/types/ui/filters';
-import { SortDirection, SortField, StatName } from '@/lib/constants/enums';
-import { DEFAULT_ITEMS_PER_PAGE } from '@/lib/constants/pagination';
-import { URL_PARAMS } from '@/lib/constants/urlParams';
+import { SortDirection, SortField } from '@/lib/constants/pokemon/sorting';
+import { StatName } from '@/lib/constants/pokemon/stats';
+import { DEFAULT_ITEMS_PER_PAGE } from '@/lib/constants/api/pagination';
+import { URL_PARAMS } from '@/lib/constants/api/urlParams';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
 interface URLParams {

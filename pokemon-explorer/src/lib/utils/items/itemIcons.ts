@@ -1,5 +1,5 @@
 import { Package, Star, Zap, Heart, Sword } from 'lucide-react';
-import { ItemCategory } from '@/lib/constants/enums';
+import { ItemCategory } from '@/lib/constants/items/categories';
 
 export function getItemIcon(categoryName: string) {
   switch (categoryName) {

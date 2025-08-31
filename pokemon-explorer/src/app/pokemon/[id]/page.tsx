@@ -15,7 +15,7 @@ import { ComprehensiveMovesDisplay } from '@/components/pokemon/moves/Comprehens
 import { PageLayout } from '@/components/common/PageLayout';
 import { PageHeader } from '@/components/common/PageHeader';
 import { ContentSection } from '@/components/common/ContentSection';
-import { ContentSectionTitle } from '@/lib/constants/enums';
+import { ContentSectionTitle } from '@/lib/constants/ui/content';
 import { PokemonHeroSection } from '@/components/pokemon/PokemonHeroSection';
 import { PokemonSpeciesInfo } from '@/components/pokemon/species/PokemonSpeciesInfo';
 import { PokemonDescription } from '@/components/pokemon/PokemonDescription';

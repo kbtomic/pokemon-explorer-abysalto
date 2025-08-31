@@ -4,7 +4,7 @@ import { useMovesData } from '@/lib/hooks/useMovesData';
 import { MovesFilters } from '@/components/pokemon/moves/MovesFilters';
 import { MovesTable } from '@/components/pokemon/moves/MovesTable';
 import { filterMoves, sortMoves } from '@/lib/utils/pokemon/movesUtils';
-import { MoveSortField } from '@/lib/constants/enums';
+import { MoveSortField } from '@/lib/constants/moves/sorting';
 
 interface ComprehensiveMovesDisplayProps {
   moves: PokemonMove[];

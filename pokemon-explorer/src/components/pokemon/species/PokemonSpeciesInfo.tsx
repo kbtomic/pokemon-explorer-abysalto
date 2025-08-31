@@ -1,5 +1,5 @@
 import { PokemonSpecies } from '@/types/pokemon/species';
-import { ContentSectionTitle, CharacteristicLabel, BiologyLabel, SpecialCategoryLabel, BadgeColor } from '@/lib/constants/enums';
+import { ContentSectionTitle, CharacteristicLabel, BiologyLabel, SpecialCategoryLabel, BadgeColor } from '@/lib/constants/ui/content';
 import { InfoCard } from '@/components/pokemon/species/InfoCard';
 import { InfoGrid } from '@/components/pokemon/species/InfoGrid';
 import { InfoSection } from '@/components/pokemon/species/InfoSection';

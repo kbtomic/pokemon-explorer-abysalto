@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { ButtonSize, ButtonVariant } from '@/lib/constants/enums';
+import { ButtonSize, ButtonVariant } from '@/lib/constants/ui/buttons';
 
 interface FilterHeaderProps {
   title: string;

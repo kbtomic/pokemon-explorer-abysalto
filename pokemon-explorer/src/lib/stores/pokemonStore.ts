@@ -3,8 +3,9 @@ import { devtools } from 'zustand/middleware';
 import { Pokemon } from '@/types/pokemon/core';
 import { PokemonFilters, SortOption, FilterState } from '@/types/ui/filters';
 import { calculateStatRanges } from '@/lib/utils/data/filters/statRanges';
-import { SortDirection, SortField, StatName } from '@/lib/constants/enums';
-import { DEFAULT_ITEMS_PER_PAGE } from '@/lib/constants/pagination';
+import { SortDirection, SortField } from '@/lib/constants/pokemon/sorting';
+import { StatName } from '@/lib/constants/pokemon/stats';
+import { DEFAULT_ITEMS_PER_PAGE } from '@/lib/constants/api/pagination';
 
 interface PaginationState {
   currentPage: number;
