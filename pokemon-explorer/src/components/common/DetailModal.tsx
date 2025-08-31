@@ -1,5 +1,3 @@
-'use client';
-
 import { ImageWithFallback } from '@/components/ui/ImageWithFallback';
 import { Modal } from '@/components/ui/modal';
 import { CloseButton } from '@/components/common/CloseButton';
@@ -73,11 +71,9 @@ export function DetailModal({
               </div>
             </div>
 
-            {/* Close Button */}
             <CloseButton onClose={onClose} />
           </div>
 
-          {/* Content */}
           {children}
         </>
       )}

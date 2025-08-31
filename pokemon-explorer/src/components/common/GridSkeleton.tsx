@@ -1,5 +1,3 @@
-'use client';
-
 import { getOptimalGridColumns } from '@/lib/utils/gridLayout';
 import { Theme } from '@/lib/constants/enums';
 

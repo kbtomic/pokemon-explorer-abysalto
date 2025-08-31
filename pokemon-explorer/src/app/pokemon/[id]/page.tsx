@@ -8,7 +8,7 @@ import { formatPokemonName, getEvolutionChainId } from '@/lib/utils/pokemon';
 import { AdvancedStatsDisplay } from '@/components/pokemon/AdvancedStatsDisplay';
 import { EvolutionChainContainer } from '@/components/pokemon/evolutionChain/EvolutionChainContainer';
 import { EnhancedAbilitiesDisplay } from '@/components/pokemon/abilities/EnhancedAbilitiesDisplay';
-import { TypeEffectivenessDisplay } from '@/components/pokemon/TypeEffectivenessDisplay';
+import { TypeEffectivenessDisplay } from '@/components/pokemon/effectiveness/TypeEffectivenessDisplay';
 import { PokemonVarietiesDisplay } from '@/components/pokemon/varieties/PokemonVarieties';
 import { ComprehensiveMovesDisplay } from '@/components/pokemon/moves/ComprehensiveMovesDisplay';
 
@@ -33,7 +33,7 @@ export default function PokemonDetailPage() {
   if (isLoading || speciesLoading) {
     return (
       <PageLayout>
-        <div className="flex items-center justify-center min-h-[60vh] text-center">
+        <div className="flex items-center flex-col justify-center min-h-[60vh] text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-red-600 mx-auto mb-4" />
           <p className="text-xl text-gray-600">Loading Pokemon details...</p>
         </div>

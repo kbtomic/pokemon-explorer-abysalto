@@ -41,17 +41,17 @@ export const POKEMON_INFO_CARDS_CONFIG: InfoCardConfig[] = [
   {
     label: 'Height',
     valueKey: 'height',
-    formatter: (height: number) => `${(height / 10).toFixed(1)} m`,
+    formatter: (height: number) => (height ? `${(height / 10).toFixed(1)} m` : 'N/A'),
   },
   {
     label: 'Weight',
     valueKey: 'weight',
-    formatter: (weight: number) => `${(weight / 10).toFixed(1)} kg`,
+    formatter: (weight: number) => (weight ? `${(weight / 10).toFixed(1)} kg` : 'N/A'),
   },
   {
     label: 'Experience',
     valueKey: 'base_experience',
-    formatter: (exp: number) => exp.toString(),
+    formatter: (exp: number) => (exp ? exp.toString() : 'N/A'),
   },
   {
     label: TOTAL_STATS_LABEL,

@@ -1,5 +1,3 @@
-'use client';
-
 import { GenericFilter } from '@/components/filters/common/GenericFilter';
 import { StatsFilter } from '@/components/filters/stats/StatsFilter';
 import { SortSelector } from '@/components/sort/SortSelector';

@@ -14,7 +14,6 @@ import { getImageUrl } from '@/lib/utils/imageUtils';
 import { paginateItems } from '@/lib/utils/pagination';
 import { buildSearchParams, getNavigationUrl } from '@/lib/utils/urlUtils';
 import { usePerformanceOptimization } from '@/lib/hooks/usePerformanceOptimization';
-import { PerformanceIndicator } from '@/components/ui/performance-indicator';
 import { ImageType, Theme, SortField, SortDirection, NavigationLabel } from '@/lib/constants/enums';
 import { useEffect, useMemo, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
@@ -140,13 +139,6 @@ function ItemsPageContent() {
           itemName: NavigationLabel.ITEMS.toLowerCase(),
           isFiltered: !!filters.search,
         }}
-      />
-
-      {/* Performance Indicator */}
-      <PerformanceIndicator
-        isVirtualized={useVirtualization}
-        itemCount={paginatedResults.items.length}
-        threshold={virtualizationThreshold}
       />
 
       <DataGrid

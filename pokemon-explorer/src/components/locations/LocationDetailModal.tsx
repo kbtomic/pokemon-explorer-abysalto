@@ -1,5 +1,3 @@
-'use client';
-
 import { Location } from '@/types';
 import { DetailModal } from '@/components/common/DetailModal';
 import { ContentSection } from '@/components/common/ContentSection';
@@ -49,7 +47,6 @@ export function LocationDetailModal({ location, isLoading, onClose }: LocationDe
       }}
     >
       <div className="space-y-6">
-        {/* Basic Stats */}
         <StatsGrid
           stats={[
             {
@@ -73,7 +70,6 @@ export function LocationDetailModal({ location, isLoading, onClose }: LocationDe
           ]}
         />
 
-        {/* Region Information */}
         <ContentSection title="Region">
           <DataCard
             item={{ name: region, id: 0 }}
@@ -89,7 +85,6 @@ export function LocationDetailModal({ location, isLoading, onClose }: LocationDe
           />
         </ContentSection>
 
-        {/* Areas */}
         {location.areas.length > 0 && (
           <ContentSection title="Areas">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -112,7 +107,6 @@ export function LocationDetailModal({ location, isLoading, onClose }: LocationDe
           </ContentSection>
         )}
 
-        {/* Games */}
         {games.length > 0 && (
           <ContentSection title="Appears in Games">
             <div className="flex flex-wrap gap-2">
@@ -125,7 +119,6 @@ export function LocationDetailModal({ location, isLoading, onClose }: LocationDe
           </ContentSection>
         )}
 
-        {/* Languages */}
         {languages.length > 0 && (
           <ContentSection title="Names in Different Languages">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">

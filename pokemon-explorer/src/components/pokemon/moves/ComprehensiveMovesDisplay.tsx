@@ -23,7 +23,7 @@ export function ComprehensiveMovesDisplay({ moves }: ComprehensiveMovesDisplayPr
   }, [moves, moveDataMap, sortBy, filterBy, searchQuery]);
 
   return (
-    <div className="bg-blue-500 rounded-xl shadow-lg p-6">
+    <div className="bg-blue-500 rounded-xl shadow-lg p-6 max-h-[550px] overflow-y-auto">
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-2xl font-bold text-white flex items-center">
           <span className="mr-2">⚔️</span>({moves.length} total moves)

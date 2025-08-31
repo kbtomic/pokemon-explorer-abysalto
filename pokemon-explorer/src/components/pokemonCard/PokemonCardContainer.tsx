@@ -1,5 +1,3 @@
-'use client';
-
 import { useRef } from 'react';
 import { Card } from '@/components/ui/card';
 import { handleEnterOrSpace } from '@/lib/utils/keyboard';
@@ -17,6 +15,7 @@ export function PokemonCardContainer({ children, onClick, className = '' }: Poke
     <Card
       ref={cardRef}
       tabIndex={0}
+      data-testid="pokemon-card"
       className={`group cursor-pointer transition-all duration-500 ease-out hover:scale-[1.03] hover:shadow-2xl bg-gradient-to-br from-red-500 to-red-600 border-red-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-inset relative overflow-hidden ${className}`}
       onClick={onClick}
       onKeyDown={event => handleEnterOrSpace(event, onClick)}

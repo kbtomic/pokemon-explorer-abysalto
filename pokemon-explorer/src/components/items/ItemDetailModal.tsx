@@ -1,5 +1,3 @@
-'use client';
-
 import { DetailModal } from '@/components/common/DetailModal';
 import { StatsGrid } from '@/components/common/StatsGrid';
 import { formatName } from '@/lib/utils/dataUtils';

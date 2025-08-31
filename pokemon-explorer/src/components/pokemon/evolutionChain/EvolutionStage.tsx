@@ -3,6 +3,7 @@ import { formatPokemonName, getPokemonImageUrl } from '@/lib/utils';
 import { getPokemonIdFromUrl } from '@/lib/utils/evolutionUtils';
 import { EvolutionTrigger } from '@/components/pokemon/evolutionChain/EvolutionTrigger';
 import { ImageWithFallback } from '@/components/ui/ImageWithFallback';
+import { cn } from '@/lib/utils';
 
 interface EvolutionStageProps {
   pokemon: EvolutionChainLink;
@@ -18,8 +19,8 @@ export function EvolutionStage({ pokemon, currentPokemonId, level = 0, className
   const isCurrentPokemon = pokemonId === currentPokemonId;
 
   return (
-    <div className={`flex flex-col items-center space-y-2 ${level > 0 ? 'ml-8' : ''} ${className}`}>
-      <div className={`relative w-20 h-20 ${isCurrentPokemon ? 'ring-2 ring-blue-500 rounded-full' : ''}`}>
+    <div className={cn('flex flex-col items-center space-y-2', level > 0 ? 'ml-8' : '', className)}>
+      <div className={cn('relative w-20 h-20', isCurrentPokemon ? 'ring-2 ring-blue-500 rounded-full' : '')}>
         <div className="flex items-center justify-center w-full h-full">
           <ImageWithFallback
             src={imageUrl || ''}
@@ -32,10 +33,8 @@ export function EvolutionStage({ pokemon, currentPokemonId, level = 0, className
           />
         </div>
       </div>
-      <span className={`text-sm font-medium text-center ${isCurrentPokemon ? 'text-blue-600' : 'text-gray-900 dark:text-white'}`}>
-        {pokemonName}
-      </span>
-      <span className="text-xs text-gray-600 dark:text-gray-400">#{pokemonId.toString().padStart(3, '0')}</span>
+      <span className={cn('text-sm font-medium text-center', isCurrentPokemon ? 'text-blue-600' : 'text-gray-900')}>{pokemonName}</span>
+      <span className="text-xs text-gray-600">#{pokemonId.toString().padStart(3, '0')}</span>
 
       {pokemon.evolution_details.length > 0 && (
         <div className="text-center">

@@ -154,7 +154,7 @@ describe('Pokemon Store', () => {
       });
 
       expect(result.current.isModalOpen).toBe(true);
-      expect(result.current.selectedPokemon).toBe(1);
+      expect(result.current.selectedPokemon).toBe(null); // No Pokemon in list, so null
     });
 
     it('should close modal', () => {

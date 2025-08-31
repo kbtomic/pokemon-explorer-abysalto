@@ -1,5 +1,3 @@
-'use client';
-
 import { Modal } from '@/components/ui/modal';
 import { FilterContent } from '@/components/filters/common/FilterContent';
 import { ClearAllButton } from '@/components/filters/common/ClearAllButton';

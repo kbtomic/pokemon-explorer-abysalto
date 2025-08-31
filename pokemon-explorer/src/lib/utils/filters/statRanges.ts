@@ -9,7 +9,7 @@ export function calculateStatRanges(pokemonList: Pokemon[]): StatRanges {
   }
 
   // Extract unique stat names dynamically from Pokemon data
-  const statNames = [...new Set(pokemonList.flatMap(pokemon => pokemon.stats.map(stat => stat.stat.name)))] as const;
+  const statNames = [...new Set(pokemonList.flatMap(pokemon => pokemon.stats.map(stat => stat.stat.name)))];
 
   const ranges: Partial<StatRanges> = {};
 

@@ -1,11 +1,9 @@
-'use client';
-
-import Image from 'next/image';
 import { StatsGrid } from '@/components/common/StatsGrid';
 import { Ruler, Weight, Star, Target } from 'lucide-react';
 import { getPokemonImageUrl, getTotalStats } from '@/lib/utils/pokemon';
 import { getTypeColor } from '@/lib/utils/typeColors';
 import { Pokemon } from '@/types/pokemon';
+import { ImageWithFallback } from '@/components/ui/ImageWithFallback';
 
 interface PokemonHeroSectionProps {
   pokemon: Pokemon;
@@ -50,24 +48,25 @@ export function PokemonHeroSection({ pokemon, genus }: PokemonHeroSectionProps) 
   return (
     <div className="bg-white rounded-xl shadow-lg p-6 mb-8 border border-gray-200">
       <div className="flex flex-col lg:flex-row gap-8 items-center">
-        {/* Pokemon Image */}
-        <div className="flex-shrink-0">
-          <div className="relative w-64 h-64 bg-gradient-to-br from-red-100 to-red-200 rounded-xl p-4 shadow-inner border border-red-200">
-            {imageUrl ? (
-              <Image src={imageUrl} alt={pokemon.name} width={256} height={256} className="object-contain drop-shadow-lg" priority />
-            ) : (
-              <div className="flex items-center justify-center w-full h-full">
-                <Image src="/favicon.svg" alt="Pokemon Explorer" width={128} height={128} className="object-contain opacity-60" priority />
-              </div>
-            )}
-          </div>
+        <div className="relative flex items-center justify-center w-64 h-64 bg-gradient-to-br from-red-100 to-red-200 rounded-xl p-4 shadow-inner border border-red-200">
+          <ImageWithFallback
+            src={imageUrl || ''}
+            alt={pokemon.name}
+            width={256}
+            height={256}
+            className="object-contain drop-shadow-lg"
+            fallbackSrc="/favicon.svg"
+            fallbackAlt="Pokemon Explorer"
+            fallbackWidth={128}
+            fallbackHeight={128}
+            fallbackClassName="object-contain opacity-60"
+            priority
+          />
         </div>
 
-        {/* Basic Info */}
         <div className="flex-1 text-center lg:text-left">
           {genus && <p className="text-xl text-gray-600 italic mb-4 border-b border-gray-200 pb-2">{genus}</p>}
 
-          {/* Types */}
           <div className="flex flex-wrap justify-center lg:justify-start gap-3 mb-6">
             {pokemon.types.map(type => (
               <span
@@ -82,7 +81,6 @@ export function PokemonHeroSection({ pokemon, genus }: PokemonHeroSectionProps) 
             ))}
           </div>
 
-          {/* Basic Stats */}
           <StatsGrid stats={basicStats} />
         </div>
       </div>

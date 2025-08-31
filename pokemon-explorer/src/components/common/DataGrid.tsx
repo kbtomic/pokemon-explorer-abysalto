@@ -1,6 +1,4 @@
-'use client';
-
-import { DataCard } from './DataCard';
+import { DataCard } from '@/components/common/DataCard';
 import { DEFAULT_ITEMS_PER_PAGE } from '@/lib/constants/pagination';
 import { getOptimalGridColumns } from '@/lib/utils/gridLayout';
 import { GridSkeleton } from '@/components/common/GridSkeleton';

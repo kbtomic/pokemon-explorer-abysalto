@@ -7,7 +7,6 @@ import { DesktopFilterBar } from '@/components/filters/desktop/DesktopFilterBar'
 import { MobileFilterBar } from '@/components/filters/mobile/MobileFilterBar';
 import { PokemonGrid } from '@/components/pokemon/PokemonGrid';
 import { PokemonModal } from '@/components/pokemonCard/pokemonModal/PokemonModal';
-import { PerformanceIndicator } from '@/components/ui/performance-indicator';
 import { useAllPokemon } from '@/lib/hooks/usePokemon';
 import { usePerformanceOptimization } from '@/lib/hooks/usePerformanceOptimization';
 import { useGenerationMapping } from '@/lib/hooks/useGenerationMapping';
@@ -114,13 +113,6 @@ function ExplorerPageContent() {
         </div>
       </div>
       <div className="container mx-auto px-4 py-8">
-        {/* Performance Indicator */}
-        <PerformanceIndicator
-          isVirtualized={useVirtualization}
-          itemCount={paginatedResults.items.length}
-          threshold={virtualizationThreshold}
-        />
-
         <PokemonGrid pokemonList={paginatedResults.items} isLoading={isLoading} />
 
         {!isLoading && paginatedResults.totalPages > 1 && (

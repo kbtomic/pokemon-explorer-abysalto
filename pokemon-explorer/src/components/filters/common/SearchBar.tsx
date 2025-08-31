@@ -62,5 +62,5 @@ export function PokemonSearchBar() {
   const setSearch = usePokemonStore(state => state.setSearch);
   const search = usePokemonStore(state => state.filters.search);
 
-  return <SearchBar placeholder="Search by name..." searchValue={search} onSearchChange={setSearch} />;
+  return <SearchBar placeholder="Search Pokemon..." searchValue={search} onSearchChange={setSearch} />;
 }

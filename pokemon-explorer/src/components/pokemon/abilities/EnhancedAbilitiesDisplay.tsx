@@ -1,5 +1,3 @@
-'use client';
-
 import { PokemonAbility } from '@/types';
 import { AbilityCard } from '@/components/pokemon/abilities/AbilityCard';
 

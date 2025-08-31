@@ -1,5 +1,3 @@
-'use client';
-
 import { Navigation } from '@/components/header/Navigation';
 import { Logo } from '@/components/header/Logo';
 

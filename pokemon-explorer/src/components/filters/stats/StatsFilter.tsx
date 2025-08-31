@@ -1,5 +1,3 @@
-'use client';
-
 import { usePokemonStore } from '@/lib/stores/pokemonStore';
 import { GenericFilter } from '@/components/filters/common/GenericFilter';
 import { StatsContent } from '@/components/filters/stats/StatsContent';

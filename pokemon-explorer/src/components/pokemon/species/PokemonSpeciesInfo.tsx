@@ -1,5 +1,3 @@
-'use client';
-
 import { PokemonSpecies } from '@/types/pokemon';
 import { ContentSectionTitle, CharacteristicLabel, BiologyLabel, SpecialCategoryLabel, BadgeColor } from '@/lib/constants/enums';
 import { InfoCard } from '@/components/pokemon/species/InfoCard';
@@ -15,7 +13,6 @@ interface PokemonSpeciesInfoProps {
 export function PokemonSpeciesInfo({ species }: PokemonSpeciesInfoProps) {
   return (
     <div className="bg-white rounded-lg p-6 shadow-md border border-gray-200 space-y-6">
-      {/* Characteristics */}
       <InfoSection title={ContentSectionTitle.CHARACTERISTICS}>
         <InfoGrid>
           <InfoCard label={CharacteristicLabel.GENERATION} value={formatGeneration(species.generation)} />
@@ -25,7 +22,6 @@ export function PokemonSpeciesInfo({ species }: PokemonSpeciesInfoProps) {
         </InfoGrid>
       </InfoSection>
 
-      {/* Biology */}
       <InfoSection title={ContentSectionTitle.BIOLOGY}>
         <InfoGrid>
           <InfoCard label={BiologyLabel.CAPTURE_RATE} value={`${species.capture_rate}/255`} />
@@ -35,7 +31,6 @@ export function PokemonSpeciesInfo({ species }: PokemonSpeciesInfoProps) {
         </InfoGrid>
       </InfoSection>
 
-      {/* Egg Groups */}
       {species.egg_groups.length > 0 && (
         <InfoSection title={ContentSectionTitle.EGG_GROUPS}>
           <div className="flex flex-wrap gap-2">
@@ -48,7 +43,6 @@ export function PokemonSpeciesInfo({ species }: PokemonSpeciesInfoProps) {
         </InfoSection>
       )}
 
-      {/* Special Categories */}
       <InfoSection title={ContentSectionTitle.RARITY}>
         <div className="flex flex-wrap gap-2">
           {species.is_baby && <Badge variant={BadgeColor.PINK}>{SpecialCategoryLabel.BABY_POKEMON}</Badge>}

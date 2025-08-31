@@ -13,7 +13,7 @@ export function LoadingStatItem({ statName }: LoadingStatItemProps) {
       </div>
 
       <div className="space-y-2">
-        <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+        <div className="flex items-center justify-between text-xs text-gray-500">
           <span>Min: --</span>
           <span>Max: --</span>
         </div>

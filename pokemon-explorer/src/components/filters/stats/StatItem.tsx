@@ -26,7 +26,7 @@ export function StatItem({ statName, statRange, currentFilter, onStatChange, onR
       </div>
 
       <div className="space-y-2">
-        <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+        <div className="flex items-center justify-between text-xs text-gray-500">
           <span>Min: {effectiveRange[0]}</span>
           <span>Max: {effectiveRange[1]}</span>
         </div>

@@ -1,5 +1,3 @@
-'use client';
-
 import { useState } from 'react';
 import { MobileNavigationMenu } from '@/components/header/MobileNavigationMenu';
 import { Menu } from 'lucide-react';

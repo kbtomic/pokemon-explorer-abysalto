@@ -15,7 +15,6 @@ import { filterData, sortData } from '@/lib/utils/dataUtils';
 import { paginateItems } from '@/lib/utils/pagination';
 import { buildSearchParams, getNavigationUrl } from '@/lib/utils/urlUtils';
 import { usePerformanceOptimization } from '@/lib/hooks/usePerformanceOptimization';
-import { PerformanceIndicator } from '@/components/ui/performance-indicator';
 import { useEffect, useMemo, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
 import { NoResults } from '@/components/common/NoResults';
@@ -140,12 +139,6 @@ function LocationsPageContent() {
           itemName: NavigationLabel.LOCATIONS.toLowerCase(),
           isFiltered: !!filters.search,
         }}
-      />
-
-      <PerformanceIndicator
-        isVirtualized={useVirtualization}
-        itemCount={paginatedResults.items.length}
-        threshold={virtualizationThreshold}
       />
 
       <DataGrid

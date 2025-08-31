@@ -1,5 +1,3 @@
-'use client';
-
 import { ReactNode } from 'react';
 import { Header } from '@/components/header/Header';
 import { cn } from '@/lib/utils/cn';

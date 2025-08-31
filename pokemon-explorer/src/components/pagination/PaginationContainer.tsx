@@ -7,8 +7,8 @@ interface PaginationContainerProps {
 
 export function PaginationContainer({ children, className }: PaginationContainerProps) {
   return (
-    <div className={cn('flex items-center justify-center space-x-2 mt-12 sm:mt-10 md:mt-8 w-full max-w-full overflow-hidden', className)}>
+    <nav aria-label="pagination" className={cn('flex items-center justify-center space-x-2 mt-12 sm:mt-10 md:mt-8 w-full max-w-full overflow-hidden', className)}>
       {children}
-    </div>
+    </nav>
   );
 }

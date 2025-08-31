@@ -1,5 +1,3 @@
-'use client';
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { ButtonVariant, ButtonSize, ChartType } from '@/lib/constants/enums';
@@ -56,16 +54,9 @@ export function AdvancedStatsDisplay({ pokemon, compareWith }: AdvancedStatsDisp
         </div>
       </div>
 
-      {/* Chart type selector */}
       <ChartSelector chartType={chartType} onChartTypeChange={setChartType} />
-
-      {/* Summary Stats */}
       <SummaryStats pokemon={pokemon} />
-
-      {/* Chart */}
       <div className="min-h-[300px] bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10">{renderChart()}</div>
-
-      {/* Legend */}
       {compareWith && showComparison && <ChartLegend pokemon={pokemon} compareWith={compareWith} />}
     </div>
   );
