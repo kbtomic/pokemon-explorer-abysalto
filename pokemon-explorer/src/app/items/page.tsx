@@ -13,7 +13,7 @@ import { formatName, filterData, sortData } from '@/lib/utils/dataUtils';
 import { getImageUrl } from '@/lib/utils/imageUtils';
 import { paginateItems } from '@/lib/utils/pagination';
 import { buildSearchParams, getNavigationUrl } from '@/lib/utils/urlUtils';
-import { usePerformanceOptimization } from '@/lib/hooks/usePerformanceOptimization';
+// import { usePerformanceOptimization } from '@/lib/hooks/usePerformanceOptimization';
 import { ImageType, Theme, SortField, SortDirection, NavigationLabel } from '@/lib/constants/enums';
 import { useEffect, useMemo, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
@@ -115,8 +115,8 @@ function ItemsPageContent() {
   // Fetch full item details when an item is selected
   const { data: selectedItemDetails, isLoading: isLoadingItemDetails } = useItem(selectedItem ? selectedItem.id : '');
 
-  // Performance optimization
-  const { useVirtualization, virtualizationThreshold } = usePerformanceOptimization(paginatedResults.items.length);
+  // Performance optimization - currently not used
+  // const { useVirtualization, virtualizationThreshold } = usePerformanceOptimization(paginatedResults.items.length);
 
   const isLoading = isLoadingItems;
   const error = itemsError;

@@ -79,7 +79,29 @@ export function useURLSync() {
     }
 
     isUpdatingFromURL.current = false;
-  }, [searchParams, getFiltersFromURL, getSortFromURL, getPaginationFromURL]);
+  }, [
+    searchParams,
+    getFiltersFromURL,
+    getSortFromURL,
+    getPaginationFromURL,
+    filters.search,
+    filters.types,
+    filters.generations,
+    filters.abilities,
+    filters.stats,
+    sort,
+    pagination.currentPage,
+    pagination.itemsPerPage,
+    pokemonList.length,
+    setSearch,
+    setTypes,
+    setGenerations,
+    setAbilities,
+    setStatRange,
+    setSort,
+    setCurrentPage,
+    setItemsPerPage,
+  ]);
 
   return { isUpdatingFromURL: isUpdatingFromURL.current };
 }

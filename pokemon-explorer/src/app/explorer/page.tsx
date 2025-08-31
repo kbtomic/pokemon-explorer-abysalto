@@ -8,7 +8,7 @@ import { MobileFilterBar } from '@/components/filters/mobile/MobileFilterBar';
 import { PokemonGrid } from '@/components/pokemon/PokemonGrid';
 import { PokemonModal } from '@/components/pokemonCard/pokemonModal/PokemonModal';
 import { useAllPokemon } from '@/lib/hooks/usePokemon';
-import { usePerformanceOptimization } from '@/lib/hooks/usePerformanceOptimization';
+// import { usePerformanceOptimization } from '@/lib/hooks/usePerformanceOptimization';
 import { useGenerationMapping } from '@/lib/hooks/useGenerationMapping';
 import { useURLSync } from '@/lib/hooks/useExplorerURLSync';
 import { usePokemonStore } from '@/lib/stores/pokemonStore';
@@ -82,8 +82,8 @@ function ExplorerPageContent() {
     return paginateItems(filteredAndSortedPokemon, pagination.currentPage, pagination.itemsPerPage);
   }, [filteredAndSortedPokemon, pagination.currentPage, pagination.itemsPerPage]);
 
-  // Performance optimization
-  const { useVirtualization, virtualizationThreshold } = usePerformanceOptimization(paginatedResults.items.length);
+  // Performance optimization - currently not used
+  // const { useVirtualization, virtualizationThreshold } = usePerformanceOptimization(paginatedResults.items.length);
 
   const isLoading = isLoadingPokemon;
   const error = pokemonError;

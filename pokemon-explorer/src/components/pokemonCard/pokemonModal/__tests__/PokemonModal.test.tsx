@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen } from '@/lib/test-utils';
 import { PokemonModal } from '../PokemonModal';
 import { usePokemonStore } from '@/lib/stores/pokemonStore';
+// import { Pokemon } from '@/types';
 
 // Mock the Pokemon store
 jest.mock('@/lib/stores/pokemonStore', () => ({
@@ -53,13 +54,59 @@ describe('PokemonModal', () => {
 
   const mockCloseModal = jest.fn();
 
+  // Helper function to create mock store return value
+  const createMockStoreReturn = (overrides: Partial<ReturnType<typeof usePokemonStore>> = {}) => ({
+    isModalOpen: true,
+    selectedPokemon: mockPokemon,
+    closeModal: mockCloseModal,
+    pokemonList: [],
+    isLoading: false,
+    error: null,
+    filters: {
+      search: '',
+      types: [],
+      generations: [],
+      abilities: [],
+      stats: {
+        hp: [0, 0],
+        attack: [0, 0],
+        defense: [0, 0],
+        speed: [0, 0],
+        'special-attack': [0, 0],
+        'special-defense': [0, 0],
+      },
+    },
+    originalStatRanges: {
+      hp: [0, 0],
+      attack: [0, 0],
+      defense: [0, 0],
+      speed: [0, 0],
+      'special-attack': [0, 0],
+      'special-defense': [0, 0],
+    },
+    sort: { field: 'id', direction: 'asc' },
+    pagination: { currentPage: 1, itemsPerPage: 20, totalItems: 0 },
+    setPokemonList: jest.fn(),
+    setLoading: jest.fn(),
+    setError: jest.fn(),
+    setSearch: jest.fn(),
+    setTypes: jest.fn(),
+    setGenerations: jest.fn(),
+    setAbilities: jest.fn(),
+    setStatRange: jest.fn(),
+    clearFilters: jest.fn(),
+    setSort: jest.fn(),
+    setCurrentPage: jest.fn(),
+    setItemsPerPage: jest.fn(),
+    resetPagination: jest.fn(),
+    openModal: jest.fn(),
+    setSelectedPokemon: jest.fn(),
+    ...overrides,
+  });
+
   beforeEach(() => {
     jest.clearAllMocks();
-    mockUsePokemonStore.mockReturnValue({
-      isModalOpen: true,
-      selectedPokemon: mockPokemon,
-      closeModal: mockCloseModal,
-    } as any);
+    mockUsePokemonStore.mockReturnValue(createMockStoreReturn());
   });
 
   it('should render Pokemon name', () => {
@@ -131,11 +178,11 @@ describe('PokemonModal', () => {
       weight: null,
     };
 
-    mockUsePokemonStore.mockReturnValue({
-      isModalOpen: true,
-      selectedPokemon: pokemonWithMissingData,
-      closeModal: mockCloseModal,
-    } as any);
+    mockUsePokemonStore.mockReturnValue(
+      createMockStoreReturn({
+        selectedPokemon: pokemonWithMissingData,
+      })
+    );
 
     render(<PokemonModal />);
 
@@ -148,7 +195,6 @@ describe('PokemonModal', () => {
     render(<PokemonModal />);
 
     const grassBadge = screen.getByText('grass');
-    const poisonBadge = screen.getByText('poison');
 
     // Check that badges have the expected styling classes
     expect(grassBadge).toHaveClass('px-3');
@@ -166,11 +212,11 @@ describe('PokemonModal', () => {
       name: 'mew-two',
     };
 
-    mockUsePokemonStore.mockReturnValue({
-      isModalOpen: true,
-      selectedPokemon: pokemonWithHyphen,
-      closeModal: mockCloseModal,
-    } as any);
+    mockUsePokemonStore.mockReturnValue(
+      createMockStoreReturn({
+        selectedPokemon: pokemonWithHyphen,
+      })
+    );
 
     render(<PokemonModal />);
 
@@ -213,22 +259,22 @@ describe('PokemonModal', () => {
   });
 
   it('should not render when modal is closed', () => {
-    mockUsePokemonStore.mockReturnValue({
-      isModalOpen: false,
-      selectedPokemon: mockPokemon,
-      closeModal: mockCloseModal,
-    } as any);
+    mockUsePokemonStore.mockReturnValue(
+      createMockStoreReturn({
+        isModalOpen: false,
+      })
+    );
 
     const { container } = render(<PokemonModal />);
     expect(container.firstChild).toBeNull();
   });
 
   it('should not render when no Pokemon is selected', () => {
-    mockUsePokemonStore.mockReturnValue({
-      isModalOpen: true,
-      selectedPokemon: null,
-      closeModal: mockCloseModal,
-    } as any);
+    mockUsePokemonStore.mockReturnValue(
+      createMockStoreReturn({
+        selectedPokemon: null,
+      })
+    );
 
     const { container } = render(<PokemonModal />);
     expect(container.firstChild).toBeNull();

@@ -22,9 +22,11 @@ const createWrapper = () => {
       },
     },
   });
-  return ({ children }: { children: React.ReactNode }) => {
+  const Wrapper = ({ children }: { children: React.ReactNode }) => {
     return React.createElement(QueryClientProvider, { client: queryClient }, children);
   };
+  Wrapper.displayName = 'QueryClientWrapper';
+  return Wrapper;
 };
 
 describe('usePokemonTypes', () => {
@@ -33,11 +35,14 @@ describe('usePokemonTypes', () => {
   });
 
   it('should fetch Pokemon types successfully', async () => {
-    const mockTypes = [
-      { id: 1, name: 'normal', names: [{ language: { name: 'en' }, name: 'Normal' }] },
-      { id: 2, name: 'fire', names: [{ language: { name: 'en' }, name: 'Fire' }] },
-      { id: 3, name: 'water', names: [{ language: { name: 'en' }, name: 'Water' }] },
-    ];
+    const mockTypes = {
+      count: 3,
+      results: [
+        { name: 'normal', url: 'https://pokeapi.co/api/v2/type/1/' },
+        { name: 'fire', url: 'https://pokeapi.co/api/v2/type/2/' },
+        { name: 'water', url: 'https://pokeapi.co/api/v2/type/3/' },
+      ],
+    };
 
     mockPokeAPI.getTypes.mockResolvedValue(mockTypes);
 
@@ -76,12 +81,12 @@ describe('usePokemonTypes', () => {
   });
 
   it('should return empty array when no data', async () => {
-    mockPokeAPI.getTypes.mockResolvedValue([]);
+    mockPokeAPI.getTypes.mockResolvedValue({ count: 0, results: [] });
 
     const { result } = renderHook(() => usePokemonTypes(), { wrapper: createWrapper() });
 
     await waitFor(() => {
-      expect(result.current.data).toEqual([]);
+      expect(result.current.data).toEqual({ count: 0, results: [] });
     });
 
     expect(result.current.isLoading).toBe(false);

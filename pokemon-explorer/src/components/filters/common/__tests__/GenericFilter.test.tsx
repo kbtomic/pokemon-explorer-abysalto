@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@/lib/test-utils';
+import { render, screen, fireEvent } from '@/lib/test-utils';
 import { GenericFilter } from '../GenericFilter';
 import { FilterItem } from '@/types/filters';
 

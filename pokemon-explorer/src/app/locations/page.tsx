@@ -14,7 +14,7 @@ import { getImageUrl } from '@/lib/utils/imageUtils';
 import { filterData, sortData } from '@/lib/utils/dataUtils';
 import { paginateItems } from '@/lib/utils/pagination';
 import { buildSearchParams, getNavigationUrl } from '@/lib/utils/urlUtils';
-import { usePerformanceOptimization } from '@/lib/hooks/usePerformanceOptimization';
+// import { usePerformanceOptimization } from '@/lib/hooks/usePerformanceOptimization';
 import { useEffect, useMemo, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
 import { NoResults } from '@/components/common/NoResults';
@@ -113,8 +113,8 @@ function LocationsPageContent() {
 
   const { data: selectedLocationDetails, isLoading: isLoadingLocationDetails } = useLocation(selectedLocation ? selectedLocation.id : '');
 
-  // Performance optimization
-  const { useVirtualization, virtualizationThreshold } = usePerformanceOptimization(paginatedResults.items.length);
+  // Performance optimization - currently not used
+  // const { useVirtualization, virtualizationThreshold } = usePerformanceOptimization(paginatedResults.items.length);
 
   const isLoading = isLoadingLocations;
   const error = locationsError;
