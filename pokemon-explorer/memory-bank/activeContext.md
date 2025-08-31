@@ -272,6 +272,19 @@ The application now has **complete API coverage** and all the data needed to bui
 
 ## 🔄 Recent Major Changes
 
+### **Pokemon Species ID Fix (DECEMBER 2024):**
+
+- **Issue**: 404 error when fetching Pokemon species data for high-ID Pokemon (e.g., Pokemon ID 10277)
+- **Root Cause**: Components were using Pokemon ID directly as species ID, but these are different values
+- **Solution**: Created `getSpeciesIdFromPokemon()` utility function to extract correct species ID from Pokemon's species URL
+- **Implementation**:
+  - **`src/lib/utils/pokemon.ts`**: Added `getSpeciesIdFromPokemon()` function
+  - **`src/lib/hooks/usePokemonSpecies.ts`**: Updated hook to accept Pokemon objects or species IDs
+  - **Component Updates**: Fixed `PokemonModalInfo.tsx`, `PokemonInfo.tsx`, and individual Pokemon page
+  - **Error Handling**: Added proper null checking and fallback behavior
+- **Result**: All Pokemon species data now loads correctly without 404 errors
+- **Testing**: Added comprehensive tests for the new utility function
+
 ### **Testing Infrastructure (DECEMBER 2024):**
 
 - **Issue**: Failing tests and low test coverage

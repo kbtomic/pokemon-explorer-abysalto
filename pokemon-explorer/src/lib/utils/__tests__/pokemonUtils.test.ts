@@ -1,7 +1,16 @@
-import { getPokemonImageUrl, getTotalStats, getStatValue, filterPokemon, sortPokemon, formatPokemonName, formatStatName } from '../pokemon';
+import {
+  getPokemonImageUrl,
+  getTotalStats,
+  getStatValue,
+  filterPokemon,
+  sortPokemon,
+  formatPokemonName,
+  formatStatName,
+  getSpeciesIdFromPokemon,
+} from '../pokemon';
 import { getGenerationFromId } from '../generationMapping';
 import { mockPokemon, mockPokemonList } from '@/lib/test-utils';
-import { PokemonFilters, SortOption } from '@/types';
+import { PokemonFilters, SortOption, Pokemon } from '@/types';
 
 describe('Pokemon Utilities', () => {
   describe('getPokemonImageUrl', () => {
@@ -238,6 +247,47 @@ describe('Pokemon Utilities', () => {
       expect(formatStatName('special-attack')).toBe('Special Attack');
       expect(formatStatName('special-defense')).toBe('Special Defense');
       expect(formatStatName('attack')).toBe('Attack');
+    });
+  });
+
+  describe('getSpeciesIdFromPokemon', () => {
+    it('should extract species ID from Pokemon species URL', () => {
+      const pokemon = {
+        id: 10277,
+        name: 'terapagos-stellar',
+        species: {
+          name: 'terapagos',
+          url: 'https://pokeapi.co/api/v2/pokemon-species/1024/',
+        },
+      } as Pokemon;
+
+      const speciesId = getSpeciesIdFromPokemon(pokemon);
+      expect(speciesId).toBe(1024);
+    });
+
+    it('should return null when species URL is missing', () => {
+      const pokemon = {
+        id: 1,
+        name: 'bulbasaur',
+        species: null,
+      } as Pokemon;
+
+      const speciesId = getSpeciesIdFromPokemon(pokemon);
+      expect(speciesId).toBeNull();
+    });
+
+    it('should return null when species URL is malformed', () => {
+      const pokemon = {
+        id: 1,
+        name: 'bulbasaur',
+        species: {
+          name: 'bulbasaur',
+          url: 'https://pokeapi.co/api/v2/pokemon-species/invalid/',
+        },
+      } as Pokemon;
+
+      const speciesId = getSpeciesIdFromPokemon(pokemon);
+      expect(speciesId).toBeNull();
     });
   });
 });

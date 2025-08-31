@@ -26,7 +26,7 @@ export default function PokemonDetailPage() {
   const pokemonId = parseInt(params.id as string);
 
   const { data: pokemon, isLoading, error } = usePokemon(pokemonId);
-  const { data: species, isLoading: speciesLoading } = usePokemonSpecies(pokemonId);
+  const { data: species, isLoading: speciesLoading } = usePokemonSpecies(pokemon || pokemonId);
   const evolutionChainId = species ? getEvolutionChainId(species) : null;
   const { data: evolutionChain, isLoading: evolutionLoading } = useEvolutionChain(evolutionChainId);
 

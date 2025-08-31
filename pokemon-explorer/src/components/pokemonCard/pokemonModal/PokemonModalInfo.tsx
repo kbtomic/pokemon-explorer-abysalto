@@ -9,7 +9,7 @@ interface PokemonModalInfoProps {
 }
 
 export function PokemonModalInfo({ pokemon }: PokemonModalInfoProps) {
-  const { data: species, isLoading: speciesLoading } = usePokemonSpecies(pokemon.id);
+  const { data: species, isLoading: speciesLoading } = usePokemonSpecies(pokemon);
 
   return (
     <div className="text-center space-y-3">

@@ -166,3 +166,9 @@ export function getEvolutionChainId(species: PokemonSpecies): number | null {
   const match = species.evolution_chain.url.match(/\/evolution-chain\/(\d+)\//);
   return match ? parseInt(match[1], 10) : null;
 }
+
+export function getSpeciesIdFromPokemon(pokemon: Pokemon): number | null {
+  if (!pokemon.species?.url) return null;
+  const match = pokemon.species.url.match(/\/pokemon-species\/(\d+)\//);
+  return match ? parseInt(match[1], 10) : null;
+}

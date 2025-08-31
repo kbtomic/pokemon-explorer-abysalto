@@ -11,7 +11,7 @@ interface PokemonInfoProps {
 }
 
 export function PokemonInfo({ pokemon, className = '' }: PokemonInfoProps) {
-  const { data: species, isLoading: speciesLoading } = usePokemonSpecies(pokemon.id);
+  const { data: species, isLoading: speciesLoading } = usePokemonSpecies(pokemon);
 
   return (
     <div className={cn('text-center', className)}>
