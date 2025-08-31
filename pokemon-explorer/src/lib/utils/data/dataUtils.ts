@@ -1,16 +1,7 @@
 // Generic data utilities for filtering, sorting, and formatting any data type
 
 import { SortDirection, SortField } from '@/lib/constants/enums';
-
-// Format name by replacing hyphens with spaces
-export function formatName(name: string): string {
-  return name.replace(/-/g, ' ');
-}
-
-// Format name by replacing hyphens with spaces and capitalizing first letter of each word
-export function formatNameCapitalized(name: string): string {
-  return name.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-}
+import { formatName } from '@/lib/utils/formatting/stringUtils';
 
 // Check if more data is needed for pagination
 export function needsMoreData(currentItems: number, currentPage: number, itemsPerPage: number, totalPagesNeeded: number): boolean {

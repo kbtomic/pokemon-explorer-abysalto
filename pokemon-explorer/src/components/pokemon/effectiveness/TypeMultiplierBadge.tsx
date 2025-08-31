@@ -1,5 +1,5 @@
-import { getTypeColor } from '@/lib/utils';
-import { formatPokemonName } from '@/lib/utils';
+import { getTypeColor } from '@/lib/utils/ui/typeColors';
+import { formatPokemonName } from '@/lib/utils/pokemon/pokemon';
 
 interface TypeMultiplierBadgeProps {
   type: string;

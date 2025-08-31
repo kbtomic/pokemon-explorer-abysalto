@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { usePokemonStore } from '@/lib/stores/pokemonStore';
 import { useURLStore } from '@/lib/stores/urlStore';
-import { arraysEqual, statsEqual, sortOptionsEqual } from '@/lib/utils/comparison';
+import { arraysEqual, statsEqual, sortOptionsEqual } from '@/lib/utils/interaction/comparison';
 import { StatName } from '@/lib/constants/enums';
 
 export function useURLSync() {

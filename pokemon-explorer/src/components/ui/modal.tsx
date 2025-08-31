@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/formatting/cn';
 import { Button } from './button';
 import { ButtonVariant, ButtonSize } from '@/lib/constants/enums';
-import { handleDocumentEscape } from '@/lib/utils/keyboard';
+import { handleDocumentEscape } from '@/lib/utils/interaction/keyboard';
 
 export interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
   isOpen: boolean;

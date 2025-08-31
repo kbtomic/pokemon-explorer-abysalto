@@ -1,7 +1,8 @@
 import { PokemonVariety } from '@/types';
-import { cn } from '@/lib/utils/cn';
-import { getPokemonImageUrl, formatPokemonName } from '@/lib/utils';
-import { getPokemonIdFromVarietyUrl, isCurrentPokemon } from '@/lib/utils/varietyUtils';
+import { cn } from '@/lib/utils/formatting/cn';
+import { getPokemonImageUrl } from '@/lib/utils/ui/imageUtils';
+import { formatPokemonName } from '@/lib/utils/pokemon/pokemon';
+import { getPokemonIdFromVarietyUrl, isCurrentPokemon } from '@/lib/utils/pokemon/varietyUtils';
 import { VarietyLabel } from '@/lib/constants/enums';
 import { ImageWithFallback } from '@/components/ui/ImageWithFallback';
 

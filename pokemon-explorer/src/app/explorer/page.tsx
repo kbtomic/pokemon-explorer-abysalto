@@ -12,9 +12,9 @@ import { useGenerationMapping } from '@/lib/hooks/useGenerationMapping';
 import { useURLSync } from '@/lib/hooks/useExplorerURLSync';
 import { usePokemonStore } from '@/lib/stores/pokemonStore';
 import { useURLStore } from '@/lib/stores/urlStore';
-import { filterPokemon, sortPokemon } from '@/lib/utils/pokemon';
-import { paginateItems } from '@/lib/utils/pagination';
-import { getNavigationUrl } from '@/lib/utils/urlUtils';
+import { filterPokemon, sortPokemon } from '@/lib/utils/pokemon/pokemon';
+import { paginateItems } from '@/lib/utils/data/pagination';
+import { getNavigationUrl } from '@/lib/utils/routing/urlUtils';
 import { Pagination } from '@/components/pagination/Pagination';
 import { NavigationLabel } from '@/lib/constants/enums';
 

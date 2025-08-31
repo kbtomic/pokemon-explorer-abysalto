@@ -1,4 +1,4 @@
-import { formatPokemonName } from '@/lib/utils';
+import { formatPokemonName } from '@/lib/utils/pokemon/pokemon';
 
 interface AbilityHeaderProps {
   abilityName: string;

@@ -1,6 +1,6 @@
 import { Pokemon } from '@/types';
 import { STAT_NAMES } from '@/lib/constants/filters';
-import { getStatData, calculateRadarPoint, calculateRadarLabel } from '@/lib/utils/chartUtils';
+import { getStatData, calculateRadarPoint, calculateRadarLabel } from '@/lib/utils/ui/chartUtils';
 import {
   CHART_CENTER,
   CHART_RADIUS,

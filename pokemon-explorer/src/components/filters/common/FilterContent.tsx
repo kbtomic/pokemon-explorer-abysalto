@@ -1,7 +1,7 @@
 import { GenericFilter } from '@/components/filters/common/GenericFilter';
 import { StatsFilter } from '@/components/filters/stats/StatsFilter';
 import { SortSelector } from '@/components/sort/SortSelector';
-import { useTypeFilterConfig, useGenerationFilterConfig, useAbilitiesFilterConfig } from '@/lib/utils/filters/filters';
+import { useTypeFilterConfig, useGenerationFilterConfig, useAbilitiesFilterConfig } from '@/lib/utils/data/filters/filters';
 
 interface FilterContentProps {
   className?: string;

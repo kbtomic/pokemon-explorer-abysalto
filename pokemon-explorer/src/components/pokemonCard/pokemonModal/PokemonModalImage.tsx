@@ -1,4 +1,4 @@
-import { getPokemonImageUrl } from '@/lib/utils';
+import { getPokemonImageUrl } from '@/lib/utils/ui/imageUtils';
 import { Pokemon } from '@/types';
 import { ImageWithFallback } from '@/components/ui/ImageWithFallback';
 

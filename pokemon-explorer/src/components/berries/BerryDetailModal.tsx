@@ -1,11 +1,11 @@
 import { DetailModal } from '@/components/common/DetailModal';
 import { StatsGrid } from '@/components/common/StatsGrid';
-import { formatName } from '@/lib/utils/dataUtils';
-import { getImageUrl } from '@/lib/utils/imageUtils';
+import { formatName } from '@/lib/utils/formatting/stringUtils';
+import { getImageUrl } from '@/lib/utils/ui/imageUtils';
 import { ImageType } from '@/lib/constants/enums';
 import { BerryDataSection } from '@/components/berries/BerryDataSection';
-import { getBerryStats } from '@/lib/utils/berryStats';
-import { getBerryCharacteristics, getBerryFlavors } from '@/lib/utils/berryDataUtils';
+import { getBerryStats } from '@/lib/utils/items/berryStats';
+import { getBerryCharacteristics, getBerryFlavors } from '@/lib/utils/items/berryDataUtils';
 import type { Berry } from '@/types/pokemon';
 
 interface BerryDetailModalProps {

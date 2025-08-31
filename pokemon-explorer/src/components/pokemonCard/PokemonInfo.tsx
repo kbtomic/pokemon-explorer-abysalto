@@ -1,9 +1,9 @@
-import { formatPokemonName } from '@/lib/utils';
+import { formatPokemonName } from '@/lib/utils/pokemon/pokemon';
 import { usePokemonSpecies } from '@/lib/hooks/usePokemonSpecies';
-import { getEnglishGenus } from '@/lib/utils/speciesUtils';
+import { getEnglishGenus } from '@/lib/utils/pokemon/speciesUtils';
 import { Pokemon } from '@/types';
 import { PokemonTypeBadge } from '@/components/pokemonCard/PokemonTypeBadge';
-import { cn } from '@/lib/utils/cn';
+import { cn } from '@/lib/utils/formatting/cn';
 
 interface PokemonInfoProps {
   pokemon: Pokemon;

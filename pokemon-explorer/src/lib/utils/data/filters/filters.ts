@@ -3,8 +3,8 @@ import { usePokemonStore } from '@/lib/stores/pokemonStore';
 import { usePokemonTypes } from '@/lib/hooks/usePokemonTypes';
 import { usePokemonGenerations } from '@/lib/hooks/usePokemonGenerations';
 import { useAbilities } from '@/lib/hooks/useAbilities';
-import { getTypeColor } from '@/lib/utils';
-import { formatAbilityName } from '@/lib/utils/pokemon';
+import { getTypeColor } from '@/lib/utils/ui/typeColors';
+import { formatAbilityName } from '@/lib/utils/formatting/stringUtils';
 import { Ability } from '@/types';
 
 // Type Filter Configuration

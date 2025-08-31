@@ -4,7 +4,14 @@ import { InfoCard } from '@/components/pokemon/species/InfoCard';
 import { InfoGrid } from '@/components/pokemon/species/InfoGrid';
 import { InfoSection } from '@/components/pokemon/species/InfoSection';
 import { Badge } from '@/components/pokemon/species/Badge';
-import { formatGeneration, formatHabitat, formatShape, formatColor, formatGenderRate, formatEggGroup } from '@/lib/utils/speciesUtils';
+import {
+  formatGeneration,
+  formatHabitat,
+  formatShape,
+  formatColor,
+  formatGenderRate,
+  formatEggGroup,
+} from '@/lib/utils/pokemon/speciesUtils';
 
 interface PokemonSpeciesInfoProps {
   species: PokemonSpecies;

@@ -1,8 +1,8 @@
 import { Pokemon } from '@/types';
 import { StatName } from '@/lib/constants/enums';
-import { getStatValue } from '@/lib/utils/pokemon';
+import { getStatValue } from '@/lib/utils/pokemon/pokemon';
 import { STATS_CONFIG, MAX_STAT_VALUE } from '@/lib/constants/statsConfig';
-import { getStatIconComponent } from '@/lib/utils/iconUtils';
+import { getStatIconComponent } from '@/lib/utils/ui/iconUtils';
 import {
   CHART_CENTER,
   CHART_RADIUS,

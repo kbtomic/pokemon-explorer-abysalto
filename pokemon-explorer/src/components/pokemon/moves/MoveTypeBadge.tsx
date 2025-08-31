@@ -1,4 +1,4 @@
-import { getTypeColor } from '@/lib/utils';
+import { getTypeColor } from '@/lib/utils/ui/typeColors';
 
 interface MoveTypeBadgeProps {
   typeName?: string;

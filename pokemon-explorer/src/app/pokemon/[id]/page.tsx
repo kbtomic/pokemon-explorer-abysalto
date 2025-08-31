@@ -3,8 +3,8 @@
 import { useParams } from 'next/navigation';
 import { usePokemon } from '@/lib/hooks/usePokemon';
 import { usePokemonSpecies, useEvolutionChain } from '@/lib/hooks/usePokemonSpecies';
-import { getEnglishFlavorText, getEnglishGenus } from '@/lib/utils/speciesUtils';
-import { formatPokemonName, getEvolutionChainId } from '@/lib/utils/pokemon';
+import { getEnglishFlavorText, getEnglishGenus } from '@/lib/utils/pokemon/speciesUtils';
+import { formatPokemonName, getEvolutionChainId } from '@/lib/utils/pokemon/pokemon';
 import { AdvancedStatsDisplay } from '@/components/pokemon/AdvancedStatsDisplay';
 import { EvolutionChainContainer } from '@/components/pokemon/evolutionChain/EvolutionChainContainer';
 import { EnhancedAbilitiesDisplay } from '@/components/pokemon/abilities/EnhancedAbilitiesDisplay';

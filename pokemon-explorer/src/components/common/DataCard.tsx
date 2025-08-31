@@ -2,7 +2,7 @@
 
 import { ImageWithFallback } from '@/components/ui/ImageWithFallback';
 import { LocationIcon } from '@/components/common/LocationIcon';
-import { cn } from '@/lib/utils/cn';
+import { cn } from '@/lib/utils/formatting/cn';
 
 interface DataCardProps {
   item: {

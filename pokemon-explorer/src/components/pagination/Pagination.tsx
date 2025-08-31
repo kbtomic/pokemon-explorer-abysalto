@@ -5,8 +5,8 @@ import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-r
 import { PaginationContainer } from '@/components/pagination/PaginationContainer';
 import { PaginationNavigationButton } from '@/components/pagination/PaginationNavigationButton';
 import { PaginationPageNumbers } from '@/components/pagination/PaginationPageNumbers';
-import { getVisiblePages, canNavigatePrevious, canNavigateNext } from '@/lib/utils/pagination';
-import { buildPaginationUrl } from '@/lib/utils/urlUtils';
+import { getVisiblePages, canNavigatePrevious, canNavigateNext } from '@/lib/utils/data/pagination';
+import { buildPaginationUrl } from '@/lib/utils/routing/urlUtils';
 import { PokemonFilters, SortOption } from '@/types';
 
 interface PaginationProps {

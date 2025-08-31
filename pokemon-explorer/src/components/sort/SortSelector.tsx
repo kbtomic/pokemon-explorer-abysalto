@@ -6,7 +6,7 @@ import { SortButton } from '@/components/sort/SortButton';
 import { FilterDropdown } from '@/components/filters/common/FilterDropdown';
 import { FilterItemsGrid } from '@/components/filters/common/FilterItemsGrid';
 import { SortDirectionToggle } from '@/components/sort/SortDirectionToggle';
-import { convertSortOptionsToFilterItems, handleSortChange, handleDirectionToggle } from '@/lib/utils/sort/sortUtils';
+import { convertSortOptionsToFilterItems, handleSortChange, handleDirectionToggle } from '@/lib/utils/data/sort/sortUtils';
 
 export function SortSelector() {
   const [isOpen, setIsOpen] = useState(false);

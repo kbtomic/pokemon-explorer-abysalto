@@ -1,5 +1,5 @@
 import { CardHeader } from '@/components/ui/card';
-import { getTotalStats } from '@/lib/utils';
+import { getTotalStats } from '@/lib/utils/pokemon/pokemon';
 import { Pokemon } from '@/types';
 
 interface PokemonCardHeaderProps {

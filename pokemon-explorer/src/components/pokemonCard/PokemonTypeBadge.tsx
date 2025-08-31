@@ -1,5 +1,5 @@
-import { getTypeColor } from '@/lib/utils';
-import { cn } from '@/lib/utils/cn';
+import { getTypeColor } from '@/lib/utils/ui/typeColors';
+import { cn } from '@/lib/utils/formatting/cn';
 
 interface PokemonTypeBadgeProps {
   typeName: string;

@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { ButtonVariant } from '@/lib/constants/enums';
-import { cn } from '@/lib/utils/cn';
+import { cn } from '@/lib/utils/formatting/cn';
 
 interface NoResultsProps {
   icon?: string | React.ReactNode;

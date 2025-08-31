@@ -1,4 +1,4 @@
-import { formatName, formatNameCapitalized } from './dataUtils';
+import { formatName, formatNameCapitalized } from '@/lib/utils/formatting/stringUtils';
 import type { Berry } from '@/types/pokemon';
 
 export function formatFirmness(value: string | number): string {

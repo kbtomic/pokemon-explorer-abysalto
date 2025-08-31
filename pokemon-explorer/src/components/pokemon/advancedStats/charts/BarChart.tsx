@@ -1,6 +1,6 @@
 import { Pokemon } from '@/types';
 import { STAT_NAMES } from '@/lib/constants/filters';
-import { getStatData } from '@/lib/utils/chartUtils';
+import { getStatData } from '@/lib/utils/ui/chartUtils';
 import {
   MAX_STAT_VALUE,
   BAR_CHART_HEIGHT,

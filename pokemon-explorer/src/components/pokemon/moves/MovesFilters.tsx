@@ -1,7 +1,7 @@
 import { PokemonMove, Move } from '@/types';
 import { SearchBar } from '@/components/filters/common/SearchBar';
 import { FilterSelect } from '@/components/ui/FilterSelect';
-import { getAvailableMoveTypes, getSortOptions } from '@/lib/utils/movesUtils';
+import { getAvailableMoveTypes, getSortOptions } from '@/lib/utils/pokemon/movesUtils';
 import { Theme, MoveSortField } from '@/lib/constants/enums';
 
 interface MovesFiltersProps {

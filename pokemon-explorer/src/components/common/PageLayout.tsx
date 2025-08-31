@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { Header } from '@/components/header/Header';
-import { cn } from '@/lib/utils/cn';
+import { cn } from '@/lib/utils/formatting/cn';
 
 interface PageLayoutProps {
   children: ReactNode;

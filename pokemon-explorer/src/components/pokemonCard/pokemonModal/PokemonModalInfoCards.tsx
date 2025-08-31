@@ -1,4 +1,4 @@
-import { getTotalStats } from '@/lib/utils';
+import { getTotalStats } from '@/lib/utils/pokemon/pokemon';
 import { Pokemon } from '@/types';
 import { POKEMON_INFO_CARDS_CONFIG, TOTAL_STATS_LABEL } from '@/lib/constants/statsConfig';
 

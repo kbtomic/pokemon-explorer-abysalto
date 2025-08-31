@@ -1,5 +1,5 @@
 import { Ability } from '@/types';
-import { getEnglishAbilityEffect, getEnglishAbilityFlavorText } from '@/lib/utils/abilityUtils';
+import { getEnglishAbilityEffect, getEnglishAbilityFlavorText } from '@/lib/utils/pokemon/abilityUtils';
 import { AbilityContentSection } from '@/components/pokemon/abilities/AbilityContentSection';
 import { AbilityMetadata } from '@/components/pokemon/abilities/AbilityMetadata';
 import { ContentSectionTitle } from '@/lib/constants/enums';

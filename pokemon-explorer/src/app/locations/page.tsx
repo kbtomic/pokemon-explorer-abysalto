@@ -9,11 +9,11 @@ import { LocationDetailModal } from '@/components/locations/LocationDetailModal'
 import { DataGrid } from '@/components/common/DataGrid';
 import { useURLSync } from '@/lib/hooks/useURLSync';
 import { createDataStore } from '@/lib/stores/dataStore';
-import { formatName } from '@/lib/utils/dataUtils';
-import { getImageUrl } from '@/lib/utils/imageUtils';
-import { filterData, sortData } from '@/lib/utils/dataUtils';
-import { paginateItems } from '@/lib/utils/pagination';
-import { getNavigationUrl } from '@/lib/utils/urlUtils';
+import { formatName } from '@/lib/utils/formatting/stringUtils';
+import { getImageUrl } from '@/lib/utils/ui/imageUtils';
+import { filterData, sortData } from '@/lib/utils/data/dataUtils';
+import { paginateItems } from '@/lib/utils/data/pagination';
+import { getNavigationUrl } from '@/lib/utils/routing/urlUtils';
 import { useEffect, useMemo, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
 import { NoResults } from '@/components/common/NoResults';

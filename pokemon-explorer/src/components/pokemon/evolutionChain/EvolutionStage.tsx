@@ -1,9 +1,10 @@
 import { EvolutionChainLink } from '@/types';
-import { formatPokemonName, getPokemonImageUrl } from '@/lib/utils';
-import { getPokemonIdFromUrl } from '@/lib/utils/evolutionUtils';
+import { formatPokemonName } from '@/lib/utils/pokemon/pokemon';
+import { getPokemonImageUrl } from '@/lib/utils/ui/imageUtils';
+import { getPokemonIdFromUrl } from '@/lib/utils/pokemon/evolutionUtils';
 import { EvolutionTrigger } from '@/components/pokemon/evolutionChain/EvolutionTrigger';
 import { ImageWithFallback } from '@/components/ui/ImageWithFallback';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/formatting/cn';
 
 interface EvolutionStageProps {
   pokemon: EvolutionChainLink;

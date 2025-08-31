@@ -28,7 +28,7 @@ import {
   EvolutionTrigger,
 } from '@/types';
 import { POKEMON_CHUNK_SIZE } from '@/lib/constants/pagination';
-import { measurePerformance } from '@/lib/utils/performance';
+import { measurePerformance } from '@/lib/utils/performance/performance';
 
 const BASE_URL = 'https://pokeapi.co/api/v2';
 

@@ -1,7 +1,7 @@
 'use client';
 
 import { ChevronUp } from 'lucide-react';
-import { cn } from '@/lib/utils/cn';
+import { cn } from '@/lib/utils/formatting/cn';
 import { useScrollToTop } from '@/lib/hooks/useScrollToTop';
 
 interface ScrollToTopButtonProps {

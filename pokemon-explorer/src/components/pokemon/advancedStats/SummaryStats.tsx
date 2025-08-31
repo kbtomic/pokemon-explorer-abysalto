@@ -1,6 +1,6 @@
 import { Pokemon } from '@/types';
-import { getTotalStats } from '@/lib/utils/pokemon';
-import { getStatData } from '@/lib/utils/chartUtils';
+import { getTotalStats } from '@/lib/utils/pokemon/pokemon';
+import { getStatData } from '@/lib/utils/ui/chartUtils';
 import { SUMMARY_ITEMS_CONFIG, SummaryItem } from '@/lib/constants/statsConfig';
 
 interface SummaryStatsProps {

@@ -9,7 +9,7 @@ import {
   getLocationRegion,
   getLocationGames,
   getLocationLanguages,
-} from '@/lib/utils/locationDataUtils';
+} from '@/lib/utils/locations/locationDataUtils';
 import { MapPin } from 'lucide-react';
 
 interface LocationDetailModalProps {

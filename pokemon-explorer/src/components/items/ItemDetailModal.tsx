@@ -1,8 +1,8 @@
 import { DetailModal } from '@/components/common/DetailModal';
 import { StatsGrid } from '@/components/common/StatsGrid';
-import { formatName } from '@/lib/utils/dataUtils';
-import { getImageUrl } from '@/lib/utils/imageUtils';
-import { getItemStats } from '@/lib/utils/itemStats';
+import { formatName } from '@/lib/utils/formatting/stringUtils';
+import { getImageUrl } from '@/lib/utils/ui/imageUtils';
+import { getItemStats } from '@/lib/utils/items/itemStats';
 import { ImageType } from '@/lib/constants/enums';
 import { ItemEffectSection } from '@/components/items/ItemEffectSection';
 import { ItemAttributesSection } from '@/components/items/ItemAttributesSection';

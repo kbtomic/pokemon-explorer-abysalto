@@ -1,5 +1,5 @@
 import { Ability } from '@/types';
-import { getEnglishAbilityEffect } from '@/lib/utils/abilityUtils';
+import { getEnglishAbilityEffect } from '@/lib/utils/pokemon/abilityUtils';
 import { LabelValuePair } from '@/components/common/LabelValuePair';
 import { ContentSectionTitle } from '@/lib/constants/enums';
 

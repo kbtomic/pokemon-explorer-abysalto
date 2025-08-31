@@ -1,4 +1,4 @@
-import { getMultiplierColor, getMultiplierText } from '@/lib/utils/effectivenessUtils';
+import { getMultiplierColor, getMultiplierText } from '@/lib/utils/pokemon/effectivenessUtils';
 import { TypeMultiplierBadge } from '@/components/pokemon/effectiveness/TypeMultiplierBadge';
 
 interface EffectivenessRowProps {

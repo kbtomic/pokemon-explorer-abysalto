@@ -1,7 +1,7 @@
 import { SortOption } from '@/types';
 import { Button } from '@/components/ui/button';
 import { ArrowUpDown } from 'lucide-react';
-import { getSortOptionLabel } from '@/lib/utils/sortOptions';
+import { getSortOptionLabel } from '@/lib/utils/data/sortOptions';
 import { ButtonVariant } from '@/lib/constants/enums';
 
 interface SortButtonProps {

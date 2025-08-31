@@ -1,7 +1,7 @@
 'use client';
 
 import { Search } from 'lucide-react';
-import { cn } from '@/lib/utils/cn';
+import { cn } from '@/lib/utils/formatting/cn';
 import { Theme } from '@/lib/constants/enums';
 import { usePokemonStore } from '@/lib/stores/pokemonStore';
 

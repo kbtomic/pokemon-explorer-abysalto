@@ -1,6 +1,6 @@
 import { SortOption } from '@/types';
 import { SortDirection } from '@/lib/constants/enums';
-import { SORT_OPTIONS } from '@/lib/utils/sortOptions';
+import { SORT_OPTIONS } from '@/lib/utils/data/sortOptions';
 import { FilterItem } from '@/types/filters';
 
 export function convertSortOptionsToFilterItems(): FilterItem[] {

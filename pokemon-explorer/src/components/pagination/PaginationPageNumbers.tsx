@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { PaginationButton } from '@/components/pagination/PaginationButton';
 import { PaginationDots } from '@/components/pagination/PaginationDots';
-import { isPageActive } from '@/lib/utils/pagination';
+import { isPageActive } from '@/lib/utils/data/pagination';
 
 interface PaginationPageNumbersProps {
   visiblePages: (number | string)[];

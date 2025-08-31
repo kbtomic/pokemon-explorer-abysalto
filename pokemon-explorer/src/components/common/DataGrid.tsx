@@ -1,6 +1,6 @@
 import { DataCard } from '@/components/common/DataCard';
 import { DEFAULT_ITEMS_PER_PAGE } from '@/lib/constants/pagination';
-import { getOptimalGridColumns } from '@/lib/utils/gridLayout';
+import { getOptimalGridColumns } from '@/lib/utils/ui/gridLayout';
 import { GridSkeleton } from '@/components/common/GridSkeleton';
 import { Theme } from '@/lib/constants/enums';
 

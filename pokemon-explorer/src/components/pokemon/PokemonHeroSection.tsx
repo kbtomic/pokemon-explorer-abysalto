@@ -1,7 +1,8 @@
 import { StatsGrid } from '@/components/common/StatsGrid';
 import { Ruler, Weight, Star, Target } from 'lucide-react';
-import { getPokemonImageUrl, getTotalStats } from '@/lib/utils/pokemon';
-import { getTypeColor } from '@/lib/utils/typeColors';
+import { getPokemonImageUrl } from '@/lib/utils/ui/imageUtils';
+import { getTotalStats } from '@/lib/utils/pokemon/pokemon';
+import { getTypeColor } from '@/lib/utils/ui/typeColors';
 import { Pokemon } from '@/types/pokemon';
 import { ImageWithFallback } from '@/components/ui/ImageWithFallback';
 

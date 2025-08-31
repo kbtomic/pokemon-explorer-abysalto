@@ -1,5 +1,5 @@
-import { getItemIcon } from '@/lib/utils/itemIcons';
-import { formatName } from '@/lib/utils/dataUtils';
+import { getItemIcon } from '@/lib/utils/items/itemIcons';
+import { formatName } from '@/lib/utils/formatting/stringUtils';
 
 interface ItemCategoryDisplayProps {
   item: { category?: { name: string } };

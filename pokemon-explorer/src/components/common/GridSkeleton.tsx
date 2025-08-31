@@ -1,4 +1,4 @@
-import { getOptimalGridColumns } from '@/lib/utils/gridLayout';
+import { getOptimalGridColumns } from '@/lib/utils/ui/gridLayout';
 import { Theme } from '@/lib/constants/enums';
 
 interface GridSkeletonProps {
