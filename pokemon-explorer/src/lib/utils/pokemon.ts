@@ -1,6 +1,18 @@
 import { Pokemon, PokemonFilters, PokemonSpecies, SortOption } from '@/types';
 import { StatName, PokemonImageVariant, SortField, SortDirection } from '@/lib/constants/enums';
 
+/**
+ * Gets the image URL for a Pokemon
+ *
+ * @param pokemonOrId - Either a Pokemon object or a Pokemon ID number
+ * @param variant - The image variant to return (default or shiny)
+ * @returns The image URL or null if no image is available
+ *
+ * When a Pokemon object is provided, it uses the actual sprite data from the API
+ * with fallbacks to ensure an image is returned. When only an ID is provided,
+ * it constructs a direct URL to the PokeAPI sprites repository as a fallback
+ * for cases where you don't have the full Pokemon data but still need an image.
+ */
 export function getPokemonImageUrl(
   pokemonOrId: Pokemon | number,
   variant: PokemonImageVariant = PokemonImageVariant.DEFAULT
