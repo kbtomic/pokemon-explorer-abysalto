@@ -6,16 +6,19 @@ import { PaginationContainer } from '@/components/pagination/PaginationContainer
 import { PaginationNavigationButton } from '@/components/pagination/PaginationNavigationButton';
 import { PaginationPageNumbers } from '@/components/pagination/PaginationPageNumbers';
 import { getVisiblePages, canNavigatePrevious, canNavigateNext } from '@/lib/utils/pagination';
+import { buildPaginationUrl } from '@/lib/utils/urlUtils';
+import { PokemonFilters, SortOption } from '@/types';
 
 interface PaginationProps {
   currentPage: number;
   totalPages: number;
   baseUrl: string;
-  searchParams?: Record<string, string>;
+  filters: PokemonFilters | { search: string };
+  sort: SortOption;
   className?: string;
 }
 
-export function Pagination({ currentPage, totalPages, baseUrl, searchParams = {}, className }: PaginationProps) {
+export function Pagination({ currentPage, totalPages, baseUrl, filters, sort, className }: PaginationProps) {
   const visiblePages = getVisiblePages(currentPage, totalPages);
 
   if (totalPages <= 1) {
@@ -23,14 +26,7 @@ export function Pagination({ currentPage, totalPages, baseUrl, searchParams = {}
   }
 
   const buildUrl = (page: number) => {
-    const params = new URLSearchParams(searchParams);
-    if (page > 1) {
-      params.set('page', page.toString());
-    } else {
-      params.delete('page');
-    }
-    const queryString = params.toString();
-    return queryString ? `${baseUrl}?${queryString}` : baseUrl;
+    return buildPaginationUrl(baseUrl, filters, sort, page);
   };
 
   return (

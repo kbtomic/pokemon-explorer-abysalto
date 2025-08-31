@@ -12,8 +12,7 @@ import { createDataStore } from '@/lib/stores/dataStore';
 import { formatName, filterData, sortData } from '@/lib/utils/dataUtils';
 import { getImageUrl } from '@/lib/utils/imageUtils';
 import { paginateItems } from '@/lib/utils/pagination';
-import { buildSearchParams, getNavigationUrl } from '@/lib/utils/urlUtils';
-// import { usePerformanceOptimization } from '@/lib/hooks/usePerformanceOptimization';
+import { getNavigationUrl } from '@/lib/utils/urlUtils';
 import { ImageType, Theme, SortField, SortDirection, NavigationLabel } from '@/lib/constants/enums';
 import { useEffect, useMemo, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
@@ -162,7 +161,8 @@ function ItemsPageContent() {
             currentPage={pagination.currentPage}
             totalPages={paginatedResults.totalPages}
             baseUrl={getNavigationUrl(NavigationLabel.ITEMS)}
-            searchParams={buildSearchParams(filters, sort)}
+            filters={filters}
+            sort={sort}
           />
         </div>
       )}

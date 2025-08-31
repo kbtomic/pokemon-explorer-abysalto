@@ -13,8 +13,7 @@ import { formatName } from '@/lib/utils/dataUtils';
 import { getImageUrl } from '@/lib/utils/imageUtils';
 import { filterData, sortData } from '@/lib/utils/dataUtils';
 import { paginateItems } from '@/lib/utils/pagination';
-import { buildSearchParams, getNavigationUrl } from '@/lib/utils/urlUtils';
-// import { usePerformanceOptimization } from '@/lib/hooks/usePerformanceOptimization';
+import { getNavigationUrl } from '@/lib/utils/urlUtils';
 import { useEffect, useMemo, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
 import { NoResults } from '@/components/common/NoResults';
@@ -162,7 +161,8 @@ function BerriesPageContent() {
             currentPage={pagination.currentPage}
             totalPages={paginatedResults.totalPages}
             baseUrl={getNavigationUrl(NavigationLabel.BERRIES)}
-            searchParams={buildSearchParams(filters, sort)}
+            filters={filters}
+            sort={sort}
           />
         </div>
       )}

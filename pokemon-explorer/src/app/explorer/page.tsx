@@ -8,14 +8,13 @@ import { MobileFilterBar } from '@/components/filters/mobile/MobileFilterBar';
 import { PokemonGrid } from '@/components/pokemon/PokemonGrid';
 import { PokemonModal } from '@/components/pokemonCard/pokemonModal/PokemonModal';
 import { useAllPokemon } from '@/lib/hooks/usePokemon';
-// import { usePerformanceOptimization } from '@/lib/hooks/usePerformanceOptimization';
 import { useGenerationMapping } from '@/lib/hooks/useGenerationMapping';
 import { useURLSync } from '@/lib/hooks/useExplorerURLSync';
 import { usePokemonStore } from '@/lib/stores/pokemonStore';
 import { useURLStore } from '@/lib/stores/urlStore';
 import { filterPokemon, sortPokemon } from '@/lib/utils/pokemon';
 import { paginateItems } from '@/lib/utils/pagination';
-import { buildSearchParams, getNavigationUrl } from '@/lib/utils/urlUtils';
+import { getNavigationUrl } from '@/lib/utils/urlUtils';
 import { Pagination } from '@/components/pagination/Pagination';
 import { NavigationLabel } from '@/lib/constants/enums';
 
@@ -121,7 +120,8 @@ function ExplorerPageContent() {
               currentPage={pagination.currentPage}
               totalPages={paginatedResults.totalPages}
               baseUrl={getNavigationUrl(NavigationLabel.POKEMON)}
-              searchParams={buildSearchParams(filters, sort)}
+              filters={filters}
+              sort={sort}
             />
           </div>
         )}
