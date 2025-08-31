@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Montserrat, Inter } from 'next/font/google';
 import { Providers } from './providers';
+import { ScrollToTopButton } from '@/components/ui/ScrollToTopButton';
 import './globals.css';
 
 const montserrat = Montserrat({
@@ -40,7 +41,10 @@ export default function RootLayout({
   return (
     <html lang="en" className="bg-gray-50 dark:bg-gray-900">
       <body className={`${montserrat.variable} ${inter.variable} antialiased bg-gray-50 dark:bg-gray-900 min-h-screen`}>
-        <Providers>{children}</Providers>
+        <Providers>
+          {children}
+          <ScrollToTopButton />
+        </Providers>
       </body>
     </html>
   );
