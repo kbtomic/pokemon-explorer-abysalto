@@ -35,6 +35,7 @@ export function VarietyCard({ variety, currentPokemonId, className = '' }: Varie
           className="object-contain"
           fallbackWidth={32}
           fallbackHeight={32}
+          priority={true} // Priority for variety images (above the fold)
         />
       </div>
       <span className={cn('text-xs font-medium text-center', isCurrent ? 'text-blue-600' : 'text-gray-900')}>{pokemonName}</span>

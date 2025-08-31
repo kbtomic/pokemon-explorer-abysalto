@@ -31,6 +31,7 @@ export function EvolutionStage({ pokemon, currentPokemonId, level = 0, className
             className="object-contain"
             fallbackWidth={40}
             fallbackHeight={40}
+            priority={true} // Priority for evolution images (above the fold)
           />
         </div>
       </div>

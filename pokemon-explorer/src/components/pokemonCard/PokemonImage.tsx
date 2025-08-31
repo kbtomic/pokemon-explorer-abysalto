@@ -7,9 +7,10 @@ interface PokemonImageProps {
   pokemon: Pokemon;
   size?: number;
   className?: string;
+  priority?: boolean;
 }
 
-export function PokemonImage({ pokemon, size = 112, className }: PokemonImageProps) {
+export function PokemonImage({ pokemon, size = 112, className, priority = false }: PokemonImageProps) {
   const imageUrl = getPokemonImageUrl(pokemon);
   const containerSize = size + 16; // Add padding
 
@@ -28,6 +29,7 @@ export function PokemonImage({ pokemon, size = 112, className }: PokemonImagePro
         height={size}
         className="object-contain drop-shadow-sm"
         loading="lazy"
+        priority={priority}
       />
     </div>
   );
