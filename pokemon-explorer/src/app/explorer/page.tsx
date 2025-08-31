@@ -137,9 +137,6 @@ export default function ExplorerPage() {
     <Suspense
       fallback={
         <div className="min-h-screen bg-white">
-          <div className="sticky top-0 z-40 bg-white">
-            <Header />
-          </div>
           <div className="container mx-auto px-4 py-8">
             <div className="text-center">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
