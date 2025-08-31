@@ -1,5 +1,3 @@
-'use client';
-
 import { CardContent } from '@/components/ui/card';
 import { Pokemon } from '@/types';
 import { PokemonCardContainer } from '@/components/pokemonCard/PokemonCardContainer';
@@ -18,7 +16,7 @@ export function PokemonCard({ pokemon, onClick }: PokemonCardProps) {
     <PokemonCardContainer onClick={onClick}>
       <PokemonCardHeader pokemon={pokemon} />
 
-      <CardContent className="pt-0 relative z-10">
+      <CardContent className="relative z-10">
         <div className="flex flex-col items-center space-y-4">
           <PokemonImage pokemon={pokemon} />
           <PokemonInfo pokemon={pokemon} />
