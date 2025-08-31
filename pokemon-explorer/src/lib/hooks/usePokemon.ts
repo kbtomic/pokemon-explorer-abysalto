@@ -290,16 +290,6 @@ export function useAllItemsWithFallback() {
     enabled: detailsQuery.isError, // Only run if details query fails
   });
 
-  // Debug logging
-  console.log('Items Fallback Hook State:', {
-    detailsLoading: detailsQuery.isLoading,
-    detailsError: detailsQuery.isError,
-    detailsData: !!detailsQuery.data,
-    basicLoading: basicQuery.isLoading,
-    basicError: basicQuery.isError,
-    basicData: !!basicQuery.data,
-  });
-
   // Return the successful query
   if (detailsQuery.data) {
     return {

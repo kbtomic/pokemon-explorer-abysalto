@@ -41,12 +41,6 @@ export class PerformanceMonitor {
 
   logMetrics(label: string): void {
     const metrics = this.getMetrics();
-    console.log(`🚀 ${label} Performance:`, {
-      totalDuration: `${metrics.duration.toFixed(2)}ms`,
-      requestCount: metrics.requestCount,
-      averageRequestTime: `${metrics.averageRequestTime.toFixed(2)}ms`,
-      requestsPerSecond: `${(metrics.requestCount / (metrics.duration / 1000)).toFixed(2)}/s`,
-    });
   }
 }
 

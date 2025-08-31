@@ -448,7 +448,6 @@ export const pokeAPI = {
     return measurePerformance('Items Fetch All Details', async () => {
       // First get all items with URLs
       const allItemsList = await this.getItems();
-      console.log('Items API: Got', allItemsList.results.length, 'items from basic list');
 
       // Extract IDs from URLs instead of using names (avoids special character issues)
       const allIds = allItemsList.results
@@ -457,8 +456,6 @@ export const pokeAPI = {
           return parseInt(urlParts[urlParts.length - 2]);
         })
         .filter(id => !isNaN(id));
-
-      console.log('Items API: Extracted', allIds.length, 'valid IDs, starting batch fetch...');
 
       // Fetch all item details with optimized parallel chunking using IDs
       return this.getItemsBatchChunked(allIds, 50); // Increase chunk size to speed up
@@ -492,9 +489,6 @@ export const pokeAPI = {
 
       // Flatten and add results
       results.push(...batchResults.flat());
-
-      // Progress logging
-      console.log(`Items API: Processed ${results.length}/${namesOrIds.length} items`);
 
       // Add delay between batches (except for the last batch)
       if (i + maxConcurrentChunks < chunks.length) {
@@ -560,7 +554,6 @@ export const pokeAPI = {
     return measurePerformance('Locations Fetch All Details', async () => {
       // First get all locations with URLs
       const allLocationsList = await this.getLocations();
-      console.log('Locations API: Got', allLocationsList.results.length, 'locations from basic list');
 
       // Extract IDs from URLs instead of using names (avoids special character issues)
       const allIds = allLocationsList.results
@@ -569,8 +562,6 @@ export const pokeAPI = {
           return parseInt(urlParts[urlParts.length - 2]);
         })
         .filter(id => !isNaN(id));
-
-      console.log('Locations API: Extracted', allIds.length, 'valid IDs, starting batch fetch...');
 
       // Fetch all location details with optimized parallel chunking using IDs
       return this.getLocationsBatchChunked(allIds, 50); // Increase chunk size to speed up
@@ -604,9 +595,6 @@ export const pokeAPI = {
 
       // Flatten and add results
       results.push(...batchResults.flat());
-
-      // Progress logging
-      console.log(`Locations API: Processed ${results.length}/${namesOrIds.length} locations`);
 
       // Add delay between batches (except for the last batch)
       if (i + maxConcurrentChunks < chunks.length) {

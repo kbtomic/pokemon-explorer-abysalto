@@ -60,7 +60,6 @@ function ItemsPageContent() {
   useEffect(() => {
     if (allItems) {
       setItemList(allItems);
-      console.log('Items: Loaded', allItems.length, 'items with full details');
     }
   }, [allItems, setItemList]);
 
