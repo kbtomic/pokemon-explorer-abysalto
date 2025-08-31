@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { Card } from '@/components/ui/card';
+import { Card } from '@/components/ui/Card';
 import { handleEnterOrSpace } from '@/lib/utils/interaction/keyboard';
 
 interface PokemonCardContainerProps {

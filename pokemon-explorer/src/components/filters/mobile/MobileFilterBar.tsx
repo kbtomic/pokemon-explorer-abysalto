@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/Button';
 import { MobileFilters } from '@/components/filters/mobile/MobileFilters';
 import { MobileSearchModal } from '@/components/filters/mobile/MobileSearchModal/MobileSearchModal';
 import { Search, Filter } from 'lucide-react';

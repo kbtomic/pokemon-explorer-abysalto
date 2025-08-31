@@ -1,5 +1,5 @@
 import { ImageWithFallback } from '@/components/ui/ImageWithFallback';
-import { Modal } from '@/components/ui/modal';
+import { Modal } from '@/components/ui/Modal';
 import { CloseButton } from '@/components/common/CloseButton';
 import { ReactNode } from 'react';
 

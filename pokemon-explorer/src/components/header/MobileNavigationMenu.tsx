@@ -1,4 +1,4 @@
-import { Modal } from '@/components/ui/modal';
+import { Modal } from '@/components/ui/Modal';
 import { ModalHeaderMobile } from '@/components/common/ModalHeaderMobile';
 import { Navigation } from '@/components/header/Navigation';
 

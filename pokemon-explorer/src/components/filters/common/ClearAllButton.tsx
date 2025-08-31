@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/Button';
 import { usePokemonStore } from '@/lib/stores/pokemonStore';
 import { useActiveFilters } from '@/lib/hooks/ui/useActiveFilters';
 import { RotateCcw } from 'lucide-react';

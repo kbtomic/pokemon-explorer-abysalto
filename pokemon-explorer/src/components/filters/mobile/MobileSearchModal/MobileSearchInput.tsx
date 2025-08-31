@@ -1,6 +1,6 @@
 'use client';
 
-import { Input } from '@/components/ui/input';
+import { Input } from '@/components/ui/Input';
 import { X, Search, ChevronRight } from 'lucide-react';
 
 interface MobileSearchInputProps {

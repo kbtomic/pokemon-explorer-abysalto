@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/Button';
 import { ButtonVariant } from '@/lib/constants/ui/buttons';
 import { navigationItems } from '@/lib/data/navigation';
 

@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/Button';
 import { ButtonVariant } from '@/lib/constants/ui/buttons';
 import { Filter } from 'lucide-react';
 

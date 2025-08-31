@@ -1,4 +1,4 @@
-import { CardHeader } from '@/components/ui/card';
+import { CardHeader } from '@/components/ui/Card';
 import { getTotalStats } from '@/lib/utils/pokemon/pokemon';
 import { Pokemon } from '@/types/pokemon/core';
 

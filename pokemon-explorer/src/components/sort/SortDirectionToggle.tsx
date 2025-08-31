@@ -1,5 +1,5 @@
 import { SortOption } from '@/types/ui/filters';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/Button';
 import { ArrowUp, ArrowDown } from 'lucide-react';
 import { SortDirection } from '@/lib/constants/pokemon/sorting';
 import { ButtonVariant, ButtonSize } from '@/lib/constants/ui/buttons';

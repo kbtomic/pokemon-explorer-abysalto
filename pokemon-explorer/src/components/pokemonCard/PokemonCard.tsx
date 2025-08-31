@@ -1,4 +1,4 @@
-import { CardContent } from '@/components/ui/card';
+import { CardContent } from '@/components/ui/Card';
 import { Pokemon } from '@/types/pokemon/core';
 import { PokemonCardContainer } from '@/components/pokemonCard/PokemonCardContainer';
 import { PokemonCardHeader } from '@/components/pokemonCard/PokemonCardHeader';

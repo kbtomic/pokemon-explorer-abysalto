@@ -1,6 +1,6 @@
 'use client';
 
-import { Modal } from '@/components/ui/modal';
+import { Modal } from '@/components/ui/Modal';
 import { usePokemonStore } from '@/lib/stores/pokemonStore';
 import { AdvancedStatsDisplay } from '@/components/pokemon/AdvancedStatsDisplay';
 import { PokemonStatsGrid } from '@/components/pokemonCard/PokemonStatsGrid';

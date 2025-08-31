@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils/formatting/cn';
-import { Button } from './button';
+import { Button } from './Button';
 import { ButtonVariant, ButtonSize } from '@/lib/constants/ui/buttons';
 import { handleDocumentEscape } from '@/lib/utils/interaction/keyboard';
 

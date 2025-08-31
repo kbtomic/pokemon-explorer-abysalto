@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
 import { Zap } from 'lucide-react';
 import { ButtonSize } from '@/lib/constants/ui/buttons';

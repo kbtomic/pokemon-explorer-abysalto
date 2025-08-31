@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/Button';
 import { ButtonVariant, ButtonSize } from '@/lib/constants/ui/buttons';
 import { ChartType } from '@/lib/constants/ui/charts';
 import { BarChart3 } from 'lucide-react';

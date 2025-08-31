@@ -1,4 +1,4 @@
-import { Modal } from '@/components/ui/modal';
+import { Modal } from '@/components/ui/Modal';
 import { FilterContent } from '@/components/filters/common/FilterContent';
 import { ClearAllButton } from '@/components/filters/common/ClearAllButton';
 import { ModalHeaderMobile } from '@/components/common/ModalHeaderMobile';

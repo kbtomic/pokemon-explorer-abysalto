@@ -1,4 +1,4 @@
-import { Modal } from '@/components/ui/modal';
+import { Modal } from '@/components/ui/Modal';
 import { ModalHeaderMobile } from '@/components/common/ModalHeaderMobile';
 import { MobileSearchInput } from '@/components/filters/mobile/MobileSearchModal/MobileSearchInput';
 import { useMobileSearch } from '@/lib/hooks/ui/useMobileSearch';
