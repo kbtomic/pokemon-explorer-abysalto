@@ -25,6 +25,7 @@ export function useURLSync() {
 
   const isInitialized = useRef(false);
   const isUpdatingFromURL = useRef(false);
+  const lastSearchParams = useRef<string>('');
 
   // Initialize URL store
   useEffect(() => {
@@ -34,9 +35,16 @@ export function useURLSync() {
     }
   }, [searchParams, initialize]);
 
-  // Sync URL to store (only when URL changes, not when store changes)
+  // Sync URL to store only on initial load and browser navigation
   useEffect(() => {
     if (!isInitialized.current) return;
+
+    const currentSearchParams = searchParams.toString();
+
+    // Only sync if search params actually changed (browser navigation)
+    if (currentSearchParams === lastSearchParams.current) return;
+
+    lastSearchParams.current = currentSearchParams;
 
     const urlFilters = getFiltersFromURL(searchParams);
     const urlSort = getSortFromURL(searchParams);
