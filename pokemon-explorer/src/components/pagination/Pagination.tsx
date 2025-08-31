@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
 import { PaginationContainer } from '@/components/pagination/PaginationContainer';
 import { PaginationNavigationButton } from '@/components/pagination/PaginationNavigationButton';
@@ -9,48 +10,48 @@ import { getVisiblePages, canNavigatePrevious, canNavigateNext } from '@/lib/uti
 interface PaginationProps {
   currentPage: number;
   totalPages: number;
-  onPageChange: (page: number) => void;
+  baseUrl: string;
+  searchParams?: Record<string, string>;
   className?: string;
 }
 
-export function Pagination({ currentPage, totalPages, onPageChange, className }: PaginationProps) {
+export function Pagination({ currentPage, totalPages, baseUrl, searchParams = {}, className }: PaginationProps) {
   const visiblePages = getVisiblePages(currentPage, totalPages);
 
   if (totalPages <= 1) {
     return null;
   }
 
+  const buildUrl = (page: number) => {
+    const params = new URLSearchParams(searchParams);
+    if (page > 1) {
+      params.set('page', page.toString());
+    } else {
+      params.delete('page');
+    }
+    const queryString = params.toString();
+    return queryString ? `${baseUrl}?${queryString}` : baseUrl;
+  };
+
   return (
     <PaginationContainer className={className}>
-      <PaginationNavigationButton
-        icon={ChevronsLeft}
-        onClick={() => onPageChange(1)}
-        disabled={!canNavigatePrevious(currentPage)}
-        ariaLabel="Go to first page"
-      />
+      <Link href={buildUrl(1)}>
+        <PaginationNavigationButton icon={ChevronsLeft} disabled={!canNavigatePrevious(currentPage)} ariaLabel="Go to first page" />
+      </Link>
 
-      <PaginationNavigationButton
-        icon={ChevronLeft}
-        onClick={() => onPageChange(currentPage - 1)}
-        disabled={!canNavigatePrevious(currentPage)}
-        ariaLabel="Go to previous page"
-      />
+      <Link href={buildUrl(currentPage - 1)}>
+        <PaginationNavigationButton icon={ChevronLeft} disabled={!canNavigatePrevious(currentPage)} ariaLabel="Go to previous page" />
+      </Link>
 
-      <PaginationPageNumbers visiblePages={visiblePages} currentPage={currentPage} onPageChange={onPageChange} />
+      <PaginationPageNumbers visiblePages={visiblePages} currentPage={currentPage} buildUrl={buildUrl} />
 
-      <PaginationNavigationButton
-        icon={ChevronRight}
-        onClick={() => onPageChange(currentPage + 1)}
-        disabled={!canNavigateNext(currentPage, totalPages)}
-        ariaLabel="Go to next page"
-      />
+      <Link href={buildUrl(currentPage + 1)}>
+        <PaginationNavigationButton icon={ChevronRight} disabled={!canNavigateNext(currentPage, totalPages)} ariaLabel="Go to next page" />
+      </Link>
 
-      <PaginationNavigationButton
-        icon={ChevronsRight}
-        onClick={() => onPageChange(totalPages)}
-        disabled={!canNavigateNext(currentPage, totalPages)}
-        ariaLabel="Go to last page"
-      />
+      <Link href={buildUrl(totalPages)}>
+        <PaginationNavigationButton icon={ChevronsRight} disabled={!canNavigateNext(currentPage, totalPages)} ariaLabel="Go to last page" />
+      </Link>
     </PaginationContainer>
   );
 }

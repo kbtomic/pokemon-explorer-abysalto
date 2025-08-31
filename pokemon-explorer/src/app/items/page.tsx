@@ -12,9 +12,10 @@ import { createDataStore } from '@/lib/stores/dataStore';
 import { formatName, filterData, sortData } from '@/lib/utils/dataUtils';
 import { getImageUrl } from '@/lib/utils/imageUtils';
 import { paginateItems } from '@/lib/utils/pagination';
-import { usePerformanceOptimization } from '@/lib/hooks/use-performance-optimization';
+import { buildSearchParams, getNavigationUrl } from '@/lib/utils/urlUtils';
+import { usePerformanceOptimization } from '@/lib/hooks/usePerformanceOptimization';
 import { PerformanceIndicator } from '@/components/ui/performance-indicator';
-import { ImageType, Theme, NavigationLabel, SortField, SortDirection } from '@/lib/constants/enums';
+import { ImageType, Theme, SortField, SortDirection } from '@/lib/constants/enums';
 import { useEffect, useMemo, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
 import { NoResults } from '@/components/common/NoResults';
@@ -112,11 +113,6 @@ function ItemsPageContent() {
     return paginateItems(filteredAndSortedItems, pagination.currentPage, pagination.itemsPerPage);
   }, [filteredAndSortedItems, pagination.currentPage, pagination.itemsPerPage]);
 
-  // Update URL when pagination changes
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
-
   // Fetch full item details when an item is selected
   const { data: selectedItemDetails, isLoading: isLoadingItemDetails } = useItem(selectedItem ? selectedItem.id : '');
 
@@ -170,7 +166,12 @@ function ItemsPageContent() {
 
       {paginatedResults.totalPages > 1 && (
         <div className="mt-8 sm:mt-12">
-          <Pagination currentPage={pagination.currentPage} totalPages={paginatedResults.totalPages} onPageChange={handlePageChange} />
+          <Pagination
+            currentPage={pagination.currentPage}
+            totalPages={paginatedResults.totalPages}
+            baseUrl={getNavigationUrl(NavigationLabel.ITEMS)}
+            searchParams={buildSearchParams(filters, sort)}
+          />
         </div>
       )}
 

@@ -9,14 +9,16 @@ import { PokemonGrid } from '@/components/pokemon/PokemonGrid';
 import { PokemonModal } from '@/components/pokemonCard/pokemonModal/PokemonModal';
 import { PerformanceIndicator } from '@/components/ui/performance-indicator';
 import { useAllPokemon } from '@/lib/hooks/usePokemon';
-import { usePerformanceOptimization } from '@/lib/hooks/use-performance-optimization';
+import { usePerformanceOptimization } from '@/lib/hooks/usePerformanceOptimization';
 import { useGenerationMapping } from '@/lib/hooks/useGenerationMapping';
 import { useURLSync } from '@/lib/hooks/useExplorerURLSync';
 import { usePokemonStore } from '@/lib/stores/pokemonStore';
 import { useURLStore } from '@/lib/stores/urlStore';
 import { filterPokemon, sortPokemon } from '@/lib/utils/pokemon';
 import { paginateItems } from '@/lib/utils/pagination';
+import { buildSearchParams, getNavigationUrl } from '@/lib/utils/urlUtils';
 import { Pagination } from '@/components/pagination/Pagination';
+import { NavigationLabel } from '@/lib/constants/enums';
 
 function ExplorerPageContent() {
   const router = useRouter();
@@ -81,12 +83,6 @@ function ExplorerPageContent() {
     return paginateItems(filteredAndSortedPokemon, pagination.currentPage, pagination.itemsPerPage);
   }, [filteredAndSortedPokemon, pagination.currentPage, pagination.itemsPerPage]);
 
-  // Update URL when pagination changes
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-    // URL will be updated automatically by the useEffect above
-  };
-
   // Performance optimization
   const { useVirtualization, virtualizationThreshold } = usePerformanceOptimization(paginatedResults.items.length);
 
@@ -129,7 +125,12 @@ function ExplorerPageContent() {
 
         {!isLoading && paginatedResults.totalPages > 1 && (
           <div className="mt-8">
-            <Pagination currentPage={pagination.currentPage} totalPages={paginatedResults.totalPages} onPageChange={handlePageChange} />
+            <Pagination
+              currentPage={pagination.currentPage}
+              totalPages={paginatedResults.totalPages}
+              baseUrl={getNavigationUrl(NavigationLabel.POKEMON)}
+              searchParams={buildSearchParams(filters, sort)}
+            />
           </div>
         )}
 

@@ -13,7 +13,8 @@ import { formatName } from '@/lib/utils/dataUtils';
 import { getImageUrl } from '@/lib/utils/imageUtils';
 import { filterData, sortData } from '@/lib/utils/dataUtils';
 import { paginateItems } from '@/lib/utils/pagination';
-import { usePerformanceOptimization } from '@/lib/hooks/use-performance-optimization';
+import { buildSearchParams, getNavigationUrl } from '@/lib/utils/urlUtils';
+import { usePerformanceOptimization } from '@/lib/hooks/usePerformanceOptimization';
 import { PerformanceIndicator } from '@/components/ui/performance-indicator';
 import { useEffect, useMemo, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
@@ -111,11 +112,6 @@ function LocationsPageContent() {
     return paginateItems(filteredAndSortedLocations, pagination.currentPage, pagination.itemsPerPage);
   }, [filteredAndSortedLocations, pagination.currentPage, pagination.itemsPerPage]);
 
-  // Update URL when pagination changes
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
-
   const { data: selectedLocationDetails, isLoading: isLoadingLocationDetails } = useLocation(selectedLocation ? selectedLocation.id : '');
 
   // Performance optimization
@@ -169,7 +165,12 @@ function LocationsPageContent() {
 
       {paginatedResults.totalPages > 1 && (
         <div className="mt-8 sm:mt-12">
-          <Pagination currentPage={pagination.currentPage} totalPages={paginatedResults.totalPages} onPageChange={handlePageChange} />
+          <Pagination
+            currentPage={pagination.currentPage}
+            totalPages={paginatedResults.totalPages}
+            baseUrl={getNavigationUrl(NavigationLabel.LOCATIONS)}
+            searchParams={buildSearchParams(filters, sort)}
+          />
         </div>
       )}
 

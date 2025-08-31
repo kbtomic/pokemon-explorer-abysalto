@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { CACHE_STRATEGIES } from '@/lib/constants';
 
 // Types for move metadata
 interface MoveDamageClass {
@@ -61,8 +62,7 @@ export function useMoveDamageClasses() {
 
       return damageClasses;
     },
-    staleTime: 60 * 60 * 1000, // 1 hour
-    gcTime: 24 * 60 * 60 * 1000, // 24 hours
+    ...CACHE_STRATEGIES.SEMI_STATIC,
     retry: 3,
     retryDelay: attemptIndex => Math.min(1000 * 2 ** attemptIndex, 30000),
   });
@@ -93,8 +93,7 @@ export function useMoveLearnMethods() {
 
       return learnMethods;
     },
-    staleTime: 60 * 60 * 1000, // 1 hour
-    gcTime: 24 * 60 * 60 * 1000, // 24 hours
+    ...CACHE_STRATEGIES.SEMI_STATIC,
     retry: 3,
     retryDelay: attemptIndex => Math.min(1000 * 2 ** attemptIndex, 30000),
   });
@@ -125,8 +124,7 @@ export function useMoveCategories() {
 
       return categories;
     },
-    staleTime: 60 * 60 * 1000, // 1 hour
-    gcTime: 24 * 60 * 60 * 1000, // 24 hours
+    ...CACHE_STRATEGIES.SEMI_STATIC,
     retry: 3,
     retryDelay: attemptIndex => Math.min(1000 * 2 ** attemptIndex, 30000),
   });

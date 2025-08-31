@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { usePokemonStore } from '@/lib/stores/pokemonStore';
-import { usePokemonTypes } from '@/lib/hooks/use-pokemon-types';
+import { usePokemonTypes } from '@/lib/hooks/usePokemonTypes';
 import { usePokemonGenerations } from '@/lib/hooks/usePokemonGenerations';
 import { useAbilities } from '@/lib/hooks/useAbilities';
 import { getTypeColor } from '@/lib/utils';
@@ -11,7 +11,8 @@ import { Ability } from '@/types';
 export const useTypeFilterConfig = () => {
   const selectedTypes = usePokemonStore(state => state.filters.types);
   const setTypes = usePokemonStore(state => state.setTypes);
-  const { types: pokemonTypes, isLoading, error } = usePokemonTypes();
+  const { data: typesResponse, isLoading, error } = usePokemonTypes();
+  const pokemonTypes = typesResponse?.results || [];
 
   const handleTypeToggle = (itemId: string | number) => {
     const typeName = String(itemId);
@@ -49,7 +50,7 @@ export const useTypeFilterConfig = () => {
 export const useGenerationFilterConfig = () => {
   const selectedGenerations = usePokemonStore(state => state.filters.generations);
   const setGenerations = usePokemonStore(state => state.setGenerations);
-  const { generations: pokemonGenerations, isLoading, error } = usePokemonGenerations();
+  const { data: pokemonGenerations, isLoading, error } = usePokemonGenerations();
 
   const handleGenerationToggle = (itemId: string | number) => {
     const generationId = typeof itemId === 'number' ? itemId : parseInt(itemId, 10);
@@ -90,7 +91,7 @@ export const useGenerationFilterConfig = () => {
       .join(' ');
   };
 
-  const filterItems = pokemonGenerations.map(generation => ({
+  const filterItems = (pokemonGenerations || []).map(generation => ({
     id: generation.id,
     name: generation.name,
     url: generation.url,
@@ -115,7 +116,9 @@ export const useGenerationFilterConfig = () => {
 export const useAbilitiesFilterConfig = () => {
   const selectedAbilities = usePokemonStore(state => state.filters.abilities);
   const setAbilities = usePokemonStore(state => state.setAbilities);
-  const { abilities, isLoading, isLoadingMore, error, hasMore, loadMore, totalCount } = useAbilities();
+  const { data, isLoading, isFetchingNextPage, error, hasNextPage, fetchNextPage } = useAbilities();
+  const abilities = data?.pages.flatMap(page => page.abilities) || [];
+  const totalCount = data?.pages[0]?.totalCount || 0;
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleAbilityToggle = (itemId: string | number) => {
@@ -148,16 +151,16 @@ export const useAbilitiesFilterConfig = () => {
     onToggle: handleAbilityToggle,
     onClearAll: handleClearAll,
     isLoading,
-    error: error ? new Error(error) : null,
+    error: error ? new Error(error.message) : null,
     getItemDisplayName,
     badgeColor: 'bg-red-600',
     gridCols: 1,
     useTypeVariant: false,
     searchTerm,
     onSearchChange: setSearchTerm,
-    isLoadingMore,
-    hasMore,
-    onLoadMore: loadMore,
+    isLoadingMore: isFetchingNextPage,
+    hasMore: hasNextPage,
+    onLoadMore: fetchNextPage,
     totalCount,
   };
 };

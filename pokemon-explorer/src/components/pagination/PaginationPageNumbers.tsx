@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { PaginationButton } from '@/components/pagination/PaginationButton';
 import { PaginationDots } from '@/components/pagination/PaginationDots';
 import { isPageActive } from '@/lib/utils/pagination';
@@ -5,10 +6,10 @@ import { isPageActive } from '@/lib/utils/pagination';
 interface PaginationPageNumbersProps {
   visiblePages: (number | string)[];
   currentPage: number;
-  onPageChange: (page: number) => void;
+  buildUrl: (page: number) => string;
 }
 
-export function PaginationPageNumbers({ visiblePages, currentPage, onPageChange }: PaginationPageNumbersProps) {
+export function PaginationPageNumbers({ visiblePages, currentPage, buildUrl }: PaginationPageNumbersProps) {
   return (
     <>
       {visiblePages.map((page, index) => (
@@ -16,11 +17,9 @@ export function PaginationPageNumbers({ visiblePages, currentPage, onPageChange 
           {page === '...' ? (
             <PaginationDots />
           ) : (
-            <PaginationButton
-              page={page as number}
-              isActive={isPageActive(currentPage, page as number)}
-              onClick={() => onPageChange(page as number)}
-            />
+            <Link href={buildUrl(page as number)}>
+              <PaginationButton page={page as number} isActive={isPageActive(currentPage, page as number)} />
+            </Link>
           )}
         </div>
       ))}

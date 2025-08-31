@@ -5,5 +5,4 @@ export const navigationItems = [
   { href: '/berries', label: NavigationLabel.BERRIES },
   { href: '/items', label: NavigationLabel.ITEMS },
   { href: '/locations', label: NavigationLabel.LOCATIONS },
-  { href: '/pokemon/species', label: NavigationLabel.SPECIES },
 ];

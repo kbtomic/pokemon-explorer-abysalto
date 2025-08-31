@@ -2,7 +2,8 @@
 
 import { useParams } from 'next/navigation';
 import { usePokemon } from '@/lib/hooks/usePokemon';
-import { usePokemonSpecies, getEnglishFlavorText, getEnglishGenus, useEvolutionChain } from '@/lib/hooks/use-pokemon-species';
+import { usePokemonSpecies, useEvolutionChain } from '@/lib/hooks/usePokemonSpecies';
+import { getEnglishFlavorText, getEnglishGenus } from '@/lib/utils/speciesUtils';
 import { formatPokemonName, getEvolutionChainId } from '@/lib/utils/pokemon';
 import { AdvancedStatsDisplay } from '@/components/pokemon/AdvancedStatsDisplay';
 import { EvolutionChainContainer } from '@/components/pokemon/evolutionChain/EvolutionChainContainer';

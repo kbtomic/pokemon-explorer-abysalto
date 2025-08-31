@@ -122,7 +122,6 @@ export enum NavigationLabel {
   BERRIES = 'Berries',
   ITEMS = 'Items',
   LOCATIONS = 'Locations',
-  SPECIES = 'Species',
 }
 
 export enum TechnologyName {

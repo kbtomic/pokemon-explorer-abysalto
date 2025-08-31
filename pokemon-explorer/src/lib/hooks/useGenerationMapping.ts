@@ -8,12 +8,12 @@ import { Generation } from '@/types';
  * @returns Object with generation mapping functions and loading state
  */
 export function useGenerationMapping() {
-  const { generations, isLoading, error } = useFullGenerations();
+  const { data: generations, isLoading, error } = useFullGenerations();
 
   // Memoized function to get generation from Pokemon ID
   const getGenerationFromId = useMemo(() => {
     return (pokemonId: number): number | null => {
-      if (isLoading || error || generations.length === 0) {
+      if (isLoading || error || !generations || generations.length === 0) {
         return null;
       }
       return getGenerationFromIdUtil(pokemonId, generations);
@@ -23,7 +23,7 @@ export function useGenerationMapping() {
   // Memoized function to get all Pokemon IDs for a generation
   const getPokemonIdsForGeneration = useMemo(() => {
     return (generationId: number): number[] => {
-      if (isLoading || error || generations.length === 0) {
+      if (isLoading || error || !generations || generations.length === 0) {
         return [];
       }
 

@@ -3,6 +3,7 @@ import { devtools } from 'zustand/middleware';
 import { PokemonFilters, SortOption } from '@/types';
 import { SortDirection, SortField, StatName } from '@/lib/constants/enums';
 import { DEFAULT_ITEMS_PER_PAGE } from '@/lib/constants/pagination';
+import { URL_PARAMS } from '@/lib/constants/urlParams';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
 interface URLParams {
@@ -35,47 +36,54 @@ interface URLStore {
 const parseStatsFromURL = (statsParam: string | null): PokemonFilters['stats'] => {
   if (!statsParam) {
     return {
-      [StatName.HP]: [0, 0],
-      [StatName.ATTACK]: [0, 0],
-      [StatName.DEFENSE]: [0, 0],
-      [StatName.SPEED]: [0, 0],
-      [StatName.SPECIAL_ATTACK]: [0, 0],
-      [StatName.SPECIAL_DEFENSE]: [0, 0],
+      [StatName.HP]: [0, 0] as [number, number],
+      [StatName.ATTACK]: [0, 0] as [number, number],
+      [StatName.DEFENSE]: [0, 0] as [number, number],
+      [StatName.SPEED]: [0, 0] as [number, number],
+      [StatName.SPECIAL_ATTACK]: [0, 0] as [number, number],
+      [StatName.SPECIAL_DEFENSE]: [0, 0] as [number, number],
     };
   }
 
+  const defaultStats = {
+    [StatName.HP]: [0, 0] as [number, number],
+    [StatName.ATTACK]: [0, 0] as [number, number],
+    [StatName.DEFENSE]: [0, 0] as [number, number],
+    [StatName.SPEED]: [0, 0] as [number, number],
+    [StatName.SPECIAL_ATTACK]: [0, 0] as [number, number],
+    [StatName.SPECIAL_DEFENSE]: [0, 0] as [number, number],
+  };
+
   try {
-    const stats = JSON.parse(statsParam);
-    return {
-      [StatName.HP]: stats.hp || [0, 0],
-      [StatName.ATTACK]: stats.attack || [0, 0],
-      [StatName.DEFENSE]: stats.defense || [0, 0],
-      [StatName.SPEED]: stats.speed || [0, 0],
-      [StatName.SPECIAL_ATTACK]: stats['special-attack'] || [0, 0],
-      [StatName.SPECIAL_DEFENSE]: stats['special-defense'] || [0, 0],
-    };
+    // Parse stats in format: "hp:1-255,attack:50-150"
+    const statEntries = statsParam.split(',');
+
+    statEntries.forEach(entry => {
+      const [statName, range] = entry.split(':');
+      if (range) {
+        const [min, max] = range.split('-').map(Number);
+        if (!isNaN(min) && !isNaN(max) && statName in defaultStats) {
+          defaultStats[statName as StatName] = [min, max] as [number, number];
+        }
+      }
+    });
+
+    return defaultStats;
   } catch {
-    return {
-      [StatName.HP]: [0, 0],
-      [StatName.ATTACK]: [0, 0],
-      [StatName.DEFENSE]: [0, 0],
-      [StatName.SPEED]: [0, 0],
-      [StatName.SPECIAL_ATTACK]: [0, 0],
-      [StatName.SPECIAL_DEFENSE]: [0, 0],
-    };
+    return defaultStats;
   }
 };
 
 const serializeStatsForURL = (stats: PokemonFilters['stats']): string => {
-  const serialized = {
-    hp: stats[StatName.HP],
-    attack: stats[StatName.ATTACK],
-    defense: stats[StatName.DEFENSE],
-    speed: stats[StatName.SPEED],
-    'special-attack': stats[StatName.SPECIAL_ATTACK],
-    'special-defense': stats[StatName.SPECIAL_DEFENSE],
-  };
-  return JSON.stringify(serialized);
+  const activeStats: string[] = [];
+
+  Object.entries(stats).forEach(([statName, [min, max]]) => {
+    if (min > 0 || max > 0) {
+      activeStats.push(`${statName}:${min}-${max}`);
+    }
+  });
+
+  return activeStats.join(',');
 };
 
 export const useURLStore = create<URLStore>()(
@@ -96,56 +104,56 @@ export const useURLStore = create<URLStore>()(
 
         // Update pagination
         if (params.page !== undefined) {
-          newSearchParams.set('page', params.page.toString());
+          newSearchParams.set(URL_PARAMS.PAGE, params.page.toString());
         }
         if (params.itemsPerPage !== undefined) {
-          newSearchParams.set('itemsPerPage', params.itemsPerPage.toString());
+          newSearchParams.set(URL_PARAMS.ITEMS_PER_PAGE, params.itemsPerPage.toString());
         }
 
         // Update filters
         if (params.search !== undefined) {
           if (params.search) {
-            newSearchParams.set('search', params.search);
+            newSearchParams.set(URL_PARAMS.SEARCH, params.search);
           } else {
-            newSearchParams.delete('search');
+            newSearchParams.delete(URL_PARAMS.SEARCH);
           }
         }
         if (params.types !== undefined) {
           if (params.types.length > 0) {
-            newSearchParams.set('types', params.types.join(','));
+            newSearchParams.set(URL_PARAMS.TYPES, params.types.join(','));
           } else {
-            newSearchParams.delete('types');
+            newSearchParams.delete(URL_PARAMS.TYPES);
           }
         }
         if (params.generations !== undefined) {
           if (params.generations.length > 0) {
-            newSearchParams.set('generations', params.generations.join(','));
+            newSearchParams.set(URL_PARAMS.GENERATIONS, params.generations.join(','));
           } else {
-            newSearchParams.delete('generations');
+            newSearchParams.delete(URL_PARAMS.GENERATIONS);
           }
         }
         if (params.abilities !== undefined) {
           if (params.abilities.length > 0) {
-            newSearchParams.set('abilities', params.abilities.join(','));
+            newSearchParams.set(URL_PARAMS.ABILITIES, params.abilities.join(','));
           } else {
-            newSearchParams.delete('abilities');
+            newSearchParams.delete(URL_PARAMS.ABILITIES);
           }
         }
         if (params.stats !== undefined) {
           const hasActiveStats = Object.values(params.stats).some(([min, max]) => min > 0 || max > 0);
           if (hasActiveStats) {
-            newSearchParams.set('stats', serializeStatsForURL(params.stats));
+            newSearchParams.set(URL_PARAMS.STATS, serializeStatsForURL(params.stats));
           } else {
-            newSearchParams.delete('stats');
+            newSearchParams.delete(URL_PARAMS.STATS);
           }
         }
 
         // Update sort
         if (params.sortField !== undefined) {
-          newSearchParams.set('sortField', params.sortField);
+          newSearchParams.set(URL_PARAMS.SORT_FIELD, params.sortField);
         }
         if (params.sortDirection !== undefined) {
-          newSearchParams.set('sortDirection', params.sortDirection);
+          newSearchParams.set(URL_PARAMS.SORT_DIRECTION, params.sortDirection);
         }
 
         set({ searchParams: newSearchParams });
@@ -159,20 +167,20 @@ export const useURLStore = create<URLStore>()(
       },
 
       parseFromURL: (searchParams: URLSearchParams): URLParams => {
-        const page = parseInt(searchParams.get('page') || '1', 10);
-        const itemsPerPage = parseInt(searchParams.get('itemsPerPage') || DEFAULT_ITEMS_PER_PAGE.toString(), 10);
-        const search = searchParams.get('search') || '';
-        const types = searchParams.get('types')?.split(',').filter(Boolean) || [];
+        const page = parseInt(searchParams.get(URL_PARAMS.PAGE) || '1', 10);
+        const itemsPerPage = parseInt(searchParams.get(URL_PARAMS.ITEMS_PER_PAGE) || DEFAULT_ITEMS_PER_PAGE.toString(), 10);
+        const search = searchParams.get(URL_PARAMS.SEARCH) || '';
+        const types = searchParams.get(URL_PARAMS.TYPES)?.split(',').filter(Boolean) || [];
         const generations =
           searchParams
-            .get('generations')
+            .get(URL_PARAMS.GENERATIONS)
             ?.split(',')
             .map(Number)
             .filter(n => !isNaN(n)) || [];
-        const abilities = searchParams.get('abilities')?.split(',').filter(Boolean) || [];
-        const stats = parseStatsFromURL(searchParams.get('stats'));
-        const sortField = searchParams.get('sortField') || 'id';
-        const sortDirection = searchParams.get('sortDirection') || 'asc';
+        const abilities = searchParams.get(URL_PARAMS.ABILITIES)?.split(',').filter(Boolean) || [];
+        const stats = parseStatsFromURL(searchParams.get(URL_PARAMS.STATS));
+        const sortField = searchParams.get(URL_PARAMS.SORT_FIELD) || 'id';
+        const sortDirection = searchParams.get(URL_PARAMS.SORT_DIRECTION) || 'asc';
 
         return {
           page,

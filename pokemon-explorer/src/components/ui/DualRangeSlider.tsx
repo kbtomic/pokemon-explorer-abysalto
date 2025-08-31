@@ -16,17 +16,16 @@ export function DualRangeSlider({ min, max, value, onChange, className = '' }: D
 
   const getPercentage = (val: number) => ((val - min) / (max - min)) * 100;
 
-  const handleMouseDown = (e: React.MouseEvent, handle: 'min' | 'max') => {
-    e.preventDefault();
+  const handleStart = (handle: 'min' | 'max') => {
     setIsDragging(handle);
   };
 
-  const handleMouseMove = useCallback(
-    (e: MouseEvent) => {
+  const handleMove = useCallback(
+    (clientX: number) => {
       if (!isDragging || !sliderRef.current) return;
 
       const rect = sliderRef.current.getBoundingClientRect();
-      const percentage = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
+      const percentage = Math.max(0, Math.min(100, ((clientX - rect.left) / rect.width) * 100));
       const newValue = Math.round((percentage / 100) * (max - min) + min);
 
       if (isDragging === 'min') {
@@ -37,23 +36,25 @@ export function DualRangeSlider({ min, max, value, onChange, className = '' }: D
         onChange([value[0], newMax]);
       }
     },
-    [isDragging, max, min, value, onChange]
+    [isDragging, min, max, value, onChange]
   );
 
-  const handleMouseUp = () => {
-    setIsDragging(null);
-  };
+  const handleEnd = () => setIsDragging(null);
 
   useEffect(() => {
     if (isDragging) {
-      document.addEventListener('mousemove', handleMouseMove);
-      document.addEventListener('mouseup', handleMouseUp);
+      const handlePointerMove = (e: PointerEvent) => handleMove(e.clientX);
+      const handlePointerUp = () => handleEnd();
+
+      document.addEventListener('pointermove', handlePointerMove);
+      document.addEventListener('pointerup', handlePointerUp);
+
       return () => {
-        document.removeEventListener('mousemove', handleMouseMove);
-        document.removeEventListener('mouseup', handleMouseUp);
+        document.removeEventListener('pointermove', handlePointerMove);
+        document.removeEventListener('pointerup', handlePointerUp);
       };
     }
-  }, [isDragging, value]);
+  }, [isDragging, handleMove]);
 
   const minPercentage = getPercentage(value[0]);
   const maxPercentage = getPercentage(value[1]);
@@ -73,16 +74,16 @@ export function DualRangeSlider({ min, max, value, onChange, className = '' }: D
 
         {/* Min handle */}
         <div
-          className="absolute top-1/2 w-4 h-4 bg-white border-2 border-red-500 rounded-full cursor-pointer transform -translate-y-1/2 -translate-x-1/2 shadow-md hover:shadow-lg transition-shadow duration-200"
+          className="absolute top-1/2 w-4 h-4 bg-white border-2 border-red-500 rounded-full cursor-pointer transform -translate-y-1/2 -translate-x-1/2 shadow-md hover:shadow-lg transition-shadow duration-200 touch-none"
           style={{ left: `${minPercentage}%` }}
-          onMouseDown={e => handleMouseDown(e, 'min')}
+          onPointerDown={() => handleStart('min')}
         />
 
         {/* Max handle */}
         <div
-          className="absolute top-1/2 w-4 h-4 bg-white border-2 border-red-500 rounded-full cursor-pointer transform -translate-y-1/2 -translate-x-1/2 shadow-md hover:shadow-lg transition-shadow duration-200"
+          className="absolute top-1/2 w-4 h-4 bg-white border-2 border-red-500 rounded-full cursor-pointer transform -translate-y-1/2 -translate-x-1/2 shadow-md hover:shadow-lg transition-shadow duration-200 touch-none"
           style={{ left: `${maxPercentage}%` }}
-          onMouseDown={e => handleMouseDown(e, 'max')}
+          onPointerDown={() => handleStart('max')}
         />
       </div>
     </div>
