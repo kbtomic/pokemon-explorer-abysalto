@@ -1,5 +1,5 @@
 import { EvolutionDetail } from '@/types';
-import { getEvolutionTriggers, formatEvolutionTrigger } from '@/lib/utils/evolutionUtils';
+import { formatEvolutionTrigger } from '@/lib/utils/evolutionUtils';
 
 interface EvolutionTriggerProps {
   detail: EvolutionDetail;

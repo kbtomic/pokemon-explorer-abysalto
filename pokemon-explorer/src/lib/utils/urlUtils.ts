@@ -1,5 +1,5 @@
 import { PokemonFilters, SortOption } from '@/types';
-import { SortDirection, SortField, NavigationLabel, StatName } from '@/lib/constants/enums';
+import { SortDirection, SortField, NavigationLabel } from '@/lib/constants/enums';
 import { URL_PARAMS } from '@/lib/constants/urlParams';
 
 /**

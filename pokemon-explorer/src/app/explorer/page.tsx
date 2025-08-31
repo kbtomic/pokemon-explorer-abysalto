@@ -25,7 +25,7 @@ function ExplorerPageContent() {
 
   const { data: allPokemon, isLoading: isLoadingPokemon, error: pokemonError } = useAllPokemon();
 
-  const { setPokemonList, setLoading, setError, pokemonList, filters, sort, pagination, setCurrentPage } = usePokemonStore();
+  const { setPokemonList, setLoading, setError, pokemonList, filters, sort, pagination } = usePokemonStore();
 
   const { updateSearchParams, syncWithRouter } = useURLStore();
 

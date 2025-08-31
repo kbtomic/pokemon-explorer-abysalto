@@ -15,7 +15,7 @@ import { paginateItems } from '@/lib/utils/pagination';
 import { buildSearchParams, getNavigationUrl } from '@/lib/utils/urlUtils';
 import { usePerformanceOptimization } from '@/lib/hooks/usePerformanceOptimization';
 import { PerformanceIndicator } from '@/components/ui/performance-indicator';
-import { ImageType, Theme, SortField, SortDirection } from '@/lib/constants/enums';
+import { ImageType, Theme, SortField, SortDirection, NavigationLabel } from '@/lib/constants/enums';
 import { useEffect, useMemo, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
 import { NoResults } from '@/components/common/NoResults';
