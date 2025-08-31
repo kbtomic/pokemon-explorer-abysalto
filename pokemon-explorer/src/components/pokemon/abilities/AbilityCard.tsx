@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { PokemonAbility } from '@/types';
+import { PokemonAbility } from '@/types/pokemon/core';
 import { useAbility } from '@/lib/hooks/usePokemon';
 
 import { ChevronDown } from 'lucide-react';

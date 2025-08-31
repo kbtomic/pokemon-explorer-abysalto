@@ -1,5 +1,5 @@
 import { Filter, BarChart3, Search, Leaf, Package, MapPin } from 'lucide-react';
-import { Feature } from '@/types/features';
+import { Feature } from '@/types/ui/features';
 
 export const features: Feature[] = [
   {

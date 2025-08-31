@@ -1,4 +1,4 @@
-import { EvolutionChainLink } from '@/types';
+import { EvolutionChainLink } from '@/types/pokemon/evolution';
 import { formatPokemonName } from '@/lib/utils/pokemon/pokemon';
 import { getPokemonImageUrl } from '@/lib/utils/ui/imageUtils';
 import { getPokemonIdFromUrl } from '@/lib/utils/pokemon/evolutionUtils';

@@ -1,4 +1,4 @@
-import type { Ability } from '@/types';
+import type { Ability } from '@/types/pokemon/abilities';
 import { LanguageCode, VersionGroup } from '@/lib/constants/enums';
 
 export function getEnglishAbilityEffect(ability: Ability): string {

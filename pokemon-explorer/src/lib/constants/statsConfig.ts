@@ -1,6 +1,6 @@
 import { StatName } from '@/lib/constants/enums';
-import { Pokemon } from '@/types';
-import { StatConfig, SummaryItem, InfoCardConfig } from '@/types/stats';
+import { Pokemon } from '@/types/pokemon/core';
+import { StatConfig, SummaryItem, InfoCardConfig } from '@/types/ui/stats';
 
 // Re-export SummaryItem for backward compatibility
 export type { SummaryItem };

@@ -3,7 +3,7 @@ import { Ruler, Weight, Star, Target } from 'lucide-react';
 import { getPokemonImageUrl } from '@/lib/utils/ui/imageUtils';
 import { getTotalStats } from '@/lib/utils/pokemon/pokemon';
 import { getTypeColor } from '@/lib/utils/ui/typeColors';
-import { Pokemon } from '@/types/pokemon';
+import { Pokemon } from '@/types/pokemon/core';
 import { ImageWithFallback } from '@/components/ui/ImageWithFallback';
 
 interface PokemonHeroSectionProps {

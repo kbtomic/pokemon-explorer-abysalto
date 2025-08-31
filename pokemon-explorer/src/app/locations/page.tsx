@@ -1,7 +1,7 @@
 'use client';
 
 import { useAllLocationsDetails, useLocation } from '@/lib/hooks/usePokemon';
-import { Location } from '@/types';
+import { Location } from '@/types/locations/locations';
 import { Map, X } from 'lucide-react';
 import { SearchBar } from '@/components/filters/common/SearchBar';
 import { Pagination } from '@/components/pagination/Pagination';

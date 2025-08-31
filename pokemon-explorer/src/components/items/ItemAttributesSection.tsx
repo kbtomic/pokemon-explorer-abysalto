@@ -1,6 +1,6 @@
 import { ContentSection } from '@/components/common/ContentSection';
 import { formatName } from '@/lib/utils/formatting/stringUtils';
-import type { Item } from '@/types/pokemon';
+import type { Item } from '@/types/items/items';
 
 interface ItemAttributesSectionProps {
   item: Item;

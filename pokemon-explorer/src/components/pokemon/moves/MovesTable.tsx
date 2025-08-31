@@ -1,4 +1,5 @@
-import { PokemonMove, Move } from '@/types';
+import { PokemonMove } from '@/types/pokemon/core';
+import { Move } from '@/types/pokemon/moves';
 import { MoveRow } from '@/components/pokemon/moves/MoveRow';
 import { MovesTableColumn } from '@/lib/constants/enums';
 

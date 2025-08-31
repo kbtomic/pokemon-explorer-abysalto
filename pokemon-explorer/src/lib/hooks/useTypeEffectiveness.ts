@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { PokemonType } from '@/types';
+import { PokemonType } from '@/types/pokemon/core';
 import { useType } from '@/lib/hooks/usePokemon';
 import { POKEMON_TYPES } from '@/lib/constants/pokemonTypes';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@/lib/test-utils';
 import { GenericFilter } from '../GenericFilter';
-import { FilterItem } from '@/types/filters';
+import { FilterItem } from '@/types/ui/filters';
 
 describe('GenericFilter', () => {
   const mockItems: FilterItem[] = [

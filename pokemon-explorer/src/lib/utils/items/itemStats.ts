@@ -1,4 +1,4 @@
-import type { Item } from '@/types/pokemon';
+import type { Item } from '@/types/items/items';
 
 export function getItemStats(item: Item) {
   const stats = [

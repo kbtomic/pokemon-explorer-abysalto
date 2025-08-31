@@ -1,4 +1,4 @@
-import { PokemonType } from '@/types';
+import { PokemonType } from '@/types/pokemon/core';
 import { useTypeEffectiveness } from '@/lib/hooks/useTypeEffectiveness';
 import { TypeEffectivenessTable } from './TypeEffectivenessTable';
 

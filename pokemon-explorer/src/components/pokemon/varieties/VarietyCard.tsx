@@ -1,4 +1,4 @@
-import { PokemonVariety } from '@/types';
+import { PokemonVariety } from '@/types/pokemon/core';
 import { cn } from '@/lib/utils/formatting/cn';
 import { getPokemonImageUrl } from '@/lib/utils/ui/imageUtils';
 import { formatPokemonName } from '@/lib/utils/pokemon/pokemon';

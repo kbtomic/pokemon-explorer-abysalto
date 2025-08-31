@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { render, RenderOptions } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Pokemon } from '@/types';
+import { Pokemon } from '@/types/pokemon/core';
 
 // Create a custom render function that includes providers
 interface CustomRenderOptions extends Omit<RenderOptions, 'wrapper'> {

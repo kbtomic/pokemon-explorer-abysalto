@@ -5,7 +5,7 @@ import { usePokemonGenerations } from '@/lib/hooks/usePokemonGenerations';
 import { useAbilities } from '@/lib/hooks/useAbilities';
 import { getTypeColor } from '@/lib/utils/ui/typeColors';
 import { formatAbilityName } from '@/lib/utils/formatting/stringUtils';
-import { Ability } from '@/types';
+import { Ability } from '@/types/pokemon/abilities';
 
 // Type Filter Configuration
 export const useTypeFilterConfig = () => {

@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
-import { SortOption } from '@/types';
+import { SortOption } from '@/types/ui/filters';
 import { SortDirection, SortField } from '@/lib/constants/enums';
 import { DEFAULT_ITEMS_PER_PAGE } from '@/lib/constants/pagination';
 

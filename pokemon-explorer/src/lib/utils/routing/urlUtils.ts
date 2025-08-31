@@ -1,4 +1,4 @@
-import { PokemonFilters, SortOption } from '@/types';
+import { PokemonFilters, SortOption } from '@/types/ui/filters';
 import { SortDirection, SortField, NavigationLabel } from '@/lib/constants/enums';
 import { URL_PARAMS } from '@/lib/constants/urlParams';
 

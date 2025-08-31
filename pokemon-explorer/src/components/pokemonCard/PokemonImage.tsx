@@ -1,5 +1,5 @@
 import { getPokemonImageUrl } from '@/lib/utils/ui/imageUtils';
-import { Pokemon } from '@/types';
+import { Pokemon } from '@/types/pokemon/core';
 import { cn } from '@/lib/utils/formatting/cn';
 import { ImageWithFallback } from '@/components/ui/ImageWithFallback';
 

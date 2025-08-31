@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { PokemonMove } from '@/types';
+import { PokemonMove } from '@/types/pokemon/core';
 import { MoveLearnMethod } from '@/lib/constants/enums';
 
 interface LearningInfo {

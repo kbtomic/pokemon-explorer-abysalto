@@ -1,4 +1,4 @@
-import { Pokemon } from '@/types';
+import { Pokemon } from '@/types/pokemon/core';
 import { StatName } from '@/lib/constants/enums';
 
 export type StatRanges = Record<StatName, [number, number]>;

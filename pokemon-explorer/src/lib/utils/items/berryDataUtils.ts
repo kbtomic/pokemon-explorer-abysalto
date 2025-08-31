@@ -1,5 +1,5 @@
 import { formatName, formatNameCapitalized } from '@/lib/utils/formatting/stringUtils';
-import type { Berry } from '@/types/pokemon';
+import type { Berry } from '@/types/items/berries';
 
 export function formatFirmness(value: string | number): string {
   return typeof value === 'string' ? formatName(value) : value.toString();

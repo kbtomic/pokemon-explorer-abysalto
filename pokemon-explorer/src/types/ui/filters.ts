@@ -1,5 +1,5 @@
 import { SortDirection, SortField, StatName } from '@/lib/constants/enums';
-import { Pokemon } from '@/types';
+import { Pokemon } from '@/types/pokemon/core';
 
 export interface PokemonFilters {
   search: string;

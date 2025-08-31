@@ -1,4 +1,5 @@
-import { PokemonMove, Move } from '@/types';
+import { PokemonMove } from '@/types/pokemon/core';
+import { Move } from '@/types/pokemon/moves';
 import { MoveLearnMethod, MoveSortField } from '@/lib/constants/enums';
 import { formatPokemonName } from './pokemon';
 

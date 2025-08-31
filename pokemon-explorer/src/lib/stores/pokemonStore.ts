@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
-import { Pokemon, PokemonFilters, SortOption, FilterState } from '@/types';
+import { Pokemon } from '@/types/pokemon/core';
+import { PokemonFilters, SortOption, FilterState } from '@/types/ui/filters';
 import { calculateStatRanges } from '@/lib/utils/data/filters/statRanges';
 import { SortDirection, SortField, StatName } from '@/lib/constants/enums';
 import { DEFAULT_ITEMS_PER_PAGE } from '@/lib/constants/pagination';

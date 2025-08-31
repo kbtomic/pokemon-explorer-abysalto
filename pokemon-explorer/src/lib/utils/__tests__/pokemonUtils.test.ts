@@ -10,7 +10,8 @@ import {
 } from '../pokemon';
 import { getGenerationFromId } from '../generationMapping';
 import { mockPokemon, mockPokemonList } from '@/lib/test-utils';
-import { PokemonFilters, SortOption, Pokemon } from '@/types';
+import { PokemonFilters, SortOption } from '@/types/ui/filters';
+import { Pokemon } from '@/types/pokemon/core';
 
 describe('Pokemon Utilities', () => {
   describe('getPokemonImageUrl', () => {

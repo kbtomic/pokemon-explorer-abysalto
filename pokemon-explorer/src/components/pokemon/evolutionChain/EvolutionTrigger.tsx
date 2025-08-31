@@ -1,4 +1,4 @@
-import { EvolutionDetail } from '@/types';
+import { EvolutionDetail } from '@/types/pokemon/evolution';
 import { formatEvolutionTrigger } from '@/lib/utils/pokemon/evolutionUtils';
 
 interface EvolutionTriggerProps {

@@ -1,4 +1,4 @@
-import { SortOption } from '@/types';
+import { SortOption } from '@/types/ui/filters';
 import { Button } from '@/components/ui/button';
 import { ArrowUpDown } from 'lucide-react';
 import { getSortOptionLabel } from '@/lib/utils/data/sortOptions';

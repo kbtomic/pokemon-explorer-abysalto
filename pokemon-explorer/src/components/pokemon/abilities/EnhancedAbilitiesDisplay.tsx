@@ -1,4 +1,4 @@
-import { PokemonAbility } from '@/types';
+import { PokemonAbility } from '@/types/pokemon/core';
 import { AbilityCard } from '@/components/pokemon/abilities/AbilityCard';
 
 interface EnhancedAbilitiesDisplayProps {

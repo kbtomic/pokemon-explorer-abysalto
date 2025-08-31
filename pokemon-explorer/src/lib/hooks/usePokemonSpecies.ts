@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { pokeAPI } from '@/lib/api/pokeapi';
 import { CACHE_STRATEGIES } from '@/lib/constants';
 import { getSpeciesIdFromPokemon } from '@/lib/utils/pokemon/pokemon';
-import { Pokemon } from '@/types';
+import { Pokemon } from '@/types/pokemon/core';
 
 export function usePokemonSpecies(pokemonOrSpeciesId: Pokemon | number) {
   const speciesId = typeof pokemonOrSpeciesId === 'number' ? pokemonOrSpeciesId : getSpeciesIdFromPokemon(pokemonOrSpeciesId);

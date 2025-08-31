@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useFullGenerations } from './useFullGenerations';
 import { getGenerationFromId as getGenerationFromIdUtil, clearGenerationMappingCache } from '@/lib/utils/routing/generationMapping';
-import { Generation } from '@/types';
+import { Generation } from '@/types/pokemon/core';
 
 /**
  * Hook that provides generation mapping functionality using actual PokeAPI data

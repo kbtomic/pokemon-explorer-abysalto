@@ -9,7 +9,7 @@ import { ItemAttributesSection } from '@/components/items/ItemAttributesSection'
 import { ItemHeldBySection } from '@/components/items/ItemHeldBySection';
 import { ItemMachinesSection } from '@/components/items/ItemMachinesSection';
 import { ItemCategoryDisplay } from '@/components/items/ItemCategoryDisplay';
-import type { Item } from '@/types/pokemon';
+import type { Item } from '@/types/items/items';
 
 interface ItemDetailModalProps {
   item: Item | undefined;

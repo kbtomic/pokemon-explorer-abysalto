@@ -1,5 +1,5 @@
 import { StatName } from '@/lib/constants/enums';
-import { SortOption, PokemonFilters } from '@/types/filters';
+import { SortOption, PokemonFilters } from '@/types/ui/filters';
 
 /**
  * Efficiently compares two arrays for equality

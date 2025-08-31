@@ -1,4 +1,4 @@
-import type { Berry } from '@/types/pokemon';
+import type { Berry } from '@/types/items/berries';
 
 export function getBerryStats(berry: Berry) {
   return [

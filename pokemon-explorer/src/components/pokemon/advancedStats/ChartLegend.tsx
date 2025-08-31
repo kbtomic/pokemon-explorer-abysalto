@@ -1,4 +1,4 @@
-import { Pokemon } from '@/types';
+import { Pokemon } from '@/types/pokemon/core';
 
 interface ChartLegendProps {
   pokemon: Pokemon;

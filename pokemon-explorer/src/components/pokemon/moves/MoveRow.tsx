@@ -1,4 +1,5 @@
-import { PokemonMove, Move } from '@/types';
+import { PokemonMove } from '@/types/pokemon/core';
+import { Move } from '@/types/pokemon/moves';
 import { formatPokemonName } from '@/lib/utils/pokemon/pokemon';
 import { useLearningInfo } from '@/lib/hooks/useLearningInfo';
 import { MoveRowSkeleton } from '@/components/pokemon/moves/MoveRowSkeleton';

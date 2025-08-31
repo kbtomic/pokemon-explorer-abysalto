@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
-import { PokemonMove, Move } from '@/types';
+import { PokemonMove } from '@/types/pokemon/core';
+import { Move } from '@/types/pokemon/moves';
 import { useMove } from '@/lib/hooks/usePokemon';
 
 export function useMovesData(moves: PokemonMove[]) {

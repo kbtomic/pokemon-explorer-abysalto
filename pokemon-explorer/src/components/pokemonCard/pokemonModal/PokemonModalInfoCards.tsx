@@ -1,5 +1,5 @@
 import { getTotalStats } from '@/lib/utils/pokemon/pokemon';
-import { Pokemon } from '@/types';
+import { Pokemon } from '@/types/pokemon/core';
 import { POKEMON_INFO_CARDS_CONFIG, TOTAL_STATS_LABEL } from '@/lib/constants/statsConfig';
 
 interface PokemonModalInfoCardsProps {

@@ -1,6 +1,6 @@
 import { CloseButton } from '@/components/common/CloseButton';
 import { formatPokemonName } from '@/lib/utils/pokemon/pokemon';
-import { Pokemon } from '@/types';
+import { Pokemon } from '@/types/pokemon/core';
 
 interface PokemonModalHeaderProps {
   pokemon: Pokemon;

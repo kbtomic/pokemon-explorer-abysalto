@@ -1,4 +1,4 @@
-import { FilterItem } from '@/types/filters';
+import { FilterItem } from '@/types/ui/filters';
 import { SelectedItemBadge } from '@/components/filters/common/SelectedItemBadge';
 
 interface SelectedItemsDisplayProps {

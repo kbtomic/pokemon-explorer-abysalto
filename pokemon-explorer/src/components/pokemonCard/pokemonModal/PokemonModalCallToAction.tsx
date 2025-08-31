@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ExternalLink, Info } from 'lucide-react';
-import { Pokemon } from '@/types';
+import { Pokemon } from '@/types/pokemon/core';
 
 interface PokemonModalCallToActionProps {
   pokemon: Pokemon;

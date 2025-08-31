@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { ButtonVariant, ButtonSize, ChartType } from '@/lib/constants/enums';
 import { BarChart3 } from 'lucide-react';
-import { Pokemon } from '@/types';
+import { Pokemon } from '@/types/pokemon/core';
 import { ChartSelector } from '@/components/pokemon/advancedStats/ChartSelector';
 import { SummaryStats } from '@/components/pokemon/advancedStats/SummaryStats';
 import { ChartLegend } from '@/components/pokemon/advancedStats/ChartLegend';

@@ -1,4 +1,4 @@
-import { Pokemon } from '@/types';
+import { Pokemon } from '@/types/pokemon/core';
 import { STAT_NAMES } from '@/lib/constants/filters';
 import { getStatData } from '@/lib/utils/ui/chartUtils';
 import {

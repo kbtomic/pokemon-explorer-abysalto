@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import { FilterItem } from '@/types/filters';
+import { FilterItem } from '@/types/ui/filters';
 import { FilterButton } from '@/components/filters/common/FilterButton';
 import { FilterDropdown } from '@/components/filters/common/FilterDropdown';
 import { FilterHeader } from '@/components/filters/common/FilterHeader';

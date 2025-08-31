@@ -1,4 +1,4 @@
-import { EvolutionChainLink } from '@/types';
+import { EvolutionChainLink } from '@/types/pokemon/evolution';
 import { EvolutionStage } from '@/components/pokemon/evolutionChain/EvolutionStage';
 import { EvolutionArrow } from '@/components/pokemon/evolutionChain/EvolutionArrow';
 

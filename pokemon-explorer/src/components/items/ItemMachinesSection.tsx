@@ -1,5 +1,5 @@
 import { ContentSection } from '@/components/common/ContentSection';
-import type { Item } from '@/types/pokemon';
+import type { Item } from '@/types/items/items';
 
 interface ItemMachinesSectionProps {
   item: Item;

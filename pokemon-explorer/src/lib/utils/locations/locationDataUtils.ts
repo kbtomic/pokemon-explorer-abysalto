@@ -1,4 +1,4 @@
-import { Location } from '@/types';
+import { Location } from '@/types/locations/locations';
 import { LocationIconType } from '@/lib/constants/enums';
 
 export function getLocationIcon(locationName: string): LocationIconType {

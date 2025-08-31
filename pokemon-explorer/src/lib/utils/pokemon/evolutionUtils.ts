@@ -1,4 +1,4 @@
-import { EvolutionDetail } from '@/types';
+import { EvolutionDetail } from '@/types/pokemon/evolution';
 import { EvolutionTriggerType, EvolutionMethod } from '@/lib/constants/enums';
 
 export const getPokemonIdFromUrl = (url: string): number => {

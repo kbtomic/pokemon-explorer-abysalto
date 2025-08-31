@@ -7,7 +7,7 @@ import { PaginationNavigationButton } from '@/components/pagination/PaginationNa
 import { PaginationPageNumbers } from '@/components/pagination/PaginationPageNumbers';
 import { getVisiblePages, canNavigatePrevious, canNavigateNext } from '@/lib/utils/data/pagination';
 import { buildPaginationUrl } from '@/lib/utils/routing/urlUtils';
-import { PokemonFilters, SortOption } from '@/types';
+import { PokemonFilters, SortOption } from '@/types/ui/filters';
 
 interface PaginationProps {
   currentPage: number;

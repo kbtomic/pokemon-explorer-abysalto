@@ -1,5 +1,5 @@
 import { StatName } from '@/lib/constants/enums';
-import { Pokemon } from '@/types';
+import { Pokemon } from '@/types/pokemon/core';
 import { cn } from '@/lib/utils/formatting/cn';
 
 interface PokemonStatItemProps {

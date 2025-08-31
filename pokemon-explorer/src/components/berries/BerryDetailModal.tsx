@@ -6,7 +6,7 @@ import { ImageType } from '@/lib/constants/enums';
 import { BerryDataSection } from '@/components/berries/BerryDataSection';
 import { getBerryStats } from '@/lib/utils/items/berryStats';
 import { getBerryCharacteristics, getBerryFlavors } from '@/lib/utils/items/berryDataUtils';
-import type { Berry } from '@/types/pokemon';
+import type { Berry } from '@/types/items/berries';
 
 interface BerryDetailModalProps {
   berry: Berry | undefined;

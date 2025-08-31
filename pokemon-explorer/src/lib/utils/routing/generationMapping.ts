@@ -1,4 +1,4 @@
-import { Generation } from '@/types';
+import { Generation } from '@/types/pokemon/core';
 
 // Cache for generation mappings to avoid recalculating
 let generationMappingCache: Map<number, number> | null = null;

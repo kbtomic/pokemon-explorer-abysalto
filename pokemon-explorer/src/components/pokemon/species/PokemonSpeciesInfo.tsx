@@ -1,4 +1,4 @@
-import { PokemonSpecies } from '@/types/pokemon';
+import { PokemonSpecies } from '@/types/pokemon/species';
 import { ContentSectionTitle, CharacteristicLabel, BiologyLabel, SpecialCategoryLabel, BadgeColor } from '@/lib/constants/enums';
 import { InfoCard } from '@/components/pokemon/species/InfoCard';
 import { InfoGrid } from '@/components/pokemon/species/InfoGrid';

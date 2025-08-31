@@ -1,5 +1,5 @@
 import { ContentSection } from '@/components/common/ContentSection';
-import type { Item } from '@/types/pokemon';
+import type { Item } from '@/types/items/items';
 import { ContentSectionTitle } from '@/lib/constants/enums';
 
 interface ItemEffectSectionProps {

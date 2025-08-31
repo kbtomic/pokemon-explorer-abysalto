@@ -1,32 +1,15 @@
-import {
-  Pokemon,
-  PokemonListResponse,
-  Type,
-  Generation,
-  Ability,
-  PokemonSpecies,
-  PokemonForm,
-  PokemonHabitat,
-  PokemonShape,
-  PokemonColor,
-  EvolutionChain,
-  Move,
-  Berry,
-  BerryFirmness,
-  BerryFlavor,
-  Item,
-  ItemCategory,
-  Machine,
-  Location,
-  LocationArea,
-  Region,
-  Pokedex,
-  Version,
-  VersionGroup,
-  EncounterMethod,
-  EncounterCondition,
-  EvolutionTrigger,
-} from '@/types';
+import { Pokemon, PokemonListResponse, Type, Generation } from '@/types/pokemon/core';
+import { Ability } from '@/types/pokemon/abilities';
+import { PokemonSpecies, PokemonForm, PokemonHabitat, PokemonShape, PokemonColor } from '@/types/pokemon/species';
+import { EvolutionChain, EvolutionTrigger } from '@/types/pokemon/evolution';
+import { Move } from '@/types/pokemon/moves';
+import { Berry, BerryFirmness, BerryFlavor } from '@/types/items/berries';
+import { Item, ItemCategory, Machine } from '@/types/items/items';
+import { Location, LocationArea } from '@/types/locations/locations';
+import { Region } from '@/types/locations/regions';
+import { Pokedex } from '@/types/game/pokedex';
+import { Version, VersionGroup } from '@/types/game/versions';
+import { EncounterMethod, EncounterCondition } from '@/types/game/encounters';
 import { POKEMON_CHUNK_SIZE } from '@/lib/constants/pagination';
 import { measurePerformance } from '@/lib/utils/performance/performance';
 

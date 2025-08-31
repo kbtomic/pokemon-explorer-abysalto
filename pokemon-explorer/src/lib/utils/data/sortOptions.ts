@@ -1,6 +1,6 @@
-import { SortOption } from '@/types';
+import { SortOption } from '@/types/ui/filters';
 import { SortField } from '@/lib/constants/enums';
-import { SortOptionConfig } from '@/types/sort';
+import { SortOptionConfig } from '@/types/ui/sort';
 
 export const SORT_OPTIONS: SortOptionConfig[] = [
   { value: SortField.ID, label: 'ID', description: 'Sort by Pokemon ID' },

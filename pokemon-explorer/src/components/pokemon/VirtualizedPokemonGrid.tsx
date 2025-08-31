@@ -1,4 +1,4 @@
-import { Pokemon } from '@/types';
+import { Pokemon } from '@/types/pokemon/core';
 import { PokemonCard } from '../pokemonCard/PokemonCard';
 import { usePokemonStore } from '@/lib/stores/pokemonStore';
 import { NoResults } from '@/components/common/NoResults';

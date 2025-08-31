@@ -1,5 +1,5 @@
 import { getTotalStats } from '@/lib/utils/pokemon/pokemon';
-import { Pokemon } from '@/types';
+import { Pokemon } from '@/types/pokemon/core';
 
 interface PokemonModalBadgesProps {
   pokemon: Pokemon;

@@ -1,7 +1,7 @@
 'use client';
 
 import { useAllBerriesDetails, useBerry } from '@/lib/hooks/usePokemon';
-import { Berry } from '@/types';
+import { Berry } from '@/types/items/berries';
 import { Leaf, X } from 'lucide-react';
 import { SearchBar } from '@/components/filters/common/SearchBar';
 import { Pagination } from '@/components/pagination/Pagination';

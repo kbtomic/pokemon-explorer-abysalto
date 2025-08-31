@@ -1,4 +1,6 @@
-import { Pokemon, PokemonFilters, PokemonSpecies, SortOption } from '@/types';
+import { Pokemon } from '@/types/pokemon/core';
+import { PokemonFilters, SortOption } from '@/types/ui/filters';
+import { PokemonSpecies } from '@/types/pokemon/species';
 import { StatName, SortField, SortDirection } from '@/lib/constants/enums';
 
 export function getTotalStats(pokemon: Pokemon): number {

@@ -1,4 +1,4 @@
-import type { PokemonSpecies } from '@/types';
+import type { PokemonSpecies } from '@/types/pokemon/species';
 import { LanguageCode } from '@/lib/constants/enums';
 
 export const formatGeneration = (generation: { name: string } | null): string => {

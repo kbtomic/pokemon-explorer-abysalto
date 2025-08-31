@@ -1,4 +1,4 @@
-import { Location } from '@/types';
+import { Location } from '@/types/locations/locations';
 import { DetailModal } from '@/components/common/DetailModal';
 import { ContentSection } from '@/components/common/ContentSection';
 import { DataCard } from '@/components/common/DataCard';

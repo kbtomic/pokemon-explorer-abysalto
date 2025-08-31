@@ -1,4 +1,4 @@
-import { PokemonSpecies } from '@/types';
+import { PokemonSpecies } from '@/types/pokemon/species';
 import { VarietyHeader } from '@/components/pokemon/varieties/VarietyHeader';
 import { VarietyGrid } from '@/components/pokemon/varieties/VarietyGrid';
 

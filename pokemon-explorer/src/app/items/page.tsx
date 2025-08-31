@@ -1,7 +1,7 @@
 'use client';
 
 import { useAllItemsDetails, useItem } from '@/lib/hooks/usePokemon';
-import { Item } from '@/types';
+import { Item } from '@/types/items/items';
 import { Package, X } from 'lucide-react';
 import { SearchBar } from '@/components/filters/common/SearchBar';
 import { Pagination } from '@/components/pagination/Pagination';

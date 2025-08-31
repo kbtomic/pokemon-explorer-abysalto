@@ -1,4 +1,5 @@
-import { PokemonMove, Move } from '@/types';
+import { PokemonMove } from '@/types/pokemon/core';
+import { Move } from '@/types/pokemon/moves';
 import { SearchBar } from '@/components/filters/common/SearchBar';
 import { FilterSelect } from '@/components/ui/FilterSelect';
 import { getAvailableMoveTypes, getSortOptions } from '@/lib/utils/pokemon/movesUtils';

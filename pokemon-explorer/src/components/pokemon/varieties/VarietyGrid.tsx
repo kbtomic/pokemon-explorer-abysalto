@@ -1,4 +1,4 @@
-import { PokemonSpecies } from '@/types';
+import { PokemonSpecies } from '@/types/pokemon/species';
 import { VarietyCard } from '@/components/pokemon/varieties/VarietyCard';
 
 interface VarietyGridProps {

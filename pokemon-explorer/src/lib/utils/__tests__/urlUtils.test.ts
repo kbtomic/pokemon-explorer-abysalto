@@ -1,5 +1,5 @@
 import { buildSearchParams, buildPaginationUrl } from '@/lib/utils/routing/urlUtils';
-import { PokemonFilters, SortOption } from '@/types';
+import { PokemonFilters, SortOption } from '@/types/ui/filters';
 import { StatName, SortField, SortDirection } from '@/lib/constants/enums';
 
 describe('URL Utilities', () => {

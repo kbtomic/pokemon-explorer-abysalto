@@ -1,5 +1,5 @@
 import { createGenerationMapping, getGenerationFromId, clearGenerationMappingCache } from '../generationMapping';
-import { Generation } from '@/types';
+import { Generation } from '@/types/pokemon/core';
 
 // Mock generation data for testing
 const mockGenerations: Generation[] = [

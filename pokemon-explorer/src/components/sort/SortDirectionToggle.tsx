@@ -1,4 +1,4 @@
-import { SortOption } from '@/types';
+import { SortOption } from '@/types/ui/filters';
 import { Button } from '@/components/ui/button';
 import { ArrowUp, ArrowDown } from 'lucide-react';
 import { SortDirection, ButtonVariant, ButtonSize } from '@/lib/constants/enums';
