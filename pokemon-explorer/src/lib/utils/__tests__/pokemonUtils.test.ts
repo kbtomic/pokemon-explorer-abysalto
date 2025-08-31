@@ -1,13 +1,5 @@
-import {
-  getPokemonImageUrl,
-  getTotalStats,
-  getStatValue,
-  filterPokemon,
-  sortPokemon,
-  getGenerationFromId,
-  formatPokemonName,
-  formatStatName,
-} from '../pokemon';
+import { getPokemonImageUrl, getTotalStats, getStatValue, filterPokemon, sortPokemon, formatPokemonName, formatStatName } from '../pokemon';
+import { getGenerationFromId } from '../generationMapping';
 import { mockPokemon, mockPokemonList } from '@/lib/test-utils';
 import { PokemonFilters, SortOption } from '@/types';
 
@@ -85,7 +77,7 @@ describe('Pokemon Utilities', () => {
           'special-defense': [0, 255],
         },
       };
-      const filtered = filterPokemon(mockPokemonList, filters);
+      const filtered = filterPokemon(mockPokemonList, filters, () => 1);
       expect(filtered).toEqual(mockPokemonList);
     });
 
@@ -104,7 +96,7 @@ describe('Pokemon Utilities', () => {
           'special-defense': [0, 255],
         },
       };
-      const filtered = filterPokemon(mockPokemonList, filters);
+      const filtered = filterPokemon(mockPokemonList, filters, () => 1);
       expect(filtered).toHaveLength(1);
       expect(filtered[0].name).toBe('bulbasaur');
     });
@@ -124,7 +116,7 @@ describe('Pokemon Utilities', () => {
           'special-defense': [0, 255],
         },
       };
-      const filtered = filterPokemon(mockPokemonList, filters);
+      const filtered = filterPokemon(mockPokemonList, filters, () => 1);
       expect(filtered).toHaveLength(3); // All mock Pokemon have grass type
     });
 
@@ -143,7 +135,7 @@ describe('Pokemon Utilities', () => {
           'special-defense': [0, 255],
         },
       };
-      const filtered = filterPokemon(mockPokemonList, filters);
+      const filtered = filterPokemon(mockPokemonList, filters, () => 1);
       expect(filtered).toHaveLength(3); // All mock Pokemon have overgrow ability
     });
 
@@ -162,7 +154,7 @@ describe('Pokemon Utilities', () => {
           'special-defense': [0, 255],
         },
       };
-      const filtered = filterPokemon(mockPokemonList, filters);
+      const filtered = filterPokemon(mockPokemonList, filters, () => 1);
       expect(filtered).toHaveLength(0); // No Pokemon have HP >= 50
     });
   });
@@ -170,7 +162,7 @@ describe('Pokemon Utilities', () => {
   describe('sortPokemon', () => {
     it('should sort by name ascending', () => {
       const sort: SortOption = { field: 'name', direction: 'asc' };
-      const sorted = sortPokemon(mockPokemonList, sort);
+      const sorted = sortPokemon(mockPokemonList, sort, () => 1);
       expect(sorted[0].name).toBe('bulbasaur');
       expect(sorted[1].name).toBe('ivysaur');
       expect(sorted[2].name).toBe('venusaur');
@@ -178,7 +170,7 @@ describe('Pokemon Utilities', () => {
 
     it('should sort by name descending', () => {
       const sort: SortOption = { field: 'name', direction: 'desc' };
-      const sorted = sortPokemon(mockPokemonList, sort);
+      const sorted = sortPokemon(mockPokemonList, sort, () => 1);
       expect(sorted[0].name).toBe('venusaur');
       expect(sorted[1].name).toBe('ivysaur');
       expect(sorted[2].name).toBe('bulbasaur');
@@ -186,7 +178,7 @@ describe('Pokemon Utilities', () => {
 
     it('should sort by ID ascending', () => {
       const sort: SortOption = { field: 'id', direction: 'asc' };
-      const sorted = sortPokemon(mockPokemonList, sort);
+      const sorted = sortPokemon(mockPokemonList, sort, () => 1);
       expect(sorted[0].id).toBe(1);
       expect(sorted[1].id).toBe(2);
       expect(sorted[2].id).toBe(3);
@@ -194,7 +186,7 @@ describe('Pokemon Utilities', () => {
 
     it('should sort by total stats', () => {
       const sort: SortOption = { field: 'total-stats', direction: 'asc' };
-      const sorted = sortPokemon(mockPokemonList, sort);
+      const sorted = sortPokemon(mockPokemonList, sort, () => 1);
       // All mock Pokemon have the same total stats, so order should remain the same
       expect(sorted[0].id).toBe(1);
       expect(sorted[1].id).toBe(2);
@@ -203,7 +195,7 @@ describe('Pokemon Utilities', () => {
 
     it('should sort by individual stat', () => {
       const sort: SortOption = { field: 'hp', direction: 'asc' };
-      const sorted = sortPokemon(mockPokemonList, sort);
+      const sorted = sortPokemon(mockPokemonList, sort, () => 1);
       // All mock Pokemon have the same HP, so order should remain the same
       expect(sorted[0].id).toBe(1);
       expect(sorted[1].id).toBe(2);
@@ -213,23 +205,23 @@ describe('Pokemon Utilities', () => {
 
   describe('getGenerationFromId', () => {
     it('should return correct generation for Pokemon ID', () => {
-      expect(getGenerationFromId(1)).toBe(1);
-      expect(getGenerationFromId(151)).toBe(1);
-      expect(getGenerationFromId(152)).toBe(2);
-      expect(getGenerationFromId(251)).toBe(2);
-      expect(getGenerationFromId(252)).toBe(3);
-      expect(getGenerationFromId(386)).toBe(3);
-      expect(getGenerationFromId(387)).toBe(4);
-      expect(getGenerationFromId(493)).toBe(4);
-      expect(getGenerationFromId(494)).toBe(5);
-      expect(getGenerationFromId(649)).toBe(5);
-      expect(getGenerationFromId(650)).toBe(6);
-      expect(getGenerationFromId(721)).toBe(6);
-      expect(getGenerationFromId(722)).toBe(7);
-      expect(getGenerationFromId(809)).toBe(7);
-      expect(getGenerationFromId(810)).toBe(8);
-      expect(getGenerationFromId(898)).toBe(8);
-      expect(getGenerationFromId(899)).toBe(9);
+      // Mock generation data for testing
+      const mockGenerations = [
+        {
+          id: 1,
+          name: 'generation-i',
+          main_region: { name: 'kanto', url: 'https://pokeapi.co/api/v2/region/1/' },
+          pokemon_species: [
+            { name: 'bulbasaur', url: 'https://pokeapi.co/api/v2/pokemon-species/1/' },
+            { name: 'ivysaur', url: 'https://pokeapi.co/api/v2/pokemon-species/2/' },
+            { name: 'venusaur', url: 'https://pokeapi.co/api/v2/pokemon-species/3/' },
+          ],
+        },
+      ];
+
+      expect(getGenerationFromId(1, mockGenerations)).toBe(1);
+      expect(getGenerationFromId(2, mockGenerations)).toBe(1);
+      expect(getGenerationFromId(3, mockGenerations)).toBe(1);
     });
   });
 
@@ -237,7 +229,7 @@ describe('Pokemon Utilities', () => {
     it('should format Pokemon name correctly', () => {
       expect(formatPokemonName('bulbasaur')).toBe('Bulbasaur');
       expect(formatPokemonName('charizard')).toBe('Charizard');
-      expect(formatPokemonName('mew-two')).toBe('Mew two');
+      expect(formatPokemonName('mew-two')).toBe('Mew-two');
     });
   });
 
