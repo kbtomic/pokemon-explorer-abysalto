@@ -1,0 +1,22 @@
+{
+  "$schema": "https://unpkg.com/knip@5/schema.json",
+  "entry": ["src/app/**/*.{ts,tsx}"],
+  "project": ["src/**/*.{ts,tsx}", "!src/**/*.test.{ts,tsx}", "!src/**/*.spec.{ts,tsx}", "!src/**/__tests__/**"],
+  "ignore": ["src/lib/test-utils.tsx", "src/components/pokemon/__tests__/**"],
+  "rules": {
+    "dependencies": "warn",
+    "exports": "warn",
+    "files": "warn",
+    "duplicates": "warn"
+  },
+  "ignoreDependencies": [
+    "@testing-library/user-event",
+    "msw",
+    "zustand",
+    "clsx",
+    "tailwind-merge",
+    "@tanstack/react-query",
+    "eslint-config-next",
+    "eslint-config-prettier"
+  ]
+}
